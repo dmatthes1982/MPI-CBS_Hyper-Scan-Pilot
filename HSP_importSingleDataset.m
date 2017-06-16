@@ -15,10 +15,18 @@ eventvalues = { 'S41','S169'; ...                                           % 40
                 'S31','S159'; ...                                           % mixed noise earphones 
                 'S32','S160'; ...                                           % mixed noise speaker  
                 'S24','S152'; ...                                           % synch finger tapping in 2 Hz, while being entrained in 2 Hz  
+                'S25','S153'; ...                                           % dialogue plus 2 Hz entrainment
                 'S51','S179'; ...                                           % A reads to B  
                 'S52','S180'; ...                                           % B reads to A  
-                'S53','S181'; ...                                           % dialogue  
+                'S53','S181'; ...                                           % dialogue
                 };
+
+events = ft_read_event( headerfile );                                       % Get all occured events from marker file              
+events = squeeze(struct2cell(events));                                      % transform struct to cell matrix
+events = events(2,:);                                                       % extract events value line
+emptyCells = cellfun('isempty', events);                                    % detect empty cells
+events(emptyCells) = [];                                                    % remove empty cells
+events = unique(events);                                                    % remove multiple numbers                                                        
 
 % basis configuration for data import
 cfgOrg                       = [];
@@ -34,13 +42,18 @@ for i=1:1:size(eventvalues, 1)
   cfg = cfgOrg;                                                             % reset configuration
   cfg.trialdef.eventvalue = eventvalues(i,:);
   
-  cfgSeg = ft_definetrial(cfg);                                             % generate config for segmentation
+  if any(strcmp(events, eventvalues(i,1))) || ...                           % if event is in the data
+     any(strcmp(events, eventvalues(i,2)))
   
-  if size(cfgSeg.trl,1) > 1                                                 % check cfgSeg.trl for multiple inputs
-    cfgSeg.trl = cfgSeg.trl(end,:);                                         % choose the last entry
+    cfgSeg = ft_definetrial(cfg);                                           % generate config for segmentation
+    if size(cfgSeg.trl,1) > 1                                               % check cfgSeg.trl for multiple inputs
+      cfgSeg.trl = cfgSeg.trl(end,:);                                       % choose the last entry
+    end
+    dataTmp = ft_preprocessing(cfgSeg);                                     % import stim specific data
+  
+  else
+    dataTmp = [];
   end
-  
-  dataTmp = ft_preprocessing(cfgSeg);                                       % import stim specific data
   
   switch i                                                                  % allocate data to substructures and correct false stimulus numbers
     case 1
@@ -89,16 +102,23 @@ for i=1:1:size(eventvalues, 1)
         data.Tapping.trialinfo = 24;
       end
     case 10
+      data.DialoguePlus2Hz = dataTmp;
+      if ~isempty(dataTmp)
+        if data.DialoguePlus2Hz.trialinfo == 153
+          data.DialoguePlus2Hz.trialinfo = 25;
+        end
+      end
+    case 11
       data.AreadsB = dataTmp;
       if data.AreadsB.trialinfo == 179
         data.AreadsB.trialinfo = 51;
       end
-    case 11
+    case 12
       data.BreadsA = dataTmp;
       if data.BreadsA.trialinfo == 180
         data.BreadsA.trialinfo = 52;
       end
-    case 12
+    case 13
       data.Dialogue = dataTmp;
       if data.Dialogue.trialinfo == 181
         data.Dialogue.trialinfo = 53;

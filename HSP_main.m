@@ -1,5 +1,5 @@
 %% general settings
-preproc = 0;
+preproc = 1;                                                                % 0 / 1 = use not / use preprocessing
 
 %% import data from brain vision eeg files and bring it into an order
 path_raw          = '../../data/HyperScanPilot/raw_data/';
@@ -24,6 +24,16 @@ save(file_path, 'data_raw');
 %% preprocess the raw data
 if preproc == 1
   data_preproc = HSP_preprocessing( data_raw, numOfPart );
+else
+  data_preproc = data_raw;
+end
+
+%% export the preprocessed data into an *.mat file
+
+if preproc == 1
+  file_name = strcat(dest_folder, 'HSP_data_preproc');
+  file_path = strcat(file_name, file_version);
+  save(file_path, 'data_preproc');
 end
 
 clear preproc path_generic numOfPart_generic path_raw numOfPart ...

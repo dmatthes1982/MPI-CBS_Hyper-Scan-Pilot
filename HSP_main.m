@@ -1,6 +1,9 @@
 %% general settings
 preproc = 1;                                                                % 0 / 1 = use not / use preprocessing
-
+if preproc == 1
+  tfrOfpreproc = 1;                                                         % 0 / 1 = calculate TFRs of preprocessed signals
+end
+  
 %% import data from brain vision eeg files and bring it into an order
 path_raw          = '../../data/HyperScanPilot/raw_data/';
 numOfPart     = 1;
@@ -34,16 +37,27 @@ if preproc == 1
   save(file_path, 'data_preproc');
 end
 
+%% calculate TFRs of the preprocessed data
+if tfrOfpreproc == 1
+  data_tfr1 = HSP_timeFreqanalysis( data_preproc, numOfPart );
+end
+
+%% export the preprocessed data into a *.mat file
+if tfrOfpreproc == 1
+  file_name = strcat(dest_folder, 'HSP_03_tfr1');
+  file_path = strcat(file_name, file_version);
+  save(file_path, 'data_tfr1');
+end
+
 %% segmentation of the preprocessed trials
 % split every the data of every condition into subtrials with a length of 5
 % seconds
 data_seg1 = HSP_segmentation( data_preproc, numOfPart);
 
 %% export the segmented data into a *.mat file
-file_name = strcat(dest_folder, 'HSP_03_seg1');
+file_name = strcat(dest_folder, 'HSP_04_seg1');
 file_path = strcat(file_name, file_version);
 save(file_path, 'data_seg1');
-
 
 clear preproc path_generic numOfPart_generic path_raw numOfPart ...
       dest_folder file_name file_path file_version file_pattern file_num

@@ -1,6 +1,6 @@
 function HSP_easyPlot( cfg, data )
-% HSP_EASYPLOT is a function which makes it easier to plot a specific trial 
-% of a particular condition from the HSP-data-structure.
+% HSP_EASYPLOT is a function, which makes it easier to plot a specific 
+% trial of a particular condition from the HSP-data-structure.
 %
 % Use as
 %   HSP_easyPlot(cfg, data)

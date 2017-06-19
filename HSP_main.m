@@ -9,7 +9,7 @@ data_raw = HSP_importAllDatasets( path_raw, numOfPart );
 
 %% export the imported and sorted data into an *.mat file
 dest_folder = '../../processed/HyperScanPilot/';
-file_name = strcat(dest_folder, 'HSP_data_raw');
+file_name = strcat(dest_folder, 'HSP_01_raw');
 file_path = strcat(file_name, '_001.mat');
 file_version = '_001.mat';
 if exist(file_path, 'file') == 2
@@ -29,7 +29,7 @@ end
 
 %% export the preprocessed data into a *.mat file
 if preproc == 1
-  file_name = strcat(dest_folder, 'HSP_data_preproc');
+  file_name = strcat(dest_folder, 'HSP_02_preproc');
   file_path = strcat(file_name, file_version);
   save(file_path, 'data_preproc');
 end
@@ -40,7 +40,7 @@ end
 data_seg1 = HSP_segmentation( data_preproc, numOfPart);
 
 %% export the segmented data into a *.mat file
-file_name = strcat(dest_folder, 'HSP_data_seg1');
+file_name = strcat(dest_folder, 'HSP_03_seg1');
 file_path = strcat(file_name, file_version);
 save(file_path, 'data_seg1');
 

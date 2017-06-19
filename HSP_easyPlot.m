@@ -27,32 +27,48 @@ trl  = ft_getopt(cfg, 'trial', 1);
 
 switch cond
   case 'Earphone40Hz'
-    plot(data.Earphone40Hz{dyad}.time{trl}, data.Earphone40Hz{dyad}.trial{trl}(elec,:));
+    plot(data(dyad).Earphone40Hz.time{trl}, data(dyad).Earphone40Hz.trial{trl}(elec,:));
+    title(sprintf('Earphone40Hz - Electrode: %s - Trial: %d - Dyad: %d', data(dyad).Earphone40Hz.label{elec}, trl, dyad));
   case 'Speaker40Hz'
-    plot(data.Speaker40Hz{dyad}.time{trl}, data.Speaker40Hz{dyad}.trial{trl}(elec,:));
+    plot(data(dyad).Speaker40Hz.time{trl}, data(dyad).Speaker40Hz.trial{trl}(elec,:));
+    title(sprintf('Speaker40Hz - Electrode: %s - Trial: %d - Dyad: %d', data(dyad).Speaker40Hz.label{elec}, trl, dyad));
   case 'Earphone2Hz'
-    plot(data.Earphone2Hz{dyad}.time{trl}, data.Earphone2Hz{dyad}.trial{trl}(elec,:));
+    plot(data(dyad).Earphone2Hz.time{trl}, data(dyad).Earphone2Hz.trial{trl}(elec,:));
+    title(sprintf('Earphone2Hz - Electrode: %s - Trial: %d - Dyad: %d', data(dyad).Earphone2Hz.label{elec}, trl, dyad));
   case 'Speaker2Hz'
-    plot(data.Speaker2Hz{dyad}.time{trl}, data.Speaker2Hz{dyad}.trial{trl}(elec,:));
+    plot(data(dyad).Speaker2Hz.time{trl}, data(dyad).Speaker2Hz.trial{trl}(elec,:));
+    title(sprintf('Speaker2Hz - Electrode: %s - Trial: %d - Dyad: %d', data(dyad).Speaker2Hz.label{elec}, trl, dyad));
   case 'Silence'
-    plot(data.Silence{dyad}.time{trl}, data.Silence{dyad}.trial{trl}(elec,:));
+    plot(data(dyad).Silence.time{trl}, data(dyad).Silence.trial{trl}(elec,:));
+    title(sprintf('Silence - Electrode: %s - Trial: %d - Dyad: %d', data(dyad).Silence.label{elec}, trl, dyad));
   case 'SilEyesClosed'
-    plot(data.SilEyesClosed{dyad}.time{trl}, data.SilEyesClosed{dyad}.trial{trl}(elec,:));
+    plot(data(dyad).SilEyesClosed.time{trl}, data(dyad).SilEyesClosed.trial{trl}(elec,:));
+    title(sprintf('SilEyesClosed - Electrode: %s - Trial: %d - Dyad: %d', data(dyad).SilEyesClosed.label{elec}, trl, dyad));
   case 'MixNoiseEarphones'
-    plot(data.MixNoiseEarphones{dyad}.time{trl}, data.MixNoiseEarphones{dyad}.trial{trl}(elec,:));
+    plot(data(dyad).MixNoiseEarphones.time{trl}, data(dyad).MixNoiseEarphones.trial{trl}(elec,:));
+    title(sprintf('MixNoiseEarphones - Electrode: %s - Trial: %d - Dyad: %d', data(dyad).MixNoiseEarphones.label{elec}, trl, dyad));
   case 'MixNoiseSpeaker'
-    plot(data.MixNoiseSpeaker{dyad}.time{trl}, data.MixNoiseSpeaker{dyad}.trial{trl}(elec,:));
+    plot(data(dyad).MixNoiseSpeaker.time{trl}, data(dyad).MixNoiseSpeaker.trial{trl}(elec,:));
+    title(sprintf('MixNoiseSpeaker - Electrode: %s - Trial: %d - Dyad: %d', data(dyad).MixNoiseSpeaker.label{elec}, trl, dyad));
   case 'Tapping'
-    plot(data.Tapping{dyad}.time{trl}, data.Tapping{dyad}.trial{trl}(elec,:));
+    plot(data(dyad).Tapping.time{trl}, data(dyad).Tapping.trial{trl}(elec,:));
+    title(sprintf('Tapping - Electrode: %s - Trial: %d - Dyad: %d', data(dyad).Tapping.label{elec}, trl, dyad));
   case 'DialoguePlus2Hz'
-    plot(data.DialoguePlus2Hz{dyad}.time{trl}, data.DialoguePlus2Hz{dyad}.trial{trl}(elec,:));
+    plot(data(dyad).DialoguePlus2Hz.time{trl}, data(dyad).DialoguePlus2Hz.trial{trl}(elec,:));
+    title(sprintf('DialoguePlus2Hz - Electrode: %s - Trial: %d - Dyad: %d', data(dyad).DialoguePlus2Hz.label{elec}, trl, dyad));
   case 'AreadsB'
-    plot(data.AreadsB{dyad}.time{trl}, data.AreadsB{dyad}.trial{trl}(elec,:));
+    plot(data(dyad).AreadsB.time{trl}, data(dyad).AreadsB.trial{trl}(elec,:));
+    title(sprintf('AreadsB - Electrode: %s - Trial: %d - Dyad: %d', data(dyad).AreadsB.label{elec}, trl, dyad));
   case 'BreadsA'
-    plot(data.BreadsA{dyad}.time{trl}, data.BreadsA{dyad}.trial{trl}(elec,:));
+    plot(data(dyad).BreadsA.time{trl}, data(dyad).BreadsA.trial{trl}(elec,:));
+    title(sprintf('BreadsA - Electrode: %s - Trial: %d - Dyad: %d', data(dyad).BreadsA.label{elec}, trl, dyad));
   case 'Dialogue'
-    plot(data.Dialogue{dyad}.time{trl}, data.Dialogue{dyad}.trial{trl}(elec,:));
+    plot(data(dyad).Dialogue.time{trl}, data(dyad).Dialogue.trial{trl}(elec,:));
+    title(sprintf('Dialogue - Electrode: %s - Trial: %d - Dyad: %d', data(dyad).Dialogue.label{elec}, trl, dyad));
 end
+
+xlabel('time in seconds');
+ylabel('voltage in \muV');
 
 end
 

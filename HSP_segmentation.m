@@ -5,18 +5,18 @@ function [ data_out ] = HSP_segmentation( data_in, numOfPart )
 % -------------------------------------------------------------------------
 % General definitions & Allocating memory
 % -------------------------------------------------------------------------
-data_out.Earphone40Hz{numOfPart}      = [];
-data_out.Speaker40Hz{numOfPart}       = [];
-data_out.Earphone2Hz{numOfPart}       = [];
-data_out.Speaker2Hz{numOfPart}        = [];
-data_out.Silence{numOfPart}           = [];
-data_out.SilEyesClosed{numOfPart}     = [];
-data_out.MixNoiseEarphones{numOfPart} = [];
-data_out.MixNoiseSpeaker{numOfPart}   = [];
-data_out.Tapping{numOfPart}           = [];
-data_out.AreadsB{numOfPart}           = [];
-data_out.BreadsA{numOfPart}           = [];
-data_out.Dialogue{numOfPart}          = [];
+data_out(numOfPart).Earphone40Hz      = [];
+data_out(numOfPart).Speaker40Hz       = [];
+data_out(numOfPart).Earphone2Hz       = [];
+data_out(numOfPart).Speaker2Hz        = [];
+data_out(numOfPart).Silence           = [];
+data_out(numOfPart).SilEyesClosed     = [];
+data_out(numOfPart).MixNoiseEarphones = [];
+data_out(numOfPart).MixNoiseSpeaker   = [];
+data_out(numOfPart).Tapping           = [];
+data_out(numOfPart).AreadsB           = [];
+data_out(numOfPart).BreadsA           = [];
+data_out(numOfPart).Dialogue          = [];
 
 % -------------------------------------------------------------------------
 % Segmentation settings
@@ -32,109 +32,109 @@ cfg.overlap         = 0;                                                    % no
 % Segmentation
 % -------------------------------------------------------------------------
 
-for i=1:1:numOfPart
+parfor i=1:1:numOfPart
   fprintf('Segment set Earphone40Hz of dyad %d...\n', numOfPart);
-  if ~isempty(data_in.Earphone40Hz{i})
-    data_out.Earphone40Hz{i}      = ft_redefinetrial(cfg, ...
-                                      data_in.Earphone40Hz{i});
+  if ~isempty(data_in(i).Earphone40Hz)
+    data_out(i).Earphone40Hz      = ft_redefinetrial(cfg, ...
+                                      data_in(i).Earphone40Hz);
   else
-    data_out.Earphone40Hz{i}      = [];
+    data_out(i).Earphone40Hz      = [];
   end
   
   fprintf('Segment set Speaker40Hz of dyad %d...\n', numOfPart);
-  if ~isempty(data_in.Speaker40Hz{i})
-    data_out.Speaker40Hz{i}       = ft_redefinetrial(cfg, ...
-                                      data_in.Speaker40Hz{i});
+  if ~isempty(data_in(i).Speaker40Hz)
+    data_out(i).Speaker40Hz       = ft_redefinetrial(cfg, ...
+                                      data_in(i).Speaker40Hz);
   else
-    data_out.Speaker40Hz{i}       = [];
+    data_out(i).Speaker40Hz       = [];
   end
   
   fprintf('Segment set Earphone2Hz of dyad %d...\n', numOfPart);
-  if ~isempty(data_in.Earphone2Hz{i})
-    data_out.Earphone2Hz{i}       = ft_redefinetrial(cfg, ...
-                                      data_in.Earphone2Hz{i});
+  if ~isempty(data_in(i).Earphone2Hz)
+    data_out(i).Earphone2Hz       = ft_redefinetrial(cfg, ...
+                                      data_in(i).Earphone2Hz);
   else
-    data_out.Earphone2Hz{i}       = [];
+    data_out(i).Earphone2Hz       = [];
   end
   
   fprintf('Segment set Speaker2Hz of dyad %d...\n', numOfPart);
-  if ~isempty(data_in.Speaker2Hz{i})
-    data_out.Speaker2Hz{i}        = ft_redefinetrial(cfg, ...
-                                      data_in.Speaker2Hz{i});
+  if ~isempty(data_in(i).Speaker2Hz)
+    data_out(i).Speaker2Hz        = ft_redefinetrial(cfg, ...
+                                      data_in(i).Speaker2Hz);
   else
-    data_out.Speaker2Hz{i}        = [];
+    data_out(i).Speaker2Hz        = [];
   end
   
   fprintf('Segment set Silence of dyad %d...\n', numOfPart);
-  if ~isempty(data_in.Silence{i})
-    data_out.Silence{i}           = ft_redefinetrial(cfg, ...
-                                      data_in.Silence{i});
+  if ~isempty(data_in(i).Silence)
+    data_out(i).Silence           = ft_redefinetrial(cfg, ...
+                                      data_in(i).Silence);
   else
-    data_out.Silence{i}           = [];
+    data_out(i).Silence           = [];
   end
   
   fprintf('Segment set SilEyesClosed of dyad %d...\n', numOfPart);
-  if ~isempty(data_in.SilEyesClosed{i})
-    data_out.SilEyesClosed{i}     = ft_redefinetrial(cfg, ...
-                                      data_in.SilEyesClosed{i});
+  if ~isempty(data_in(i).SilEyesClosed)
+    data_out(i).SilEyesClosed     = ft_redefinetrial(cfg, ...
+                                      data_in(i).SilEyesClosed);
   else
-    data_out.SilEyesClosed{i}     = [];
+    data_out(i).SilEyesClosed     = [];
   end
   
   fprintf('Segment set MixNoiseEarphones of dyad %d...\n', numOfPart);
-  if ~isempty(data_in.MixNoiseEarphones{i})
-    data_out.MixNoiseEarphones{i} = ft_redefinetrial(cfg, ...
-                                      data_in.MixNoiseEarphones{i});
+  if ~isempty(data_in(i).MixNoiseEarphones)
+    data_out(i).MixNoiseEarphones = ft_redefinetrial(cfg, ...
+                                      data_in(i).MixNoiseEarphones);
   else
-    data_out.MixNoiseEarphones{i} = [];
+    data_out(i).MixNoiseEarphones = [];
   end
   
   fprintf('Segment set MixNoiseSpeaker of dyad %d...\n', numOfPart);
-  if ~isempty(data_in.MixNoiseSpeaker{i})
-  data_out.MixNoiseSpeaker{i}     = ft_redefinetrial(cfg, ...
-                                      data_in.MixNoiseSpeaker{i});
+  if ~isempty(data_in(i).MixNoiseSpeaker)
+    data_out(i).MixNoiseSpeaker     = ft_redefinetrial(cfg, ...
+                                      data_in(i).MixNoiseSpeaker);
   else
-    data_out.MixNoiseSpeaker{i}   = [];
+    data_out(i).MixNoiseSpeaker   = [];
   end
   
   fprintf('Segment set Tapping of dyad %d...\n', numOfPart);
-  if ~isempty(data_in.Tapping{i})
-    data_out.Tapping{i}           = ft_redefinetrial(cfg, ...
-                                      data_in.Tapping{i});
+  if ~isempty(data_in(i).Tapping)
+    data_out(i).Tapping           = ft_redefinetrial(cfg, ...
+                                      data_in(i).Tapping);
   else
-    data_out.Tapping{i}           = [];
+    data_out(i).Tapping           = [];
   end
   
   fprintf('Segment set DialoguePlus2Hz of dyad %d...\n', numOfPart);
-  if ~isempty(data_in.DialoguePlus2Hz{i})
-    data_out.DialoguePlus2Hz{i}   = ft_redefinetrial(cfg, ...
-                                      data_in.DialoguePlus2Hz{i});
+  if ~isempty(data_in(i).DialoguePlus2Hz)
+    data_out(i).DialoguePlus2Hz   = ft_redefinetrial(cfg, ...
+                                      data_in(i).DialoguePlus2Hz);
   else
-    data_out.DialoguePlus2Hz{i}   = [];
+    data_out(i).DialoguePlus2Hz   = [];
   end
     
   fprintf('Segment set AreadsB of dyad %d...\n', numOfPart);
-  if ~isempty(data_in.AreadsB{i})
-    data_out.AreadsB{i}           = ft_redefinetrial(cfg, ...
-                                      data_in.AreadsB{i});
+  if ~isempty(data_in(i).AreadsB)
+    data_out(i).AreadsB           = ft_redefinetrial(cfg, ...
+                                      data_in(i).AreadsB);
   else
-    data_out.AreadsB{i}           = [];
+    data_out(i).AreadsB           = [];
   end
   
   fprintf('Segment set BreadsA of dyad %d...\n', numOfPart);
-  if ~isempty(data_in.BreadsA{i})
-    data_out.BreadsA{i}           = ft_redefinetrial(cfg, ...
-                                      data_in.BreadsA{i});
+  if ~isempty(data_in(i).BreadsA)
+    data_out(i).BreadsA           = ft_redefinetrial(cfg, ...
+                                      data_in(i).BreadsA);
   else
-    data_out.BreadsA{i}           = [];
+    data_out(i).BreadsA           = [];
   end
   
   fprintf('Segment set Dialogue of dyad %d...\n', numOfPart);
-  if ~isempty(data_in.Dialogue{i})
-    data_out.Dialogue{i}          = ft_redefinetrial(cfg, ...
-                                      data_in.Dialogue{i});
+  if ~isempty(data_in(i).Dialogue)
+    data_out(i).Dialogue          = ft_redefinetrial(cfg, ...
+                                      data_in(i).Dialogue);
   else
-    data_out.Dialogue{i}          = [];
+    data_out(i).Dialogue          = [];
   end
 end
 

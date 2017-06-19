@@ -3,19 +3,19 @@ function [data] = HSP_importAllDatasets( path, numOfPart )
 % -------------------------------------------------------------------------
 % General definitions & Allocating memory
 % -------------------------------------------------------------------------
-data.Earphone40Hz{numOfPart}       = [];
-data.Speaker40Hz{numOfPart}        = [];
-data.Earphone2Hz{numOfPart}        = [];
-data.Speaker2Hz{numOfPart}         = [];
-data.Silence{numOfPart}            = [];
-data.SilEyesClosed{numOfPart}      = [];
-data.MixNoiseEarphones{numOfPart}  = [];
-data.MixNoiseSpeaker{numOfPart}    = [];
-data.Tapping{numOfPart}            = [];
-data.DialoguePlus2Hz               = [];
-data.AreadsB{numOfPart}            = [];
-data.BreadsA{numOfPart}            = [];
-data.Dialogue{numOfPart}           = [];
+data(numOfPart).Earphone40Hz       = [];
+data(numOfPart).Speaker40Hz        = [];
+data(numOfPart).Earphone2Hz        = [];
+data(numOfPart).Speaker2Hz         = [];
+data(numOfPart).Silence            = [];
+data(numOfPart).SilEyesClosed      = [];
+data(numOfPart).MixNoiseEarphones  = [];
+data(numOfPart).MixNoiseSpeaker    = [];
+data(numOfPart).Tapping            = [];
+data(numOfPart).DialoguePlus2Hz    = [];
+data(numOfPart).AreadsB            = [];
+data(numOfPart).BreadsA            = [];
+data(numOfPart).Dialogue           = [];
 
 % -------------------------------------------------------------------------
 % Import data
@@ -35,19 +35,19 @@ for i=1:1:numOfPart                                                         % im
 
     dataImport = HSP_importSingleDataset(path);
     
-    data.Earphone40Hz{numOfPart}       = dataImport.Earphone40Hz;
-    data.Speaker40Hz{numOfPart}        = dataImport.Speaker40Hz;
-    data.Earphone2Hz{numOfPart}        = dataImport.Earphone2Hz;
-    data.Speaker2Hz{numOfPart}         = dataImport.Speaker2Hz;
-    data.Silence{numOfPart}            = dataImport.Silence;
-    data.SilEyesClosed{numOfPart}      = dataImport.SilEyesClosed;
-    data.MixNoiseEarphones{numOfPart}  = dataImport.MixNoiseEarphones;
-    data.MixNoiseSpeaker{numOfPart}    = dataImport.MixNoiseSpeaker;
-    data.Tapping{numOfPart}            = dataImport.Tapping;
-    data.DialoguePlus2Hz{numOfPart}    = dataImport.DialoguePlus2Hz;
-    data.AreadsB{numOfPart}            = dataImport.AreadsB;
-    data.BreadsA{numOfPart}            = dataImport.BreadsA;
-    data.Dialogue{numOfPart}           = dataImport.Dialogue;
+    data(numOfPart).Earphone40Hz        = dataImport.Earphone40Hz;
+    data(numOfPart).Speaker40Hz         = dataImport.Speaker40Hz;
+    data(numOfPart).Earphone2Hz         = dataImport.Earphone2Hz;
+    data(numOfPart).Speaker2Hz          = dataImport.Speaker2Hz;
+    data(numOfPart).Silence             = dataImport.Silence;
+    data(numOfPart).SilEyesClosed       = dataImport.SilEyesClosed;
+    data(numOfPart).MixNoiseEarphones   = dataImport.MixNoiseEarphones;
+    data(numOfPart).MixNoiseSpeaker     = dataImport.MixNoiseSpeaker;
+    data(numOfPart).Tapping             = dataImport.Tapping;
+    data(numOfPart).DialoguePlus2Hz     = dataImport.DialoguePlus2Hz;
+    data(numOfPart).AreadsB             = dataImport.AreadsB;
+    data(numOfPart).BreadsA             = dataImport.BreadsA;
+    data(numOfPart).Dialogue            = dataImport.Dialogue;
   end
   
 end

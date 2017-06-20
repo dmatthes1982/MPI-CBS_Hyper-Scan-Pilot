@@ -20,11 +20,17 @@ function HSP_easyPlot( cfg, data )
 
 % Copyright (C) 2017, Daniel Matthes, MPI CBS
 
+% -------------------------------------------------------------------------
+% Get and check config options
+% -------------------------------------------------------------------------
 cond = ft_getopt(cfg, 'condition', 'Earphone40Hz');
 dyad = ft_getopt(cfg, 'dyad', 1);
 elec = ft_getopt(cfg, 'electrode', 8);
 trl  = ft_getopt(cfg, 'trial', 1);
 
+% -------------------------------------------------------------------------
+% Plot timeline
+% -------------------------------------------------------------------------
 switch cond
   case 'Earphone40Hz'
     plot( data(dyad).Earphone40Hz.time{trl}, ...

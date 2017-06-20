@@ -22,6 +22,9 @@ function HSP_easyTFRplot(cfg, data)
 
 % Copyright (C) 2017, Daniel Matthes, MPI CBS
 
+% -------------------------------------------------------------------------
+% Get and check config options
+% -------------------------------------------------------------------------
 cond    = ft_getopt(cfg, 'condition', 'SilEyesClosed');
 dyad    = ft_getopt(cfg, 'dyad', 1);
 elec    = ft_getopt(cfg, 'electrode', 8);
@@ -32,7 +35,7 @@ timelim = ft_getopt(cfg, 'timelimits', [4 176]);
 warning('off','all');
 
 % -------------------------------------------------------------------------
-% Create figure
+% Plot time frequency spectrum
 % -------------------------------------------------------------------------
 cfg                 = [];                                                       
 cfg.maskstyle       = 'saturation';
@@ -44,7 +47,6 @@ cfg.channel         = elec;
 cfg.feedback        = 'no';                                                 % suppress feedback output
 cfg.showcallinfo    = 'no';                                                 % suppress function call output
 
-% figure
 colormap jet;                                                               % use the older and more common colormap
 
 switch cond

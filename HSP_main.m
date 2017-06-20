@@ -5,10 +5,10 @@ if preproc == 1
 end
   
 %% import data from brain vision eeg files and bring it into an order
-path_raw          = '../../data/HyperScanPilot/raw_data/';
-numOfPart     = 1;
+cfg       = [];
+cfg.path  = '../../data/HyperScanPilot/raw_data/';
 
-data_raw = HSP_importAllDatasets( path_raw, numOfPart );
+data_raw = HSP_importAllDatasets( cfg );
 
 %% export the imported and sorted data into an *.mat file
 dest_folder = '../../processed/HyperScanPilot/';
@@ -25,7 +25,10 @@ save(file_path, 'data_raw');
 
 %% preprocess the raw data
 if preproc == 1
-  data_preproc = HSP_preprocessing( data_raw, numOfPart );
+  cfg         = [];
+  cfg.bpfreq  = [0.3 48];                                                   % passband from 0.3 to 48 Hz
+  
+  data_preproc = HSP_preprocessing( cfg, data_raw);
 else
   data_preproc = data_raw;
 end
@@ -39,7 +42,11 @@ end
 
 %% calculate TFRs of the preprocessed data
 if tfrOfpreproc == 1
-  data_tfr1 = HSP_timeFreqanalysis( data_preproc, numOfPart );
+  cfg         = [];
+  cfg.foi     = 2:1:50;                                                     % frequency of interest
+  cfg.toi     = 4:0.5:176;                                                  % time of interest
+  
+  data_tfr1 = HSP_timeFreqanalysis( cfg, data_preproc );
 end
 
 %% export the preprocessed data into a *.mat file
@@ -52,7 +59,7 @@ end
 %% segmentation of the preprocessed trials
 % split every the data of every condition into subtrials with a length of 5
 % seconds
-data_seg1 = HSP_segmentation( data_preproc, numOfPart);
+data_seg1 = HSP_segmentation( data_preproc );
 
 %% export the segmented data into a *.mat file
 file_name = strcat(dest_folder, 'HSP_04_seg1');
@@ -60,4 +67,5 @@ file_path = strcat(file_name, file_version);
 save(file_path, 'data_seg1');
 
 clear preproc path_generic numOfPart_generic path_raw numOfPart ...
-      dest_folder file_name file_path file_version file_pattern file_num
+      dest_folder file_name file_path file_version file_pattern file_num ...
+      tfrOfpreproc cfg

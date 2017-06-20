@@ -1,11 +1,38 @@
-function [ data ] = HSP_importSingleDataset( headerfile )
+function [ data ] = HSP_importSingleDataset(cfg)
+% HSP_IMPORTSINGLEDATASET imports one specific dataset recorded with a
+% device from brain vision.
+%
+% Use as
+%   [ data ] = HSP_importSingleDataset(cfg)
+%
+% The configuration options are
+%   cfg.dataset = 'path to header file' (i.e. '../../data/HyperScanPilot/raw_data/Dual_EEG_AD_test_dyad_01.vhdr')
+%
+% You can use relativ path specifications like in the example or absolute 
+% path specifications (i.e. '/home/user/Dual_EEG_AD_test_dyad_01.vhdr').
+% Please be aware that you have to mask space signs of the path names under 
+% linux with a backslash char (i.e. '/home/user/test\ data.vhdr')
+%
+% This function requires the fieldtrip toolbox.
+%
+% See also FT_PREPROCESSING
+
+% Copyright (C) 2017, Daniel Matthes, MPI CBS
+
+% -------------------------------------------------------------------------
+% Get and check config options
+% -------------------------------------------------------------------------
+headerfile = ft_getopt(cfg, 'dataset', []);
+
+if isempty(headerfile)
+  error('No headerfile specified!');
+end
 
 % -------------------------------------------------------------------------
 % General definitions
 % -------------------------------------------------------------------------
 % definition of all possible stimuli, two for each condition, the first on 
-% is the original one and the second one is a result of the'video trigger
-% bug'
+% is the original one and the second one handles the 'video trigger bug'
 eventvalues = { 'S41','S169'; ...                                           % 40 Hz earphones
                 'S42','S170'; ...                                           % 40 Hz speaker  
                 'S21','S149'; ...                                           % 2 Hz earphones  

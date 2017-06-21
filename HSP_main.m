@@ -6,12 +6,12 @@ end
   
 %% import data from brain vision eeg files and bring it into an order
 cfg       = [];
-cfg.path  = '../../data/HyperScanPilot/raw_data/';
+cfg.path  = '/data/pt_01821/DualEEG_AD_auditory_rawData/';
 
 data_raw = HSP_importAllDatasets( cfg );
 
 %% export the imported and sorted data into an *.mat file
-dest_folder = '../../processed/HyperScanPilot/';
+dest_folder = '/data/pt_01821/DualEEG_AD_auditory_processedData/';
 file_name = strcat(dest_folder, 'HSP_01_raw');
 file_path = strcat(file_name, '_001.mat');
 file_version = '_001.mat';
@@ -32,6 +32,8 @@ if preproc == 1
 else
   data_preproc = data_raw;
 end
+
+clear data_raw
 
 %% export the preprocessed data into a *.mat file
 if preproc == 1
@@ -60,6 +62,8 @@ end
 % split every the data of every condition into subtrials with a length of 5
 % seconds
 data_seg1 = HSP_segmentation( data_preproc );
+
+clear data_preproc
 
 %% export the segmented data into a *.mat file
 file_name = strcat(dest_folder, 'HSP_04_seg1');

@@ -57,7 +57,7 @@ cfg.bpfilttype    = 'fir';                                                  % ba
 % -------------------------------------------------------------------------
 
 parfor i=1:1:numOfPart
-  fprintf('Preproc set Earphone40Hz of dyad %d...\n', numOfPart);
+  fprintf('Preproc set Earphone40Hz of dyad %d...\n', i);
   if ~isempty(data(i).Earphone40Hz)
     data_out(i).Earphone40Hz      = ft_preprocessing(cfg, ...
                                       data(i).Earphone40Hz);
@@ -65,7 +65,7 @@ parfor i=1:1:numOfPart
     data_out(i).Earphone40Hz      = [];
   end
   
-  fprintf('Preproc set Speaker40Hz of dyad %d...\n', numOfPart);
+  fprintf('Preproc set Speaker40Hz of dyad %d...\n', i);
   if ~isempty(data(i).Speaker40Hz)
     data_out(i).Speaker40Hz       = ft_preprocessing(cfg, ...
                                       data(i).Speaker40Hz);
@@ -73,7 +73,7 @@ parfor i=1:1:numOfPart
     data_out(i).Speaker40Hz       = [];
   end
   
-  fprintf('Preproc set Earphone2Hz of dyad %d...\n', numOfPart);
+  fprintf('Preproc set Earphone2Hz of dyad %d...\n', i);
   if ~isempty(data(i).Earphone2Hz)
     data_out(i).Earphone2Hz       = ft_preprocessing(cfg, ...
                                       data(i).Earphone2Hz);
@@ -81,7 +81,7 @@ parfor i=1:1:numOfPart
     data_out(i).Earphone2Hz       = [];
   end
   
-  fprintf('Preproc set Speaker2Hz of dyad %d...\n', numOfPart);
+  fprintf('Preproc set Speaker2Hz of dyad %d...\n', i);
   if ~isempty(data(i).Speaker2Hz)
     data_out(i).Speaker2Hz        = ft_preprocessing(cfg, ...
                                       data(i).Speaker2Hz);
@@ -89,7 +89,7 @@ parfor i=1:1:numOfPart
     data_out(i).Speaker2Hz        = [];
   end
   
-  fprintf('Preproc set Silence of dyad %d...\n', numOfPart);
+  fprintf('Preproc set Silence of dyad %d...\n', i);
   if ~isempty(data(i).Silence)
     data_out(i).Silence           = ft_preprocessing(cfg, ...
                                       data(i).Silence);
@@ -97,7 +97,7 @@ parfor i=1:1:numOfPart
     data_out(i).Silence           = [];
   end
   
-  fprintf('Preproc set SilEyesClosed of dyad %d...\n', numOfPart);
+  fprintf('Preproc set SilEyesClosed of dyad %d...\n', i);
   if ~isempty(data(i).SilEyesClosed)
     data_out(i).SilEyesClosed     = ft_preprocessing(cfg, ...
                                       data(i).SilEyesClosed);
@@ -105,7 +105,7 @@ parfor i=1:1:numOfPart
     data_out(i).SilEyesClosed     = [];
   end
   
-  fprintf('Preproc set MixNoiseEarphones of dyad %d...\n', numOfPart);
+  fprintf('Preproc set MixNoiseEarphones of dyad %d...\n', i);
   if ~isempty(data(i).MixNoiseEarphones)
     data_out(i).MixNoiseEarphones = ft_preprocessing(cfg, ...
                                       data(i).MixNoiseEarphones);
@@ -113,7 +113,7 @@ parfor i=1:1:numOfPart
     data_out(i).MixNoiseEarphones = [];
   end
   
-  fprintf('Preproc set MixNoiseSpeaker of dyad %d...\n', numOfPart);
+  fprintf('Preproc set MixNoiseSpeaker of dyad %d...\n', i);
   if ~isempty(data(i).MixNoiseSpeaker)
     data_out(i).MixNoiseSpeaker     = ft_preprocessing(cfg, ...
                                       data(i).MixNoiseSpeaker);
@@ -121,7 +121,7 @@ parfor i=1:1:numOfPart
     data_out(i).MixNoiseSpeaker   = [];
   end
   
-  fprintf('Preproc set Tapping of dyad %d...\n', numOfPart);
+  fprintf('Preproc set Tapping of dyad %d...\n', i);
   if ~isempty(data(i).Tapping)
     data_out(i).Tapping           = ft_preprocessing(cfg, ...
                                       data(i).Tapping);
@@ -129,7 +129,7 @@ parfor i=1:1:numOfPart
     data_out(i).Tapping           = [];
   end
   
-  fprintf('Preproc set DialoguePlus2Hz of dyad %d...\n', numOfPart);
+  fprintf('Preproc set DialoguePlus2Hz of dyad %d...\n', i);
   if ~isempty(data(i).DialoguePlus2Hz)
     data_out(i).DialoguePlus2Hz   = ft_preprocessing(cfg, ...
                                       data(i).DialoguePlus2Hz);
@@ -137,7 +137,7 @@ parfor i=1:1:numOfPart
     data_out(i).DialoguePlus2Hz   = [];
   end
     
-  fprintf('Preproc set AreadsB of dyad %d...\n', numOfPart);
+  fprintf('Preproc set AreadsB of dyad %d...\n', i);
   if ~isempty(data(i).AreadsB)
     data_out(i).AreadsB           = ft_preprocessing(cfg, ...
                                       data(i).AreadsB);
@@ -145,7 +145,7 @@ parfor i=1:1:numOfPart
     data_out(i).AreadsB           = [];
   end
   
-  fprintf('Preproc set BreadsA of dyad %d...\n', numOfPart);
+  fprintf('Preproc set BreadsA of dyad %d...\n', i);
   if ~isempty(data(i).BreadsA)
     data_out(i).BreadsA           = ft_preprocessing(cfg, ...
                                       data(i).BreadsA);
@@ -153,7 +153,7 @@ parfor i=1:1:numOfPart
     data_out(i).BreadsA           = [];
   end
   
-  fprintf('Preproc set Dialogue of dyad %d...\n', numOfPart);
+  fprintf('Preproc set Dialogue of dyad %d...\n', i);
   if ~isempty(data(i).Dialogue)
     data_out(i).Dialogue          = ft_preprocessing(cfg, ...
                                       data(i).Dialogue);

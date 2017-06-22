@@ -46,8 +46,10 @@ data_out(numOfPart).Dialogue          = [];
 % Preprocessing settings
 % -------------------------------------------------------------------------
 cfg               = [];
-cfg.feedback      = 'no';
-cfg.showcallinfo  = 'no';
+cfg.feedback      = 'no';                                                   % feedback should not be presented
+cfg.showcallinfo  = 'no';                                                   % prevent printing the time and memory after each function call
+
+% general filtering
 cfg.bpfilter      = 'yes';                                                  % use bandpass filter
 cfg.bpfreq        = bpfreq;                                                 % bandpass range  
 cfg.bpfilttype    = 'fir';                                                  % bandpass filter type = fir      

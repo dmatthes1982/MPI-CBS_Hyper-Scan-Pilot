@@ -21,7 +21,8 @@ if exist(file_path, 'file') == 2
   file_version = sprintf('_%03d.mat', file_num);
   file_path = strcat(file_name, file_version);
 end
-save(file_path, 'data_raw');
+fprintf('The RAW data will be saved in %s ...\n', file_path);
+save(file_path, 'data_raw', '-v7.3');
 
 %% preprocess the raw data
 if preproc == 1
@@ -39,7 +40,8 @@ clear data_raw
 if preproc == 1
   file_name = strcat(dest_folder, 'HSP_02_preproc');
   file_path = strcat(file_name, file_version);
-  save(file_path, 'data_preproc');
+  fprintf('The preprocessed data will be saved in %s ...\n', file_path);
+  save(file_path, 'data_preproc', '-v7.3');
 end
 
 %% calculate TFRs of the preprocessed data
@@ -55,7 +57,8 @@ end
 if tfrOfpreproc == 1
   file_name = strcat(dest_folder, 'HSP_03_tfr1');
   file_path = strcat(file_name, file_version);
-  save(file_path, 'data_tfr1');
+  fprintf('The time-frequency response data will be saved in %s ...\n', file_path);
+  save(file_path, 'data_tfr1', '-v7.3');
 end
 
 %% segmentation of the preprocessed trials
@@ -68,7 +71,8 @@ clear data_preproc
 %% export the segmented data into a *.mat file
 file_name = strcat(dest_folder, 'HSP_04_seg1');
 file_path = strcat(file_name, file_version);
-save(file_path, 'data_seg1');
+fprintf('The segmented data will be saved in %s ...\n', file_path);
+save(file_path, 'data_seg1', '-v7.3');
 
 clear preproc path_generic numOfPart_generic path_raw numOfPart ...
       dest_folder file_name file_path file_version file_pattern file_num ...

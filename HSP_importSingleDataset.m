@@ -6,12 +6,13 @@ function [ data ] = HSP_importSingleDataset(cfg)
 %   [ data ] = HSP_importSingleDataset(cfg)
 %
 % The configuration options are
-%   cfg.dataset = 'path to header file' (i.e. '../../data/HyperScanPilot/raw_data/Dual_EEG_AD_test_dyad_01.vhdr')
+%   cfg.dataset = 'path to header file' (i.e. '/data/pt_01821/DualEEG_AD_auditory_rawData/DualEEG_AD_auditory_01.vhdr')
 %
-% You can use relativ path specifications like in the example or absolute 
-% path specifications (i.e. '/home/user/Dual_EEG_AD_test_dyad_01.vhdr').
-% Please be aware that you have to mask space signs of the path names under 
-% linux with a backslash char (i.e. '/home/user/test\ data.vhdr')
+% You can use relativ path specifications (i.e. '/home/user/
+% Dual_EEG_AD_test_dyad_01.vhdr') or absolute path specifications like in 
+% the example. Please be aware that you have to mask space signs of the 
+% path names under linux with a backslash char 
+% (i.e. '/home/user/test\ data.vhdr')
 %
 % This function requires the fieldtrip toolbox.
 %
@@ -55,6 +56,9 @@ emptyCells = cellfun('isempty', events);                                    % de
 events(emptyCells) = [];                                                    % remove empty cells
 events = unique(events);                                                    % remove multiple numbers                                                        
 
+% -------------------------------------------------------------------------
+% Data import
+% -------------------------------------------------------------------------
 % basis configuration for data import
 cfgOrg                       = [];
 cfgOrg.dataset               = headerfile;
@@ -77,78 +81,112 @@ for i=1:1:size(eventvalues, 1)
       cfgSeg.trl = cfgSeg.trl(end,:);                                       % choose the last entry
     end
     dataTmp = ft_preprocessing(cfgSeg);                                     % import stim specific data
+    
+    dataTmpPart1 = dataTmp;                                                 % split dataset into two datasets, one for each participant
+    dataTmpPart1.label = strrep(dataTmp.label(1:32), '_1', '');
+    dataTmpPart1.trial{:} = dataTmp.trial{:}(1:32,:);
   
+    dataTmpPart2 = dataTmp;
+    dataTmpPart2.label = strrep(dataTmp.label(33:64), '_2', '');
+    dataTmpPart2.trial{:} = dataTmp.trial{:}(33:64,:);
   else
-    dataTmp = [];
+    dataTmpPart1 = [];
+    dataTmpPart2 = [];
   end
-  
+    
   switch i                                                                  % allocate data to substructures and correct false stimulus numbers
     case 1
-      data.Earphone40Hz = dataTmp;
-      if data.Earphone40Hz.trialinfo == 169
-        data.Earphone40Hz.trialinfo = 41;
+      data.Earphone40Hz{1} = dataTmpPart1;
+      data.Earphone40Hz{2} = dataTmpPart2;
+      if data.Earphone40Hz{1}.trialinfo == 169
+        data.Earphone40Hz{1}.trialinfo = 41;
+        data.Earphone40Hz{2}.trialinfo = 41;
       end
     case 2
-      data.Speaker40Hz = dataTmp;
-      if data.Speaker40Hz.trialinfo == 170
-        data.Speaker40Hz.trialinfo = 42;
+      data.Speaker40Hz{1} = dataTmpPart1;
+      data.Speaker40Hz{2} = dataTmpPart2;
+      if data.Speaker40Hz{1}.trialinfo == 170
+        data.Speaker40Hz{1}.trialinfo = 42;
+        data.Speaker40Hz{2}.trialinfo = 42;
       end
     case 3
-      data.Earphone2Hz = dataTmp;
-      if data.Earphone2Hz.trialinfo == 149
-        data.Earphone2Hz.trialinfo = 21;
+      data.Earphone2Hz{1} = dataTmpPart1;
+      data.Earphone2Hz{2} = dataTmpPart2;
+      if data.Earphone2Hz{1}.trialinfo == 149
+        data.Earphone2Hz{1}.trialinfo = 21;
+        data.Earphone2Hz{2}.trialinfo = 21;
       end
     case 4
-      data.Speaker2Hz = dataTmp;
-      if data.Speaker2Hz.trialinfo == 150
-        data.Speaker2Hz.trialinfo = 22;
+      data.Speaker2Hz{1} = dataTmpPart1;
+      data.Speaker2Hz{2} = dataTmpPart2;
+      if data.Speaker2Hz{1}.trialinfo == 150
+        data.Speaker2Hz{1}.trialinfo = 22;
+        data.Speaker2Hz{2}.trialinfo = 22;
       end
     case 5
-      data.Silence = dataTmp;
-      if data.Silence.trialinfo == 138
-        data.Silence.trialinfo = 10;
+      data.Silence{1} = dataTmpPart1;
+      data.Silence{2} = dataTmpPart2;
+      if data.Silence{1}.trialinfo == 138
+        data.Silence{1}.trialinfo = 10;
+        data.Silence{2}.trialinfo = 10;
       end
     case 6
-      data.SilEyesClosed = dataTmp;
-      if data.SilEyesClosed.trialinfo == 228
-        data.SilEyesClosed.trialinfo = 100;
+      data.SilEyesClosed{1} = dataTmpPart1;
+      data.SilEyesClosed{2} = dataTmpPart2;
+      if data.SilEyesClosed{1}.trialinfo == 228
+        data.SilEyesClosed{1}.trialinfo = 100;
+        data.SilEyesClosed{2}.trialinfo = 100;
       end
     case 7
-      data.MixNoiseEarphones = dataTmp;
-      if data.MixNoiseEarphones.trialinfo == 159
-        data.MixNoiseEarphones.trialinfo = 31;
+      data.MixNoiseEarphones{1} = dataTmpPart1;
+      data.MixNoiseEarphones{2} = dataTmpPart2;
+      if data.MixNoiseEarphones{1}.trialinfo == 159
+        data.MixNoiseEarphones{1}.trialinfo = 31;
+        data.MixNoiseEarphones{2}.trialinfo = 31;
       end
     case 8
-      data.MixNoiseSpeaker = dataTmp;
-      if data.MixNoiseSpeaker.trialinfo == 160
-        data.MixNoiseSpeaker.trialinfo = 32;
+      data.MixNoiseSpeaker{1} = dataTmpPart1;
+      data.MixNoiseSpeaker{2} = dataTmpPart2;
+      if data.MixNoiseSpeaker{1}.trialinfo == 160
+        data.MixNoiseSpeaker{1}.trialinfo = 32;
+        data.MixNoiseSpeaker{2}.trialinfo = 32;
       end
     case 9
-      data.Tapping = dataTmp;
-      if data.Tapping.trialinfo == 152
-        data.Tapping.trialinfo = 24;
+      data.Tapping{1} = dataTmpPart1;
+      data.Tapping{2} = dataTmpPart2;
+      if data.Tapping{1}.trialinfo == 152
+        data.Tapping{1}.trialinfo = 24;
+        data.Tapping{2}.trialinfo = 24;
       end
     case 10
-      data.DialoguePlus2Hz = dataTmp;
-      if ~isempty(dataTmp)
-        if data.DialoguePlus2Hz.trialinfo == 153
-          data.DialoguePlus2Hz.trialinfo = 25;
+      data.DialoguePlus2Hz{1} = dataTmpPart1;
+      data.DialoguePlus2Hz{2} = dataTmpPart2;
+      if ~isempty(dataTmpPart1)
+        if data.DialoguePlus2Hz{1}.trialinfo == 153
+          data.DialoguePlus2Hz{1}.trialinfo = 25;
+          data.DialoguePlus2Hz{2}.trialinfo = 25;
         end
       end
     case 11
-      data.AreadsB = dataTmp;
-      if data.AreadsB.trialinfo == 179
-        data.AreadsB.trialinfo = 51;
+      data.AreadsB{1} = dataTmpPart1;
+      data.AreadsB{2} = dataTmpPart2;
+      if data.AreadsB{1}.trialinfo == 179
+        data.AreadsB{1}.trialinfo = 51;
+        data.AreadsB{2}.trialinfo = 51;
       end
     case 12
-      data.BreadsA = dataTmp;
-      if data.BreadsA.trialinfo == 180
-        data.BreadsA.trialinfo = 52;
+      data.BreadsA{1} = dataTmpPart1;
+      data.BreadsA{2} = dataTmpPart2;
+      if data.BreadsA{1}.trialinfo == 180
+        data.BreadsA{1}.trialinfo = 52;
+        data.BreadsA{2}.trialinfo = 52;
       end
     case 13
-      data.Dialogue = dataTmp;
-      if data.Dialogue.trialinfo == 181
-        data.Dialogue.trialinfo = 53;
+      data.Dialogue{1} = dataTmpPart1;
+      data.Dialogue{2} = dataTmpPart2;
+      if data.Dialogue{1}.trialinfo == 181
+        data.Dialogue{1}.trialinfo = 53;
+        data.Dialogue{2}.trialinfo = 53;
       end
   end
 end

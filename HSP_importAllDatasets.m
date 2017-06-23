@@ -1,15 +1,15 @@
 function [data] = HSP_importAllDatasets( cfg )
-% HSP_IMPORTALLDATASETS imports data of all participants, which are under a 
-% specific source location.
+% HSP_IMPORTALLDATASETS imports data of all dyads and participants, which 
+% are under a specific source location.
 %
 % Use as
 %   [data] = HSP_importAllDatasets(cfg)
 %
 % The configuration options are
-%   cfg.path = 'source folder' (default: '../../data/HyperScanPilot/raw_data/')
+%   cfg.path = 'source folder' (default: '/data/pt_01821/DualEEG_AD_auditory_rawData/')
 %
-% You can use relativ path specifications like in the default settings or
-% absolute path specifications (i.e. '/home/user/MATLAB/data/'). Please be 
+% You can use relativ path specifications (i.e. '/home/user/MATLAB/data/') 
+% or absolute path specifications like in the default settings. Please be 
 % aware that you have to mask space signs of the path names under linux 
 % with a backslash char (i.e. '/home/user/test\ data')
 %
@@ -22,7 +22,7 @@ function [data] = HSP_importAllDatasets( cfg )
 % -------------------------------------------------------------------------
 % Get and check config options
 % -------------------------------------------------------------------------
-path = ft_getopt(cfg, 'path', '../../data/HyperScanPilot/raw_data/');
+path = ft_getopt(cfg, 'path', '/data/pt_01821/DualEEG_AD_auditory_rawData/');
 
 % -------------------------------------------------------------------------
 % Import data
@@ -41,19 +41,7 @@ end
 % -------------------------------------------------------------------------
 % General definitions & Allocating memory
 % -------------------------------------------------------------------------
-data(numOfPart).Earphone40Hz      = [];
-data(numOfPart).Speaker40Hz       = [];
-data(numOfPart).Earphone2Hz       = [];
-data(numOfPart).Speaker2Hz        = [];
-data(numOfPart).Silence           = [];
-data(numOfPart).SilEyesClosed     = [];
-data(numOfPart).MixNoiseEarphones = [];
-data(numOfPart).MixNoiseSpeaker   = [];
-data(numOfPart).Tapping           = [];
-data(numOfPart).DialoguePlus2Hz   = [];
-data(numOfPart).AreadsB           = [];
-data(numOfPart).BreadsA           = [];
-data(numOfPart).Dialogue          = [];
+data(numOfPart) = struct;
 
 % -------------------------------------------------------------------------
 % Import of all data in the data folder
@@ -70,19 +58,19 @@ for i=1:1:numOfPart
     cfg.dataset = dataset;
     dataImport = HSP_importSingleDataset(cfg);
     
-    data(i).Earphone40Hz        = dataImport.Earphone40Hz;
-    data(i).Speaker40Hz         = dataImport.Speaker40Hz;
-    data(i).Earphone2Hz         = dataImport.Earphone2Hz;
-    data(i).Speaker2Hz          = dataImport.Speaker2Hz;
-    data(i).Silence             = dataImport.Silence;
-    data(i).SilEyesClosed       = dataImport.SilEyesClosed;
-    data(i).MixNoiseEarphones   = dataImport.MixNoiseEarphones;
-    data(i).MixNoiseSpeaker     = dataImport.MixNoiseSpeaker;
-    data(i).Tapping             = dataImport.Tapping;
-    data(i).DialoguePlus2Hz     = dataImport.DialoguePlus2Hz;
-    data(i).AreadsB             = dataImport.AreadsB;
-    data(i).BreadsA             = dataImport.BreadsA;
-    data(i).Dialogue            = dataImport.Dialogue;
+    data(i).Earphone40Hz       = dataImport.Earphone40Hz;
+    data(i).Speaker40Hz        = dataImport.Speaker40Hz;
+    data(i).Earphone2Hz        = dataImport.Earphone2Hz;
+    data(i).Speaker2Hz         = dataImport.Speaker2Hz;
+    data(i).Silence            = dataImport.Silence;
+    data(i).SilEyesClosed      = dataImport.SilEyesClosed;
+    data(i).MixNoiseEarphones  = dataImport.MixNoiseEarphones;
+    data(i).MixNoiseSpeaker    = dataImport.MixNoiseSpeaker;
+    data(i).Tapping            = dataImport.Tapping;
+    data(i).DialoguePlus2Hz    = dataImport.DialoguePlus2Hz;
+    data(i).AreadsB            = dataImport.AreadsB;
+    data(i).BreadsA            = dataImport.BreadsA;
+    data(i).Dialogue           = dataImport.Dialogue;
   end
   
 end

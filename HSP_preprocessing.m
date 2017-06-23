@@ -38,6 +38,11 @@ cfg               = [];
 cfg.feedback      = 'no';                                                   % feedback should not be presented
 cfg.showcallinfo  = 'no';                                                   % prevent printing the time and memory after each function call
 
+% re-referencing to TP10
+cfg.reref         = 'yes';                                                  % enable re-referencing
+cfg.refchannel    = {'TP10'};                                               % select 'TP10' as new reference  
+cfg.refmethod     = 'avg';                                                  % average over selected electrodes (in our case insignificant)
+
 % general filtering
 cfg.bpfilter      = 'yes';                                                  % use bandpass filter
 cfg.bpfreq        = bpfreq;                                                 % bandpass range  

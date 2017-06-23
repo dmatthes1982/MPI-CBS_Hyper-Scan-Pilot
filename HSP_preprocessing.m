@@ -8,7 +8,9 @@ function [ data ] = HSP_preprocessing( cfg, data )
 % where the input data have to be the result from HSP_IMPORTALLDATASETS
 %
 % The configuration options are
-%   cfg.bpfreq = passband range [begin end] (default: [0.3 48])
+%   cfg.bpfreq      = passband range [begin end] (default: [0.3 48])
+%   cfg.reref       = re-referencing: 'yes' or 'no' (default: 'yes')
+%   cfg.refchannel  = re-reference channel (default: {'TP10'})
 %
 % Currently this function applies only a bandpass filter to the data.
 %
@@ -22,7 +24,9 @@ function [ data ] = HSP_preprocessing( cfg, data )
 % Get and check config options
 % Get number of participants
 % -------------------------------------------------------------------------
-bpfreq = ft_getopt(cfg, 'bpfreq', [0.3 48]);
+bpfreq      = ft_getopt(cfg, 'bpfreq', [0.3 48]);
+reref       = ft_getopt(cfg, 'reref', 'yes');
+refchannel  = ft_getopt(cfg, 'refchannel', {'TP10'});
 
 numOfPart = size(data, 2);
 
@@ -39,8 +43,8 @@ cfg.feedback      = 'no';                                                   % fe
 cfg.showcallinfo  = 'no';                                                   % prevent printing the time and memory after each function call
 
 % re-referencing to TP10
-cfg.reref         = 'yes';                                                  % enable re-referencing
-cfg.refchannel    = {'TP10'};                                               % select 'TP10' as new reference  
+cfg.reref         = reref;                                                  % enable re-referencing
+cfg.refchannel    = refchannel;                                             % select 'TP10' as new reference  
 cfg.refmethod     = 'avg';                                                  % average over selected electrodes (in our case insignificant)
 
 % general filtering

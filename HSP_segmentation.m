@@ -40,6 +40,7 @@ cfg.overlap         = 0;                                                    % no
 % -------------------------------------------------------------------------
 
 parfor i=1:1:numOfPart
+  ft_info off;
   fprintf('Segment set Earphone40Hz of dyad %d...\n', i);
   if ~isempty(data(i).Earphone40Hz{1})
     data_out(i).Earphone40Hz{1}      = ft_redefinetrial(cfg, ...
@@ -170,6 +171,8 @@ parfor i=1:1:numOfPart
     data_out(i).Dialogue{2}          = [];
   end
 end
+
+ft_info on;
 
 data = data_out;
 

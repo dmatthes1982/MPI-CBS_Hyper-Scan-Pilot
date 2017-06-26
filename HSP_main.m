@@ -8,7 +8,10 @@ end
 cfg       = [];
 cfg.path  = '/data/pt_01821/DualEEG_AD_auditory_rawData/';
 
+fprintf('Import data from: %s ...\n', cfg.path);
+ft_info off;
 data_raw = HSP_importAllDatasets( cfg );
+ft_info on;
 
 %% export the imported and sorted data into an *.mat file
 dest_folder = '/data/pt_01821/DualEEG_AD_auditory_processedData/';

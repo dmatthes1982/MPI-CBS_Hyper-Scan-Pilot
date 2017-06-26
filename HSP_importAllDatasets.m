@@ -56,6 +56,7 @@ for i=1:1:numOfPart
     
     cfg = [];
     cfg.dataset = dataset;
+    fprintf('Import data from: %s ...\n', dataset);
     dataImport = HSP_importSingleDataset(cfg);
     
     data(i).Earphone40Hz       = dataImport.Earphone40Hz;

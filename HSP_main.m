@@ -67,7 +67,9 @@ end
 %% segmentation of the preprocessed trials
 % split every the data of every condition into subtrials with a length of 5
 % seconds
+ft_info off;
 data_seg1 = HSP_segmentation( data_preproc );
+ft_info on;
 
 clear data_preproc
 

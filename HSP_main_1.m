@@ -1,8 +1,5 @@
 %% general settings
-preproc = 1;                                                                % 0 / 1 = use not / use preprocessing
-if preproc == 1
-  tfrOfpreproc = 1;                                                         % 0 / 1 = calculate TFRs of preprocessed signals
-end
+
   
 %% import data from brain vision eeg files and bring it into an order
 cfg       = [];
@@ -28,41 +25,31 @@ fprintf('The RAW data will be saved in %s ...\n', file_path);
 save(file_path, 'data_raw', '-v7.3');
 
 %% preprocess the raw data
-if preproc == 1
-  cfg         = [];
-  cfg.bpfreq  = [0.3 48];                                                   % passband from 0.3 to 48 Hz
+cfg         = [];
+cfg.bpfreq  = [0.3 48];                                                     % passband from 0.3 to 48 Hz
   
-  data_preproc = HSP_preprocessing( cfg, data_raw);
-else
-  data_preproc = data_raw;
-end
+data_preproc = HSP_preprocessing( cfg, data_raw);
 
 clear data_raw
 
 %% export the preprocessed data into a *.mat file
-if preproc == 1
-  file_name = strcat(dest_folder, 'HSP_02_preproc');
-  file_path = strcat(file_name, file_version);
-  fprintf('The preprocessed data will be saved in %s ...\n', file_path);
-  save(file_path, 'data_preproc', '-v7.3');
-end
+file_name = strcat(dest_folder, 'HSP_02_preproc');
+file_path = strcat(file_name, file_version);
+fprintf('The preprocessed data will be saved in %s ...\n', file_path);
+save(file_path, 'data_preproc', '-v7.3');
 
 %% calculate TFRs of the preprocessed data
-if tfrOfpreproc == 1
-  cfg         = [];
-  cfg.foi     = 2:1:50;                                                     % frequency of interest
-  cfg.toi     = 4:0.5:176;                                                  % time of interest
+cfg         = [];
+cfg.foi     = 2:1:50;                                                       % frequency of interest
+cfg.toi     = 4:0.5:176;                                                    % time of interest
   
-  data_tfr1 = HSP_timeFreqanalysis( cfg, data_preproc );
-end
+data_tfr1 = HSP_timeFreqanalysis( cfg, data_preproc );
 
 %% export the preprocessed data into a *.mat file
-if tfrOfpreproc == 1
-  file_name = strcat(dest_folder, 'HSP_03_tfr1');
-  file_path = strcat(file_name, file_version);
-  fprintf('The time-frequency response data will be saved in %s ...\n', file_path);
-  save(file_path, 'data_tfr1', '-v7.3');
-end
+file_name = strcat(dest_folder, 'HSP_03_tfr1');
+file_path = strcat(file_name, file_version);
+fprintf('The time-frequency response data will be saved in %s ...\n', file_path);
+save(file_path, 'data_tfr1', '-v7.3');
 
 %% segmentation of the preprocessed trials
 % split every the data of every condition into subtrials with a length of 5

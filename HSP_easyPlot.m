@@ -5,7 +5,7 @@ function HSP_easyPlot( cfg, data )
 % Use as
 %   HSP_easyPlot(cfg, data)
 %
-% where the input data can be the results from HSP_IMPORTALLDATASETS or
+% where the input data can be the results of HSP_IMPORTALLDATASETS or
 % HSP_PREPROCESSING
 %
 % The configuration options are

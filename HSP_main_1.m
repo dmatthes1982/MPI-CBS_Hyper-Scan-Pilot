@@ -27,8 +27,10 @@ save(file_path, 'data_raw', '-v7.3');
 %% preprocess the raw data
 cfg         = [];
 cfg.bpfreq  = [0.3 48];                                                     % passband from 0.3 to 48 Hz
-  
+
+ft_info off;
 data_preproc = HSP_preprocessing( cfg, data_raw);
+ft_info on;
 
 clear data_raw
 

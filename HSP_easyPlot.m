@@ -12,7 +12,7 @@ function HSP_easyPlot( cfg, data )
 %   cfg.condition = condition (default: 'Earphone40Hz', see HSP data structure)
 %   cfg.dyad      = number of dyad (default: 1)
 %   cfg.part      = number of participant (default: 1)
-%   cfg.electrode = number of electrode (default: 'Cz' or 8)
+%   cfg.electrode = number of electrode (default: 'Cz')
 %   cfg.trial     = number of trial (default: 1)
 %
 % This function requires the fieldtrip toolbox.
@@ -24,27 +24,24 @@ function HSP_easyPlot( cfg, data )
 % -------------------------------------------------------------------------
 % Get and check config options
 % -------------------------------------------------------------------------
-default_label = {'Fz'; 'F3'; 'F7'; 'F9'; 'FT7'; 'FC3'; 'FC1'; 'Cz'; ...
-                 'C3'; 'T7'; 'CP3'; 'Pz'; 'P3'; 'P7'; 'PO9'; 'O1'; ...
-                 'O2'; 'PO10'; 'P8'; 'P4'; 'CP4'; 'TP10'; 'T8'; 'C4'; ...
-                 'FT8'; 'FC4'; 'FC2'; 'F4'; 'F8'; 'F10'; 'V1'; 'V2'};
-
 cond = ft_getopt(cfg, 'condition', 'Earphone40Hz');
 dyad = ft_getopt(cfg, 'dyad', 1);
 part = ft_getopt(cfg, 'part', 1);
-elec = ft_getopt(cfg, 'electrode', 8);
+elec = ft_getopt(cfg, 'electrode', 'Cz');
 trl  = ft_getopt(cfg, 'trial', 1);
 
 if part < 1 || part > 2
   error('cfg.part has to be 1 or 2');
 end
 
+label = data(dyad).Earphone40Hz{part}.label;
+
 if isnumeric(elec)
   if elec < 1 || elec > 32
     error('cfg.elec hast to be a number between 1 and 32 or a existing label like ''Cz''.');
   end
 else
-  elec = find(strcmp(default_label, elec));
+  elec = find(strcmp(label, elec));
   if isempty(elec)
     error('cfg.elec hast to be a existing label like ''Cz''or a number between 1 and 32.');
   end

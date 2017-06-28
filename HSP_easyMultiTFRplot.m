@@ -51,7 +51,7 @@ cfg.xlim          = timelim;
 cfg.ylim          = freqlim;
 cfg.zlim          = 'maxmin';
 cfg.trials        = trl;
-cfg.channel       = 1:1:30;
+cfg.channel       = 1:1:28;
 cfg.layout        = 'mpi_customized_acticap32.mat';
 cfg.trials        = 1;
 

@@ -1,21 +1,21 @@
 addpath('../.');
 
-Cz_1 = data_1(1).Earphone40Hz{1}.trial{1}(8,:);
-Cz_2 = data_2(1).Earphone40Hz{1}.trial{1}(7,:);
+Cz_1 = data_1(1).Earphone2HzS{1}.trial{1}(8,:);
+Cz_2 = data_2(1).Earphone2HzS{1}.trial{1}(7,:);
 
-TP10_1 = data_1(1).Earphone40Hz{1}.trial{1}(22,:);
-TP10_2 = data_2(1).Earphone40Hz{1}.trial{1}(21,:);
+TP10_1 = data_1(1).Earphone2HzS{1}.trial{1}(22,:);
+TP10_2 = data_2(1).Earphone2HzS{1}.trial{1}(21,:);
 
-V1_1 = data_1(1).Earphone40Hz{1}.trial{1}(31,:);
-V2_1 = data_1(1).Earphone40Hz{1}.trial{1}(32,:);
+V1_1 = data_1(1).Earphone2HzS{1}.trial{1}(31,:);
+V2_1 = data_1(1).Earphone2HzS{1}.trial{1}(32,:);
 
-F9_1 = data_1(1).Earphone40Hz{1}.trial{1}(4,:);
-F10_1 = data_1(1).Earphone40Hz{1}.trial{1}(30,:);
+F9_1 = data_1(1).Earphone2HzS{1}.trial{1}(4,:);
+F10_1 = data_1(1).Earphone2HzS{1}.trial{1}(30,:);
 
-EOGV = data_2(1).Earphone40Hz{1}.trial{1}(30,:);
-EOGH = data_2(1).Earphone40Hz{1}.trial{1}(31,:);
+EOGV = data_2(1).Earphone2HzS{1}.trial{1}(30,:);
+EOGH = data_2(1).Earphone2HzS{1}.trial{1}(31,:);
 
-REF = data_2(1).Earphone40Hz{1}.trial{1}(29,:);
+REF = data_2(1).Earphone2HzS{1}.trial{1}(29,:);
 
 figure(1);
 plot(TP10_1);

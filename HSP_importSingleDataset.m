@@ -16,7 +16,7 @@ function [ data ] = HSP_importSingleDataset(cfg)
 %
 % This function requires the fieldtrip toolbox.
 %
-% See also FT_PREPROCESSING
+% See also FT_PREPROCESSING, HSP_DATASTRUCTURE
 
 % Copyright (C) 2017, Daniel Matthes, MPI CBS
 
@@ -34,19 +34,23 @@ end
 % -------------------------------------------------------------------------
 % definition of all possible stimuli, two for each condition, the first on 
 % is the original one and the second one handles the 'video trigger bug'
-eventvalues = { 'S41','S169'; ...                                           % 40 Hz earphones
+eventvalues = { 'S21','S149'; ...                                           % 2 Hz earphones synchronous  
+                'S22','S150'; ...                                           % 2 Hz speaker synchronous
+                'S24','S152'; ...                                           % finger tapping in 2 Hz plus 2 Hz speaker synchronous
+                'S25','S153'; ...                                           % dialogue plus 2 Hz speaker synchronous
+                'S26','S154'; ...                                           % 20 Hz speaker synchronous
+                'S27','S155'; ...                                           % 20 Hz earphones synchronous
+                'S28','S156'; ...                                           % 20 Hz speaker asynchronous
+                'S29','S157'; ...                                           % 20 Hz earphones asynchronous
+                'S31','S159'; ...                                           % 2 Hz earphones asynchronous  
+                'S32','S160'; ...                                           % 2 Hz speaker asynchronous
+                'S41','S169'; ...                                           % 40 Hz earphones
                 'S42','S170'; ...                                           % 40 Hz speaker  
-                'S21','S149'; ...                                           % 2 Hz earphones  
-                'S22','S150'; ...                                           % 2 Hz speaker  
-                'S10','S138'; ...                                           % silence  
-                'S100','S228'; ...                                          % silence, eyes closed  
-                'S31','S159'; ...                                           % mixed noise earphones 
-                'S32','S160'; ...                                           % mixed noise speaker  
-                'S24','S152'; ...                                           % synch finger tapping in 2 Hz, while being entrained in 2 Hz  
-                'S25','S153'; ...                                           % dialogue plus 2 Hz entrainment
-                'S51','S179'; ...                                           % A reads to B  
-                'S52','S180'; ...                                           % B reads to A  
+                'S51','S179'; ...                                           % A talks to B  
+                'S52','S180'; ...                                           % B talks to A  
                 'S53','S181'; ...                                           % dialogue
+                'S10','S138'; ...                                           % silence, eyes open  
+                'S100','S228'; ...                                          % silence, eyes closed  
                 };
 
 events = ft_read_event( headerfile );                                       % Get all occured events from marker file              
@@ -96,97 +100,133 @@ for i=1:1:size(eventvalues, 1)
     
   switch i                                                                  % allocate data to substructures and correct false stimulus numbers
     case 1
-      data.Earphone40Hz{1} = dataTmpPart1;
-      data.Earphone40Hz{2} = dataTmpPart2;
-      if data.Earphone40Hz{1}.trialinfo == 169
-        data.Earphone40Hz{1}.trialinfo = 41;
-        data.Earphone40Hz{2}.trialinfo = 41;
+      data.Earphone2HzS{1} = dataTmpPart1;
+      data.Earphone2HzS{2} = dataTmpPart2;
+      if data.Earphone2HzS{1}.trialinfo == 149
+        data.Earphone2HzS{1}.trialinfo = 21;
+        data.Earphone2HzS{2}.trialinfo = 21;
       end
     case 2
-      data.Speaker40Hz{1} = dataTmpPart1;
-      data.Speaker40Hz{2} = dataTmpPart2;
-      if data.Speaker40Hz{1}.trialinfo == 170
-        data.Speaker40Hz{1}.trialinfo = 42;
-        data.Speaker40Hz{2}.trialinfo = 42;
+      data.Speaker2HzS{1} = dataTmpPart1;
+      data.Speaker2HzS{2} = dataTmpPart2;
+      if data.Speaker2HzS{1}.trialinfo == 150
+        data.Speaker2HzS{1}.trialinfo = 22;
+        data.Speaker2HzS{2}.trialinfo = 22;
       end
     case 3
-      data.Earphone2Hz{1} = dataTmpPart1;
-      data.Earphone2Hz{2} = dataTmpPart2;
-      if data.Earphone2Hz{1}.trialinfo == 149
-        data.Earphone2Hz{1}.trialinfo = 21;
-        data.Earphone2Hz{2}.trialinfo = 21;
+      data.Tapping2HzS{1} = dataTmpPart1;
+      data.Tapping2HzS{2} = dataTmpPart2;
+      if data.Tapping2HzS{1}.trialinfo == 152
+        data.Tapping2HzS{1}.trialinfo = 24;
+        data.Tapping2HzS{2}.trialinfo = 24;
       end
     case 4
-      data.Speaker2Hz{1} = dataTmpPart1;
-      data.Speaker2Hz{2} = dataTmpPart2;
-      if data.Speaker2Hz{1}.trialinfo == 150
-        data.Speaker2Hz{1}.trialinfo = 22;
-        data.Speaker2Hz{2}.trialinfo = 22;
-      end
-    case 5
-      data.Silence{1} = dataTmpPart1;
-      data.Silence{2} = dataTmpPart2;
-      if data.Silence{1}.trialinfo == 138
-        data.Silence{1}.trialinfo = 10;
-        data.Silence{2}.trialinfo = 10;
-      end
-    case 6
-      data.SilEyesClosed{1} = dataTmpPart1;
-      data.SilEyesClosed{2} = dataTmpPart2;
-      if data.SilEyesClosed{1}.trialinfo == 228
-        data.SilEyesClosed{1}.trialinfo = 100;
-        data.SilEyesClosed{2}.trialinfo = 100;
-      end
-    case 7
-      data.MixNoiseEarphones{1} = dataTmpPart1;
-      data.MixNoiseEarphones{2} = dataTmpPart2;
-      if data.MixNoiseEarphones{1}.trialinfo == 159
-        data.MixNoiseEarphones{1}.trialinfo = 31;
-        data.MixNoiseEarphones{2}.trialinfo = 31;
-      end
-    case 8
-      data.MixNoiseSpeaker{1} = dataTmpPart1;
-      data.MixNoiseSpeaker{2} = dataTmpPart2;
-      if data.MixNoiseSpeaker{1}.trialinfo == 160
-        data.MixNoiseSpeaker{1}.trialinfo = 32;
-        data.MixNoiseSpeaker{2}.trialinfo = 32;
-      end
-    case 9
-      data.Tapping{1} = dataTmpPart1;
-      data.Tapping{2} = dataTmpPart2;
-      if data.Tapping{1}.trialinfo == 152
-        data.Tapping{1}.trialinfo = 24;
-        data.Tapping{2}.trialinfo = 24;
-      end
-    case 10
-      data.DialoguePlus2Hz{1} = dataTmpPart1;
-      data.DialoguePlus2Hz{2} = dataTmpPart2;
+      data.Dialogue2HzS{1} = dataTmpPart1;
+      data.Dialogue2HzS{2} = dataTmpPart2;
       if ~isempty(dataTmpPart1)
-        if data.DialoguePlus2Hz{1}.trialinfo == 153
-          data.DialoguePlus2Hz{1}.trialinfo = 25;
-          data.DialoguePlus2Hz{2}.trialinfo = 25;
+        if data.Dialogue2HzS{1}.trialinfo == 153
+          data.Dialogue2HzS{1}.trialinfo = 25;
+          data.Dialogue2HzS{2}.trialinfo = 25;
         end
       end
+    case 5
+      data.Speaker20HzS{1} = dataTmpPart1;
+      data.Speaker20HzS{2} = dataTmpPart2;
+      if ~isempty(dataTmpPart1)
+        if data.Speaker20HzS{1}.trialinfo == 154
+          data.Speaker20HzS{1}.trialinfo = 26;
+          data.Speaker20HzS{2}.trialinfo = 26;
+        end
+      end
+    case 6
+      data.Earphone20HzS{1} = dataTmpPart1;
+      data.Earphone20HzS{2} = dataTmpPart2;
+      if ~isempty(dataTmpPart1)
+        if data.Earphone20HzS{1}.trialinfo == 155
+          data.Earphone20HzS{1}.trialinfo = 27;
+          data.Earphone20HzS{2}.trialinfo = 27;
+        end
+      end
+    case 7
+      data.Speaker20HzA{1} = dataTmpPart1;
+      data.Speaker20HzA{2} = dataTmpPart2;
+      if ~isempty(dataTmpPart1)
+        if data.Speaker20HzA{1}.trialinfo == 156
+          data.Speaker20HzA{1}.trialinfo = 28;
+          data.Speaker20HzA{2}.trialinfo = 28;
+        end
+      end
+    case 8
+      data.Earphone20HzA{1} = dataTmpPart1;
+      data.Earphone20HzA{2} = dataTmpPart2;
+      if ~isempty(dataTmpPart1)
+        if data.Earphone20HzA{1}.trialinfo == 157
+          data.Earphone20HzA{1}.trialinfo = 29;
+          data.Earphone20HzA{2}.trialinfo = 29;
+        end
+      end
+    case 9
+      data.Earphone2HzA{1} = dataTmpPart1;
+      data.Earphone2HzA{2} = dataTmpPart2;
+      if data.Earphone2HzA{1}.trialinfo == 159
+        data.Earphone2HzA{1}.trialinfo = 31;
+        data.Earphone2HzA{2}.trialinfo = 31;
+      end
+    case 10
+      data.Speaker2HzA{1} = dataTmpPart1;
+      data.Speaker2HzA{2} = dataTmpPart2;
+      if data.Speaker2HzA{1}.trialinfo == 160
+        data.Speaker2HzA{1}.trialinfo = 32;
+        data.Speaker2HzA{2}.trialinfo = 32;
+      end
     case 11
-      data.AreadsB{1} = dataTmpPart1;
-      data.AreadsB{2} = dataTmpPart2;
-      if data.AreadsB{1}.trialinfo == 179
-        data.AreadsB{1}.trialinfo = 51;
-        data.AreadsB{2}.trialinfo = 51;
+      data.Earphone40HzS{1} = dataTmpPart1;
+      data.Earphone40HzS{2} = dataTmpPart2;
+      if data.Earphone40HzS{1}.trialinfo == 169
+        data.Earphone40HzS{1}.trialinfo = 41;
+        data.Earphone40HzS{2}.trialinfo = 41;
       end
     case 12
-      data.BreadsA{1} = dataTmpPart1;
-      data.BreadsA{2} = dataTmpPart2;
-      if data.BreadsA{1}.trialinfo == 180
-        data.BreadsA{1}.trialinfo = 52;
-        data.BreadsA{2}.trialinfo = 52;
+      data.Speaker40HzS{1} = dataTmpPart1;
+      data.Speaker40HzS{2} = dataTmpPart2;
+      if data.Speaker40HzS{1}.trialinfo == 170
+        data.Speaker40HzS{1}.trialinfo = 42;
+        data.Speaker40HzS{2}.trialinfo = 42;
       end
     case 13
+      data.Atalks2B{1} = dataTmpPart1;
+      data.Atalks2B{2} = dataTmpPart2;
+      if data.Atalks2B{1}.trialinfo == 179
+        data.Atalks2B{1}.trialinfo = 51;
+        data.Atalks2B{2}.trialinfo = 51;
+      end
+    case 14
+      data.Btalks2A{1} = dataTmpPart1;
+      data.Btalks2A{2} = dataTmpPart2;
+      if data.Btalks2A{1}.trialinfo == 180
+        data.Btalks2A{1}.trialinfo = 52;
+        data.Btalks2A{2}.trialinfo = 52;
+      end
+    case 15
       data.Dialogue{1} = dataTmpPart1;
       data.Dialogue{2} = dataTmpPart2;
       if data.Dialogue{1}.trialinfo == 181
         data.Dialogue{1}.trialinfo = 53;
         data.Dialogue{2}.trialinfo = 53;
+      end
+    case 16
+      data.SilEyesOpen{1} = dataTmpPart1;
+      data.SilEyesOpen{2} = dataTmpPart2;
+      if data.SilEyesOpen{1}.trialinfo == 138
+        data.SilEyesOpen{1}.trialinfo = 10;
+        data.SilEyesOpen{2}.trialinfo = 10;
+      end
+    case 17
+      data.SilEyesClosed{1} = dataTmpPart1;
+      data.SilEyesClosed{2} = dataTmpPart2;
+      if data.SilEyesClosed{1}.trialinfo == 228
+        data.SilEyesClosed{1}.trialinfo = 100;
+        data.SilEyesClosed{2}.trialinfo = 100;
       end
   end
 end

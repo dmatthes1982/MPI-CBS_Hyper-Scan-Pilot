@@ -62,58 +62,74 @@ cfg.colorbar      = 'yes';
 cfg.showcallinfo  = 'no';                                                   % suppress function call output
 
 switch cond
-  case 'Earphone40Hz'
-    ft_multiplotTFR(cfg, data(dyad).Earphone40Hz{part});
-    title(sprintf('Earphone40Hz - Dyad: %d - % d - Trial: %d', ...
+  case 'Earphone2HzS'
+    ft_multiplotTFR(cfg, data(dyad).Earphone2HzS{part});
+    title(sprintf('Earphone2HzS - Dyad: %d - % d - Trial: %d', ...
           dyad, part, trl));
-  case 'Speaker40Hz'
-    ft_multiplotTFR(cfg, data(dyad).Speaker40Hz{part});
-    title(sprintf('Speaker40Hz - Dyad: %d - % d - Trial: %d', ...
+  case 'Speaker2HzS'
+    ft_multiplotTFR(cfg, data(dyad).Speaker2HzS{part});
+    title(sprintf('Speaker2HzS - Dyad: %d - % d - Trial: %d', ...
           dyad, part, trl));
-  case 'Earphone2Hz'
-    ft_multiplotTFR(cfg, data(dyad).Earphone2Hz{part});
-    title(sprintf('Earphone2Hz - Dyad: %d - % d - Trial: %d', ...
+  case 'Tapping2HzS'
+    ft_multiplotTFR(cfg, data(dyad).Tapping2HzS{part});
+    title(sprintf('Tapping2HzS - Dyad: %d - % d - Trial: %d', ...
           dyad, part, trl));
-  case 'Speaker2Hz'
-    ft_multiplotTFR(cfg, data(dyad).Speaker2Hz{part});
-    title(sprintf('Speaker2Hz - Dyad: %d - % d - Trial: %d', ...
+  case 'Dialogue2HzS'
+    ft_multiplotTFR(cfg, data(dyad).Dialogue2HzS{part});
+    title(sprintf('Dialogue2HzS - Dyad: %d - % d - Trial: %d', ...
           dyad, part, trl));
-  case 'Silence'
-    ft_multiplotTFR(cfg, data(dyad).Silence{part});
-    title(sprintf('Silence - Dyad: %d - % d - Trial: %d', ...
+  case 'Speaker20HzS'
+    ft_multiplotTFR(cfg, data(dyad).Speaker20HzS{part});
+    title(sprintf('Speaker20HzS - Dyad: %d - % d - Trial: %d', ...
           dyad, part, trl));
-  case 'SilEyesClosed'
-    ft_multiplotTFR(cfg, data(dyad).SilEyesClosed{part});
-    title(sprintf('SilEyesClosed - Dyad: %d - % d - Trial: %d', ...
+  case 'Earphone20HzS'
+    ft_multiplotTFR(cfg, data(dyad).Earphone20HzS{part});
+    title(sprintf('Earphone20HzS - Dyad: %d - % d - Trial: %d', ...
           dyad, part, trl));
-  case 'MixNoiseEarphones'
-    ft_multiplotTFR(cfg, data(dyad).MixNoiseEarphones{part});
-    title(sprintf('MixNoiseEarphones - Dyad: %d - % d - Trial: %d', ...
+  case 'Speaker20HzA'
+    ft_multiplotTFR(cfg, data(dyad).Speaker20HzA{part});
+    title(sprintf('Speaker20HzA - Dyad: %d - % d - Trial: %d', ...
           dyad, part, trl));
-  case 'MixNoiseSpeaker'
-    ft_multiplotTFR(cfg, data(dyad).MixNoiseSpeaker{part});
-    title(sprintf('MixNoiseSpeaker - Dyad: %d - % d - Trial: %d', ...
+  case 'Earphone20HzA'
+    ft_multiplotTFR(cfg, data(dyad).Earphone20HzA{part});
+    title(sprintf('Earphone20HzA - Dyad: %d - % d - Trial: %d', ...
           dyad, part, trl));
-  case 'Tapping'
-    ft_multiplotTFR(cfg, data(dyad).Tapping{part});
-    title(sprintf('Tapping - Dyad: %d - % d - Trial: %d', ...
+  case 'Earphone2HzA'
+    ft_multiplotTFR(cfg, data(dyad).Earphone2HzA{part});
+    title(sprintf('Earphone2HzA - Dyad: %d - % d - Trial: %d', ...
           dyad, part, trl));
-  case 'DialoguePlus2Hz'
-    ft_multiplotTFR(cfg, data(dyad).DialoguePlus2Hz{part});
-    title(sprintf('DialoguePlus2Hz - Dyad: %d - % d - Trial: %d', ...
+  case 'Speaker2HzA'
+    ft_multiplotTFR(cfg, data(dyad).Speaker2HzA{part});
+    title(sprintf('Speaker2HzA - Dyad: %d - % d - Trial: %d', ...
           dyad, part, trl));
-  case 'AreadsB'
-    ft_multiplotTFR(cfg, data(dyad).AreadsB{part});
-    title(sprintf('AreadsB - Dyad: %d - % d - Trial: %d', ...
+  case 'Earphone40HzS'
+    ft_multiplotTFR(cfg, data(dyad).Earphone40HzS{part});
+    title(sprintf('Earphone40HzS - Dyad: %d - % d - Trial: %d', ...
           dyad, part, trl));
-  case 'BreadsA'
-    ft_multiplotTFR(cfg, data(dyad).BreadsA{part});
-    title(sprintf('BreadsA - Dyad: %d - % d - Trial: %d', ...
+  case 'Speaker40HzS'
+    ft_multiplotTFR(cfg, data(dyad).Speaker40HzS{part});
+    title(sprintf('Speaker40HzS - Dyad: %d - % d - Trial: %d', ...
           dyad, part, trl));
+  case 'Atalks2B'
+    ft_multiplotTFR(cfg, data(dyad).Atalks2B{part});
+    title(sprintf('Atalks2B - Dyad: %d - % d - Trial: %d', ...
+          dyad, part, trl));
+  case 'Btalks2A'
+    ft_multiplotTFR(cfg, data(dyad).Btalks2A{part});
+    title(sprintf('Btalks2A - Dyad: %d - % d - Trial: %d', ...
+          dyad, part, trl));      
   case 'Dialogue'
     ft_multiplotTFR(cfg, data(dyad).Dialogue{part});
     title(sprintf('Dialogue - Dyad: %d - % d - Trial: %d', ...
-          dyad, part, trl));
+          dyad, part, trl));      
+   case 'SilEyesOpen'
+    ft_multiplotTFR(cfg, data(dyad).SilEyesOpen{part});
+    title(sprintf('SilEyesOpen - Dyad: %d - % d - Trial: %d', ...
+          dyad, part, trl));     
+   case 'SilEyesClosed'
+    ft_multiplotTFR(cfg, data(dyad).SilEyesClosed{part});
+    title(sprintf('SilEyesClosed - Dyad: %d - % d - Trial: %d', ...
+          dyad, part, trl));        
 end
 
 ft_warning on;

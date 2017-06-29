@@ -9,20 +9,21 @@ function HSP_databrowser( cfg, data )
 % HSP_PREPROCESSING or HSP_SEGMENTATION
 %
 % The configuration options are
-%   cfg.condition = condition (default: 'Earphone40Hz', see HSP data structure)
+%   cfg.condition = condition (default: 'Earphone2HzS', see HSP data structure)
 %   cfg.dyad      = number of dyad (default: 1)
 %   cfg.part      = number of participant (default: 1)
 %
 % This function requires the fieldtrip toolbox
 %
-% See also HSP_IMPORTALLDATASETS, HSP_PREPROCESSING, HSP_SEGMENTATION, FT_DATABROWSER
+% See also HSP_IMPORTALLDATASETS, HSP_PREPROCESSING, HSP_SEGMENTATION, 
+% HSP_DATASTRUCTURE, FT_DATABROWSER
 
 % Copyright (C) 2017, Daniel Matthes, MPI CBS
 
 % -------------------------------------------------------------------------
 % Get and check config options
 % -------------------------------------------------------------------------
-cond = ft_getopt(cfg, 'condition', 'Earphone40Hz');
+cond = ft_getopt(cfg, 'condition', 'Earphone2HzS');
 dyad = ft_getopt(cfg, 'dyad', 1);
 part = ft_getopt(cfg, 'part', 1);
 
@@ -36,57 +37,73 @@ cfg.continuous = 'no';
 cfg.channel = 'all';
 
 switch cond
-  case 'Earphone40Hz'
-    ft_databrowser(cfg, data(dyad).Earphone40Hz{part});
-    windowTitle = sprintf('Earphone40Hz - Dyad: %d - Participant %d', ...
+  case 'Earphone2HzS'
+    ft_databrowser(cfg, data(dyad).Earphone2HzS{part});
+    windowTitle = sprintf('Earphone2HzS - Dyad: %d - Participant %d', ...
                           dyad, part);
-  case 'Speaker40Hz'
-    ft_databrowser(cfg, data(dyad).Speaker40Hz{part});
-    windowTitle = sprintf('Speaker40Hz - Dyad: %d - Participant %d', ...
+  case 'Speaker2HzS'
+    ft_databrowser(cfg, data(dyad).Speaker2HzS{part});
+    windowTitle = sprintf('Speaker2HzS - Dyad: %d - Participant %d', ...
                           dyad, part);
-  case 'Earphone2Hz'
-    ft_databrowser(cfg, data(dyad).Earphone2Hz{part});
-    windowTitle = sprintf('Earphone2Hz - Dyad: %d - Participant %d', ...
+  case 'Tapping2HzS'
+    ft_databrowser(cfg, data(dyad).Tapping2HzS{part});
+    windowTitle = sprintf('Tapping2HzS - Dyad: %d - Participant %d', ...
                           dyad, part);
-  case 'Speaker2Hz'
-    ft_databrowser(cfg, data(dyad).Speaker2Hz{part});
-    windowTitle = sprintf('Speaker2Hz - Dyad: %d - Participant %d', ...
+  case 'Dialogue2HzS'
+    ft_databrowser(cfg, data(dyad).Dialogue2HzS{part});
+    windowTitle = sprintf('Dialogue2HzS - Dyad: %d - Participant %d', ...
                           dyad, part);
-  case 'Silence'
-    ft_databrowser(cfg, data(dyad).Silence{part});
-    windowTitle = sprintf('Silence - Dyad: %d - Participant %d', ...
+  case 'Speaker20HzS'
+    ft_databrowser(cfg, data(dyad).Speaker20HzS{part});
+    windowTitle = sprintf('Speaker20HzS - Dyad: %d - Participant %d', ...
                           dyad, part);
-  case 'SilEyesClosed'
-    ft_databrowser(cfg, data(dyad).SilEyesClosed{part});
-    windowTitle = sprintf('SilEyesClosed - Dyad: %d - Participant %d', ...
+  case 'Earphone20HzS'
+    ft_databrowser(cfg, data(dyad).Earphone20HzS{part});
+    windowTitle = sprintf('Earphone20HzS - Dyad: %d - Participant %d', ...
                           dyad, part);
-  case 'MixNoiseEarphones'
-    ft_databrowser(cfg, data(dyad).MixNoiseEarphones{part});
-    windowTitle = sprintf('MixNoiseEarphones - Dyad: %d - Participant %d', ...
+  case 'Speaker20HzA'
+    ft_databrowser(cfg, data(dyad).Speaker20HzA{part});
+    windowTitle = sprintf('Speaker20HzA - Dyad: %d - Participant %d', ...
                           dyad, part);
-  case 'MixNoiseSpeaker'
-    ft_databrowser(cfg, data(dyad).MixNoiseSpeaker{part});
-    windowTitle = sprintf('MixNoiseSpeaker - Dyad: %d - Participant %d', ...
+  case 'Earphone20HzA'
+    ft_databrowser(cfg, data(dyad).Earphone20HzA{part});
+    windowTitle = sprintf('Earphone20HzA - Dyad: %d - Participant %d', ...
                           dyad, part);
-  case 'Tapping'
-    ft_databrowser(cfg, data(dyad).Tapping{part});
-    windowTitle = sprintf('Tapping - Dyad: %d - Participant %d', ...
+  case 'Earphone2HzA'
+    ft_databrowser(cfg, data(dyad).Earphone2HzA{part});
+    windowTitle = sprintf('Earphone2HzA - Dyad: %d - Participant %d', ...
                           dyad, part);
-  case 'DialoguePlus2Hz'
-    ft_databrowser(cfg, data(dyad).DialoguePlus2Hz{part});
-    windowTitle = sprintf('DialoguePlus2Hz - Dyad: %d - Participant %d', ...
+  case 'Speaker2HzA'
+    ft_databrowser(cfg, data(dyad).Speaker2HzA{part});
+    windowTitle = sprintf('Speaker2HzA - Dyad: %d - Participant %d', ...
                           dyad, part);
-  case 'AreadsB'
-    ft_databrowser(cfg, data(dyad).AreadsB{part});
-    windowTitle = sprintf('AreadsB - Dyad: %d - Participant %d', ...
+  case 'Earphone40HzS'
+    ft_databrowser(cfg, data(dyad).Earphone40HzS{part});
+    windowTitle = sprintf('Earphone40HzS - Dyad: %d - Participant %d', ...
                           dyad, part);
-  case 'BreadsA'
-    ft_databrowser(cfg, data(dyad).BreadsA{part});
-    windowTitle = sprintf('BreadsA - Dyad: %d - Participant %d', ...
+  case 'Speaker40HzS'
+    ft_databrowser(cfg, data(dyad).Speaker40HzS{part});
+    windowTitle = sprintf('Speaker40HzS - Dyad: %d - Participant %d', ...
+                          dyad, part);
+  case 'Atalks2B'
+    ft_databrowser(cfg, data(dyad).Atalks2B{part});
+    windowTitle = sprintf('Atalks2B - Dyad: %d - Participant %d', ...
+                          dyad, part);
+  case 'Btalks2A'
+    ft_databrowser(cfg, data(dyad).Btalks2A{part});
+    windowTitle = sprintf('Btalks2A - Dyad: %d - Participant %d', ...
                           dyad, part);
   case 'Dialogue'
     ft_databrowser(cfg, data(dyad).Dialogue{part});
     windowTitle = sprintf('Dialogue - Dyad: %d - Participant %d', ...
+                          dyad, part);
+  case 'SilEyesOpen'
+    ft_databrowser(cfg, data(dyad).SilEyesOpen{part});
+    windowTitle = sprintf('SilEyesOpen - Dyad: %d - Participant %d', ...
+                          dyad, part);
+  case 'SilEyesClosed'
+    ft_databrowser(cfg, data(dyad).SilEyesClosed{part});
+    windowTitle = sprintf('SilEyesClosed - Dyad: %d - Participant %d', ...
                           dyad, part);
 end
 

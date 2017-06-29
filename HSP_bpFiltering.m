@@ -32,10 +32,8 @@ fixorder  = ft_getopt(cfg, 'fixorder', true);
 numOfPart = size(data, 2);
 
 % -------------------------------------------------------------------------
-% General definitions & Allocating memory
+% Filtering settings
 % -------------------------------------------------------------------------
-data_out(numOfPart) = struct;
-
 cfg                 = [];
 cfg.trials          = 'all';                                                % apply bandpass to all trials
 cfg.channel         = 'all';                                                % apply bandpass to every channel
@@ -52,155 +50,197 @@ end
 centerFreq = (bpfreq(2) + bpfreq(1))/2;
 
 % -------------------------------------------------------------------------
-% Preprocessing
+% Bandpass filtering
 % -------------------------------------------------------------------------
 
 parfor i=1:1:numOfPart
-  fprintf('Apply bandpass to set Earphone40Hz of dyad %d with a center frequency of %d Hz...\n', ...
-          i, centerFreq);
-  if ~isempty(data(i).Earphone40Hz{1})
-    data_out(i).Earphone40Hz{1}      = ft_preprocessing(cfg, ...
-                                        data(i).Earphone40Hz{1});
-    data_out(i).Earphone40Hz{2}      = ft_preprocessing(cfg, ...
-                                        data(i).Earphone40Hz{2});
+  fprintf('Apply bandpass to set Earphone2HzS of dyad %d with a center frequency of %d Hz...\n', ...           
+            i, centerFreq);
+  if ~isempty(data(i).Earphone2HzS{1})
+    for j=1:1:2
+      data(i).Earphone2HzS{j}   = ft_preprocessing(cfg, ...
+                                       data(i).Earphone2HzS{j});
+    end
   else
-    data_out(i).Earphone40Hz{2}      = [];
+    data(i).Earphone2HzS{2}     = [];
   end
   
-  fprintf('Apply bandpass to set Speaker40Hz of dyad %d with a center frequency of %d Hz...\n', ...
-          i, centerFreq);
-  if ~isempty(data(i).Speaker40Hz{1})
-    data_out(i).Speaker40Hz{1}       = ft_preprocessing(cfg, ...
-                                        data(i).Speaker40Hz{1});
-    data_out(i).Speaker40Hz{2}       = ft_preprocessing(cfg, ...
-                                        data(i).Speaker40Hz{2});
+  fprintf('Apply bandpass to set Speaker2HzS of dyad %d with a center frequency of %d Hz...\n', ...           
+            i, centerFreq);
+  if ~isempty(data(i).Speaker2HzS{1})
+    for j=1:1:2
+        data(i).Speaker2HzS{j}  = ft_preprocessing(cfg, ...
+                                       data(i).Speaker2HzS{j});
+    end
   else
-    data_out(i).Speaker40Hz{2}       = [];
+    data(i).Speaker2HzS{2}      = [];
   end
   
-  fprintf('Apply bandpass to set Earphone2Hz of dyad %d with a center frequency of %d Hz...\n', ...
-          i, centerFreq);
-  if ~isempty(data(i).Earphone2Hz{1})
-    data_out(i).Earphone2Hz{1}       = ft_preprocessing(cfg, ...
-                                        data(i).Earphone2Hz{1});
-    data_out(i).Earphone2Hz{2}       = ft_preprocessing(cfg, ...
-                                        data(i).Earphone2Hz{2});
+  fprintf('Apply bandpass to set Tapping2HzS of dyad %d with a center frequency of %d Hz...\n', ...           
+            i, centerFreq);
+  if ~isempty(data(i).Tapping2HzS{1})
+    for j=1:1:2
+        data(i).Tapping2HzS{j}  = ft_preprocessing(cfg, ...
+                                       data(i).Tapping2HzS{j});
+    end
   else
-    data_out(i).Earphone2Hz{2}       = [];
+    data(i).Tapping2HzS{2}      = [];
   end
   
-  fprintf('Apply bandpass to set Speaker2Hz of dyad %d with a center frequency of %d Hz...\n', ...
-          i, centerFreq);
-  if ~isempty(data(i).Speaker2Hz{1})
-    data_out(i).Speaker2Hz{1}        = ft_preprocessing(cfg, ...
-                                        data(i).Speaker2Hz{1});
-    data_out(i).Speaker2Hz{2}        = ft_preprocessing(cfg, ...
-                                        data(i).Speaker2Hz{2});
+  fprintf('Apply bandpass to set Dialogue2HzS of dyad %d with a center frequency of %d Hz...\n', ...           
+            i, centerFreq);
+  if ~isempty(data(i).Dialogue2HzS{1})
+    for j=1:1:2
+      data(i).Dialogue2HzS{j}   = ft_preprocessing(cfg, ...
+                                       data(i).Dialogue2HzS{j});
+    end                                  
   else
-    data_out(i).Speaker2Hz{2}        = [];
+    data(i).Dialogue2HzS{2}     = [];
   end
   
-  fprintf('Apply bandpass to set Silence of dyad %d with a center frequency of %d Hz...\n', ...
-          i, centerFreq);
-  if ~isempty(data(i).Silence{1})
-    data_out(i).Silence{1}           = ft_preprocessing(cfg, ...
-                                        data(i).Silence{1});
-    data_out(i).Silence{2}           = ft_preprocessing(cfg, ...
-                                        data(i).Silence{2});
+  fprintf('Apply bandpass to set Speaker20HzS of dyad %d with a center frequency of %d Hz...\n', ...           
+            i, centerFreq);
+  if ~isempty(data(i).Speaker20HzS{1})
+    for j=1:1:2
+      data(i).Speaker20HzS{j}   = ft_preprocessing(cfg, ...
+                                       data(i).Speaker20HzS{j});
+    end                                  
   else
-    data_out(i).Silence{2}           = [];
+    data(i).Speaker20HzS{2}     = [];
   end
   
-  fprintf('Apply bandpass to set SilEyesClosed of dyad %d with a center frequency of %d Hz...\n', ...
-          i, centerFreq);
-  if ~isempty(data(i).SilEyesClosed{1})
-    data_out(i).SilEyesClosed{1}     = ft_preprocessing(cfg, ...
-                                        data(i).SilEyesClosed{1});
-    data_out(i).SilEyesClosed{2}     = ft_preprocessing(cfg, ...
-                                        data(i).SilEyesClosed{2});
+  fprintf('Apply bandpass to set Earphone20HzS of dyad %d with a center frequency of %d Hz...\n', ...           
+            i, centerFreq);
+  if ~isempty(data(i).Earphone20HzS{1})
+    for j=1:1:2
+      data(i).Earphone20HzS{j}  = ft_preprocessing(cfg, ...
+                                       data(i).Earphone20HzS{j});
+    end                                 
   else
-    data_out(i).SilEyesClosed{2}     = [];
+    data(i).Earphone20HzS{2}    = [];
   end
   
-  fprintf('Apply bandpass to set MixNoiseEarphones of dyad %d with a center frequency of %d Hz...\n', ...
-          i, centerFreq);
-  if ~isempty(data(i).MixNoiseEarphones{1})
-    data_out(i).MixNoiseEarphones{1} = ft_preprocessing(cfg, ...
-                                        data(i).MixNoiseEarphones{1});
-    data_out(i).MixNoiseEarphones{2} = ft_preprocessing(cfg, ...
-                                        data(i).MixNoiseEarphones{2});
+  fprintf('Apply bandpass to set Speaker20HzA of dyad %d with a center frequency of %d Hz...\n', ...           
+            i, centerFreq);
+  if ~isempty(data(i).Speaker20HzA{1})
+    for j=1:1:2
+      data(i).Speaker20HzA{j}   = ft_preprocessing(cfg, ...
+                                       data(i).Speaker20HzA{j});
+    end                                  
   else
-    data_out(i).MixNoiseEarphones{2} = [];
+    data(i).Speaker20HzA{2}     = [];
   end
   
-  fprintf('Apply bandpass to set MixNoiseSpeaker of dyad %d with a center frequency of %d Hz...\n', ...
-          i, centerFreq);
-  if ~isempty(data(i).MixNoiseSpeaker{1})
-    data_out(i).MixNoiseSpeaker{1}   = ft_preprocessing(cfg, ...
-                                        data(i).MixNoiseSpeaker{1});
-    data_out(i).MixNoiseSpeaker{2}   = ft_preprocessing(cfg, ...
-                                        data(i).MixNoiseSpeaker{2});
+  fprintf('Apply bandpass to set Earphone20HzA of dyad %d with a center frequency of %d Hz...\n', ...           
+            i, centerFreq);
+  if ~isempty(data(i).Earphone20HzA{1})
+    for j=1:1:2
+      data(i).Earphone20HzA{j}  = ft_preprocessing(cfg, ...
+                                       data(i).Earphone20HzA{j});
+    end                                  
   else
-    data_out(i).MixNoiseSpeaker{2}   = [];
+    data(i).Earphone20HzA{2}    = [];
   end
   
-  fprintf('Apply bandpass to set Tapping of dyad %d with a center frequency of %d Hz...\n', ...
-          i, centerFreq);
-  if ~isempty(data(i).Tapping{1})
-    data_out(i).Tapping{1}           = ft_preprocessing(cfg, ...
-                                        data(i).Tapping{1});
-    data_out(i).Tapping{2}           = ft_preprocessing(cfg, ...
-                                        data(i).Tapping{2});
+  fprintf('Apply bandpass to set Earphone2HzA of dyad %d with a center frequency of %d Hz...\n', ...           
+            i, centerFreq);
+  if ~isempty(data(i).Earphone2HzA{1})
+    for j=1:1:2
+      data(i).Earphone2HzA{j}   = ft_preprocessing(cfg, ...
+                                       data(i).Earphone2HzA{j});
+    end                                  
   else
-    data_out(i).Tapping{2}           = [];
+    data(i).Earphone2HzA{2}     = [];
   end
   
-  fprintf('Apply bandpass to set DialoguePlus2Hz of dyad %d with a center frequency of %d Hz...\n', ...
-          i, centerFreq);
-  if ~isempty(data(i).DialoguePlus2Hz{1})
-    data_out(i).DialoguePlus2Hz{1}   = ft_preprocessing(cfg, ...
-                                        data(i).DialoguePlus2Hz{1});
-    data_out(i).DialoguePlus2Hz{2}   = ft_preprocessing(cfg, ...
-                                        data(i).DialoguePlus2Hz{2});
+  fprintf('Apply bandpass to set Speaker2HzA of dyad %d with a center frequency of %d Hz...\n', ...           
+            i, centerFreq);
+  if ~isempty(data(i).Speaker2HzA{1})
+    for j=1:1:2
+      data(i).Speaker2HzA{j}    = ft_preprocessing(cfg, ...
+                                       data(i).Speaker2HzA{j});
+    end                                  
   else
-    data_out(i).DialoguePlus2Hz{2}   = [];
+    data(i).Speaker2HzA{2}      = [];
   end
     
-  fprintf('Apply bandpass to set AreadsB of dyad %d with a center frequency of %d Hz...\n', ...
-          i, centerFreq);
-  if ~isempty(data(i).AreadsB{1})
-    data_out(i).AreadsB{1}           = ft_preprocessing(cfg, ...
-                                        data(i).AreadsB{1});
-    data_out(i).AreadsB{2}           = ft_preprocessing(cfg, ...
-                                        data(i).AreadsB{2});
+  fprintf('Apply bandpass to set Earphone40HzS of dyad %d with a center frequency of %d Hz...\n', ...           
+            i, centerFreq);
+  if ~isempty(data(i).Earphone40HzS{1})
+    for j=1:1:2
+      data(i).Earphone40HzS{j}  = ft_preprocessing(cfg, ...
+                                       data(i).Earphone40HzS{j});
+    end                                  
   else
-    data_out(i).AreadsB {2}          = [];
+    data(i).Earphone40HzS {2}   = [];
   end
   
-  fprintf('Apply bandpass to set BreadsA of dyad %d with a center frequency of %d Hz...\n', ...
-          i, centerFreq);
-  if ~isempty(data(i).BreadsA{1})
-    data_out(i).BreadsA{1}           = ft_preprocessing(cfg, ...
-                                        data(i).BreadsA{1});
-    data_out(i).BreadsA {2}          = ft_preprocessing(cfg, ...
-                                        data(i).BreadsA{2});
+  fprintf('Apply bandpass to set Speaker40HzS of dyad %d with a center frequency of %d Hz...\n', ...           
+            i, centerFreq);
+  if ~isempty(data(i).Speaker40HzS{1})
+    for j=1:1:2
+      data(i).Speaker40HzS{j}   = ft_preprocessing(cfg, ...
+                                       data(i).Speaker40HzS{j});
+    end                                  
   else
-    data_out(i).BreadsA{2}           = [];
+    data(i).Speaker40HzS{2}     = [];
   end
   
-  fprintf('Apply bandpass to set Dialogue of dyad %d with a center frequency of %d Hz...\n', ...
-          i, centerFreq);
+  fprintf('Apply bandpass to set Atalks2B of dyad %d with a center frequency of %d Hz...\n', ...           
+            i, centerFreq);
+  if ~isempty(data(i).Atalks2B{1})
+    for j=1:1:2
+      data(i).Atalks2B{j}       = ft_preprocessing(cfg, ...
+                                       data(i).Atalks2B{j});
+    end                                  
+  else
+    data(i).Atalks2B{2}         = [];
+  end
+  
+  fprintf('Apply bandpass to set Btalks2A of dyad %d with a center frequency of %d Hz...\n', ...           
+            i, centerFreq);
+  if ~isempty(data(i).Btalks2A{1})
+    for j=1:1:2
+      data(i).Btalks2A{j}       = ft_preprocessing(cfg, ...
+                                       data(i).Btalks2A{j});
+    end                                  
+  else
+    data(i).Btalks2A{2}         = [];
+  end
+  
+  fprintf('Apply bandpass to set Dialogue of dyad %d with a center frequency of %d Hz...\n', ...           
+            i, centerFreq);
   if ~isempty(data(i).Dialogue{1})
-    data_out(i).Dialogue{1}          = ft_preprocessing(cfg, ...
-                                        data(i).Dialogue{1});
-    data_out(i).Dialogue{2}          = ft_preprocessing(cfg, ...
-                                        data(i).Dialogue{2});
+    for j=1:1:2
+      data(i).Dialogue{j}       = ft_preprocessing(cfg, ...
+                                       data(i).Dialogue{j});
+    end                                  
   else
-    data_out(i).Dialogue{2}          = [];
+    data(i).Dialogue{2}         = [];
+  end
+  
+  fprintf('Apply bandpass to set SilEyesOpen of dyad %d with a center frequency of %d Hz...\n', ...           
+            i, centerFreq);
+  if ~isempty(data(i).SilEyesOpen{1})
+    for j=1:1:2
+      data(i).SilEyesOpen{j}    = ft_preprocessing(cfg, ...
+                                       data(i).SilEyesOpen{j});
+    end                                  
+  else
+    data(i).SilEyesOpen{2}      = [];
+  end
+  
+  fprintf('Apply bandpass to set SilEyesClosed of dyad %d with a center frequency of %d Hz...\n', ...           
+            i, centerFreq);
+  if ~isempty(data(i).SilEyesClosed{1})
+    for j=1:1:2
+      data(i).SilEyesClosed{j}  = ft_preprocessing(cfg, ...
+                                       data(i).SilEyesClosed{j});
+    end                                  
+  else
+    data(i).SilEyesClosed{2}    = [];
   end
 end
-
-data = data_out;
 
 end
 

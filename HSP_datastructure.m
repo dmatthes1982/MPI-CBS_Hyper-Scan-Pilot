@@ -13,28 +13,32 @@
 %
 % data_raw
 %    |                         1         2        ...        N 
-%    |---- Earphone40Hz     1x2 cell  1x2 cell    ...     1x2 cell
-%    |---- Speaker40Hz      1x2 cell  1x2 cell    ...     1x2 cell
+%    |---- Earphone2HzS     1x2 cell  1x2 cell    ...     1x2 cell
+%    |---- Speaker2HzS      1x2 cell  1x2 cell    ...     1x2 cell
 %    |----    ...             ...       ...       ...       ...
-%    |---- Dialogue         1x2 cell  1x2 cell    ...     1x2 cell
+%    |---- SilEyesClosed    1x2 cell  1x2 cell    ...     1x2 cell
 %
 % Many functions, especially the plot functions, need a definition of the 
 % specific condition, which should be used. Currently the following 
 % conditions are existent:
 %
-% - Earphone40Hz      - S41
-% - Speaker40Hz       - S42
-% - Earphone2Hz       - S21
-% - Speaker2Hz        - S22
-% - Silence           - S10
-% - SilEyesClosed     - S100
-% - MixNoiseEarphones - S31
-% - MixNoiseSpeaker   - S32
-% - Tapping           - S24
-% - DialoguePlus2Hz   - S25
-% - AreadsB           - S51
-% - BreadsA           - S52
+% - Earphone2HzS      - S21
+% - Speaker2HzS       - S22
+% - Tapping2HzS       - S24
+% - Dialogue2HzS      - S25
+% - Speaker20HzS      - S26
+% - Earphone20HzS     - S27
+% - Speaker20HzA      - S28
+% - Earphone20HzA     - S29
+% - Earphone2HzA      - S31
+% - Speaker2HzA       - S32
+% - Earphone40HzS     - S41
+% - Speaker40HzS      - S42
+% - Atalks2B          - S51
+% - Btalks2A          - S52
 % - Dialogue          - S53
+% - SilEyesOpen       - S10
+% - SilEyesClosed     - S100
 %
 % The defintion of the condition is done by setting the cfg.condition
 % option with the string of the specific condition.

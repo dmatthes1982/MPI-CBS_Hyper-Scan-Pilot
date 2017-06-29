@@ -321,11 +321,15 @@ data_out = ft_preprocessing(cfgR, data_in);
 if strcmp(calcceogcomp, 'yes')
   cfgtmp              = [];
   cfgtmp.showcallinfo = 'no';
+  ft_info off;
   data_out            = ft_appenddata(cfgtmp, data_out, eogv, eogh);
+  ft_info on;
 else
   cfgtmp              = [];
   cfgtmp.showcallinfo = 'no';
+  ft_info off;
   data_out            = ft_appenddata(cfgtmp, data_out, eogOrg);
+  ft_info on;
 end
 
 end

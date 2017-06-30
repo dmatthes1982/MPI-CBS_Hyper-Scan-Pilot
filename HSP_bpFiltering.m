@@ -3,7 +3,7 @@ function [ data ] = HSP_bpFiltering( cfg, data)
 % the HSP_DATASTRUCTURE
 %
 % Use as
-%     [ data ] = HSP_bpFiltering( cfg, data)
+%   [ data ] = HSP_bpFiltering( cfg, data)
 %
 % where the input data have to be the result from HSP_IMPORTALLDATASETS,
 % HSP_PREPROCESSING or HSP_SEGMENTATION 
@@ -36,7 +36,7 @@ numOfPart = size(data, 2);
 % -------------------------------------------------------------------------
 cfg                 = [];
 cfg.trials          = 'all';                                                % apply bandpass to all trials
-cfg.channel         = 'all';                                                % apply bandpass to every channel
+cfg.channel         = {'all', '-REF', '-EOGV', '-EOGH'};                    % apply bandpass to every channel except REF, EOGV und EOGH
 cfg.bpfilter        = 'yes';
 cfg.bpfilttype      = 'fir';                                                % use a simple fir
 cfg.bpfreq          = bpfreq;                                               % define bandwith

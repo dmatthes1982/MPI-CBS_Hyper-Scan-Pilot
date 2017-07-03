@@ -6,7 +6,7 @@ file_num = length(dir(file_path));
 if file_num ~= 0
   file_version = sprintf('_%03d.mat', file_num);
   file_path = strcat(file_name, file_version);
-  fprintf('Loading %s ...', file_path);
+  fprintf('Loading %s ...\n', file_path);
   load(file_path);
 else
   error('A dataset with segmented data seems not available.');

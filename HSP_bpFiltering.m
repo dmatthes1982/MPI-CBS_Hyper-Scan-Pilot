@@ -10,7 +10,7 @@ function [ data ] = HSP_bpFiltering( cfg, data)
 %
 % The configuration options are
 %   cfg.bpfreq      = passband range [begin end] (default: [1.9 2.1])
-%   cfg.fixorder    = use a bandpass with a fixed order (default: true)
+%   cfg.filtorder   = define order of bandpass filter (default: 250)
 %
 % This function is configured with a fixed filter order, to generate
 % comparable filter charakteristics for every operating point.
@@ -26,8 +26,8 @@ function [ data ] = HSP_bpFiltering( cfg, data)
 % Get and check config options
 % Get number of participants
 % -------------------------------------------------------------------------
-bpfreq    = ft_getopt(cfg, 'bpfreq', [1.9 2.1]);
-fixorder  = ft_getopt(cfg, 'fixorder', true);
+bpfreq = ft_getopt(cfg, 'bpfreq', [1.9 2.1]);
+order  = ft_getopt(cfg, 'filtorder', 250);
 
 numOfPart = size(data, 2);
 
@@ -42,10 +42,7 @@ cfg.bpfilttype      = 'fir';                                                % us
 cfg.bpfreq          = bpfreq;                                               % define bandwith
 cfg.feedback        = 'no';                                                 % suppress feedback output
 cfg.showcallinfo    = 'no';                                                 % suppress function call output
-
-if fixorder == true
-  cfg.bpfiltord     = fix(90/(bpfreq(2) - bpfreq(1)));                      % filter order depends on the bandwith
-end
+cfg.bpfiltord       = order;                                                % define filter order
 
 centerFreq = (bpfreq(2) + bpfreq(1))/2;
 

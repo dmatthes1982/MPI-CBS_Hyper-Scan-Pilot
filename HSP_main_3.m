@@ -25,6 +25,7 @@ file_name = strcat(dest_folder, 'HSP_05a_bpfilt2Hz');
 file_path = strcat(file_name, file_version);
 fprintf('Saving bandpass filtered data (2Hz) in %s ...\n', file_path);
 save(file_path, 'data_bpfilt_2Hz', '-v7.3');
+fprintf('Data stored!\n');
 
 %% calculate hilbert phase at 2Hz
 data_hilbert_2Hz = HSP_hilbertPhase(data_bpfilt_2Hz);
@@ -52,6 +53,7 @@ file_name = strcat(dest_folder, 'HSP_05b_bpfilt10Hz');
 file_path = strcat(file_name, file_version);
 fprintf('Saving bandpass filtered data (10Hz) in %s ...\n', file_path);
 save(file_path, 'data_bpfilt_10Hz', '-v7.3');
+fprintf('Data stored!\n');
 
 %% calculate hilbert phase at 10Hz
 data_hilbert_10Hz = HSP_hilbertPhase(data_bpfilt_10Hz);
@@ -79,6 +81,7 @@ file_name = strcat(dest_folder, 'HSP_05c_bpfilt40Hz');
 file_path = strcat(file_name, file_version);
 fprintf('Saving bandpass filtered data (40Hz) in %s ...\n', file_path);
 save(file_path, 'data_bpfilt_40Hz', '-v7.3');
+fprintf('Data stored!');
 
 %% calculate hilbert phase at 40Hz
 data_hilbert_40Hz = HSP_hilbertPhase(data_bpfilt_40Hz);

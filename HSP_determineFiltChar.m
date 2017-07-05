@@ -30,7 +30,7 @@ elec  = ft_getopt(cfg, 'electrode', 'Cz');
 type  = ft_getopt(cfg, 'filttype', 'fir'); 
 order = ft_getopt(cfg, 'filtorder', [500, 250, 250]); 
 
-label = data(1).Earphone2HzS{1}.label;
+label = data(1).part1.label;
 
 if isnumeric(elec)
   if elec < 1 || elec > 32
@@ -47,11 +47,11 @@ end
 % Extract data from HSP_datastructure
 % -------------------------------------------------------------------------
 
-s       = data(1).Earphone2HzS{1}.trial{trial}(elec,:);                     % extract the signal
-t       = data(1).Earphone2HzS{1}.time{trial};                              % extract the time vector
+s       = data(1).part1.trial{trial}(elec,:);                               % extract the signal
+t       = data(1).part1.time{trial};                                        % extract the time vector
 
-L       = length(data(1).Earphone2HzS{1}.time{trial});                      % get the signal length
-fSample = data(1).Earphone2HzS{1}.fsample;                                  % get sample frequency
+L       = length(data(1).part1.time{trial});                                % get the signal length
+fSample = data(1).part1.fsample;                                            % get sample frequency
 freq    = fSample * (0:(L/2)) / L;                                          % calculate the frequency vector
 
 clear f

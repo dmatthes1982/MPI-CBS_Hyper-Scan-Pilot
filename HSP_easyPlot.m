@@ -1,6 +1,6 @@
 function HSP_easyPlot( cfg, data )
-% HSP_EASYPLOT is a function, which makes it easier to plot a specific 
-% trial of a particular condition from the HSP-data-structure.
+% HSP_EASYPLOT is a function, which makes it easier to plot the data of a 
+% specific condition and trial from the HSP-data-structure.
 %
 % Use as
 %   HSP_easyPlot(cfg, data)
@@ -9,9 +9,9 @@ function HSP_easyPlot( cfg, data )
 % HSP_PREPROCESSING
 %
 % The configuration options are
-%   cfg.condition = condition (default: 'Earphone2HzS', see HSP data structure)
 %   cfg.dyad      = number of dyad (default: 1)
 %   cfg.part      = number of participant (default: 1)
+%   cfg.condition = condition (default: 21 or 'Earphone2HzS', see HSP data structure)
 %   cfg.electrode = number of electrode (default: 'Cz')
 %   cfg.trial     = number of trial (default: 1)
 %
@@ -24,19 +24,47 @@ function HSP_easyPlot( cfg, data )
 % -------------------------------------------------------------------------
 % Get and check config options
 % -------------------------------------------------------------------------
-cond = ft_getopt(cfg, 'condition', 'Earphone2HzS');
 dyad = ft_getopt(cfg, 'dyad', 1);
 part = ft_getopt(cfg, 'part', 1);
+cond = ft_getopt(cfg, 'condition', 21);
 elec = ft_getopt(cfg, 'electrode', 'Cz');
 trl  = ft_getopt(cfg, 'trial', 1);
 
-if part < 1 || part > 2
+numOfDyads = length(data);                                                  % check cfg.dyad definition
+if numOfDyads < dyad
+  error('The selected dataset contains only %d dyads', numOfDyads);
+end
+
+if part < 1 || part > 2                                                     % check cfg.participant definition
   error('cfg.part has to be 1 or 2');
 end
 
-label = data(dyad).Earphone2HzS{part}.label;
+if part == 1                                                                % get trialinfo
+  trialinfo = data(dyad).part1.trialinfo;
+elseif part == 2
+  trialinfo = data(dyad).part2.trialinfo;
+end
 
-if isnumeric(elec)
+cond    = HSP_checkCondition( cond );                                       % check cfg.condition definition    
+trials  = find(trialinfo == cond);
+if isempty(trials)
+  error('The selected dataset contains no condition %d.', cond);
+else
+  numTrials = length(trials);
+  if numTrials < trl                                                        % check cfg.trial definition
+    error('The selected dataset contains only %d trials.', numTrials);
+  else
+    trl = trl-1 + trials(1);
+  end
+end
+
+if part == 1                                                                % get labels
+  label = data(dyad).part1.label;                                             
+elseif part == 2
+  label = data(dyad).part2.label;
+end
+
+if isnumeric(elec)                                                          % check cfg.electrode definition
   if elec < 1 || elec > 32
     error('cfg.elec hast to be a number between 1 and 32 or a existing label like ''Cz''.');
   end
@@ -50,113 +78,20 @@ end
 % -------------------------------------------------------------------------
 % Plot timeline
 % -------------------------------------------------------------------------
-switch cond
-  case 'Earphone2HzS'
-    plot( data(dyad).Earphone2HzS{part}.time{trl}, ...
-          data(dyad).Earphone2HzS{part}.trial{trl}(elec,:));
-    title(sprintf('Earphone2HzS - Electrode: %s - Trial: %d - Dyad: %d - % d', ...
-          strrep(data(dyad).Earphone2HzS{part}.label{elec}, '_', '\_'), ...
-          trl, dyad, part));
-  case 'Speaker2HzS'
-    plot( data(dyad).Speaker2HzS{part}.time{trl}, ...
-          data(dyad).Speaker2HzS{part}.trial{trl}(elec,:));
-    title(sprintf('Speaker2HzS - Electrode: %s - Trial: %d - Dyad: %d - % d', ...
-          strrep(data(dyad).Speaker2HzS{part}.label{elec}, '_', '\_'), ...
-          trl, dyad, part));
-  case 'Tapping2HzS'
-    plot( data(dyad).Tapping2HzS{part}.time{trl}, ...
-          data(dyad).Tapping2HzS{part}.trial{trl}(elec,:));
-    title(sprintf('Tapping2HzS - Electrode: %s - Trial: %d - Dyad: %d - % d', ...
-          strrep(data(dyad).Tapping2HzS{part}.label{elec}, '_', '\_'), ...
-          trl, dyad, part));
-  case 'Dialogue2HzS'
-    plot( data(dyad).Dialogue2HzS{part}.time{trl}, ...
-          data(dyad).Dialogue2HzS{part}.trial{trl}(elec,:));
-    title(sprintf('Dialogue2HzS - Electrode: %s - Trial: %d - Dyad: %d - % d', ...
-          strrep(data(dyad).Dialogue2HzS{part}.label{elec}, '_', '\_'), ...
-          trl, dyad, part));
-  case 'Speaker20HzS'
-    plot( data(dyad).Speaker20HzS{part}.time{trl}, ...
-          data(dyad).Speaker20HzS{part}.trial{trl}(elec,:));
-    title(sprintf('Speaker20HzS - Electrode: %s - Trial: %d - Dyad: %d - % d', ...
-          strrep(data(dyad).Speaker20HzS{part}.label{elec}, '_', '\_'), ...
-          trl, dyad, part));
-  case 'Earphone20HzS'
-    plot( data(dyad).Earphone20HzS{part}.time{trl}, ...
-          data(dyad).Earphone20HzS{part}.trial{trl}(elec,:));
-    title(sprintf('Earphone20HzS - Electrode: %s - Trial: %d - Dyad: %d - % d', ...
-          strrep(data(dyad).Earphone20HzS{part}.label{elec}, '_', '\_'), ...
-          trl, dyad, part));
-  case 'Speaker20HzA'
-    plot( data(dyad).Speaker20HzA{part}.time{trl}, ...
-          data(dyad).Speaker20HzA{part}.trial{trl}(elec,:));
-    title(sprintf('Speaker20HzA - Electrode: %s - Trial: %d - Dyad: %d - % d', ...
-          strrep(data(dyad).Speaker20HzA{part}.label{elec}, '_', '\_'), ...
-          trl, dyad, part));
-  case 'Earphone20HzA'
-    plot( data(dyad).Earphone20HzA{part}.time{trl}, ...
-          data(dyad).Earphone20HzA{part}.trial{trl}(elec,:));
-    title(sprintf('Earphone20HzA - Electrode: %s - Trial: %d - Dyad: %d - % d', ...
-          strrep(data(dyad).Earphone20HzA{part}.label{elec}, '_', '\_'), ...
-          trl, dyad, part));
-  case 'Earphone2HzA'
-    plot( data(dyad).Earphone2HzA{part}.time{trl}, ...
-          data(dyad).Earphone2HzA{part}.trial{trl}(elec,:));
-    title(sprintf('Earphone2HzA - Electrode: %s - Trial: %d - Dyad: %d - % d', ...
-          strrep(data(dyad).Earphone2HzA{part}.label{elec}, '_', '\_'), ...
-          trl, dyad, part));
-  case 'Speaker2HzA'
-    plot( data(dyad).Speaker2HzA{part}.time{trl}, ...
-          data(dyad).Speaker2HzA{part}.trial{trl}(elec,:));
-    title(sprintf('Speaker2HzA - Electrode: %s - Trial: %d - Dyad: %d - % d', ...
-          strrep(data(dyad).Speaker2HzA{part}.label{elec}, '_', '\_'),...
-          trl, dyad, part));
-  case 'Earphone40HzS'
-    plot( data(dyad).Earphone40HzS{part}.time{trl}, ...
-          data(dyad).Earphone40HzS{part}.trial{trl}(elec,:));
-    title(sprintf('Earphone40HzS - Electrode: %s - Trial: %d - Dyad: %d - % d', ...
-          strrep(data(dyad).Earphone40HzS{part}.label{elec}, '_', '\_'), ...
-          trl, dyad, part));
-  case 'Speaker40HzS'
-    plot( data(dyad).Speaker40HzS{part}.time{trl}, ...
-          data(dyad).Speaker40HzS{part}.trial{trl}(elec,:));
-    title(sprintf('Speaker40HzS - Electrode: %s - Trial: %d - Dyad: %d - % d', ...
-      strrep(data(dyad).Speaker40HzS{part}.label{elec}, '_', '\_'), ...
-      trl, dyad, part));
-  case 'Atalks2B'
-    plot( data(dyad).Atalks2B{part}.time{trl}, ...
-          data(dyad).Atalks2B{part}.trial{trl}(elec,:));
-    title(sprintf('Atalks2B - Electrode: %s - Trial: %d - Dyad: %d - % d', ... 
-          strrep(data(dyad).Atalks2B{part}.label{elec}, '_', '\_'), ...
-          trl, dyad, part));
-   case 'Btalks2A'
-    plot( data(dyad).Btalks2A{part}.time{trl}, ...
-          data(dyad).Btalks2A{part}.trial{trl}(elec,:));
-    title(sprintf('Btalks2A - Electrode: %s - Trial: %d - Dyad: %d - % d', ... 
-          strrep(data(dyad).Btalks2A{part}.label{elec}, '_', '\_'), ...
-          trl, dyad, part));     
-    case 'Dialogue'
-    plot( data(dyad).Dialogue{part}.time{trl}, ...
-          data(dyad).Dialogue{part}.trial{trl}(elec,:));
-    title(sprintf('Dialogue - Electrode: %s - Trial: %d - Dyad: %d - % d', ... 
-          strrep(data(dyad).Dialogue{part}.label{elec}, '_', '\_'), ...
-          trl, dyad, part));    
-   case 'SilEyesOpen'
-    plot( data(dyad).SilEyesOpen{part}.time{trl}, ...
-          data(dyad).SilEyesOpen{part}.trial{trl}(elec,:));
-    title(sprintf('SilEyesOpen - Electrode: %s - Trial: %d - Dyad: %d - % d', ... 
-          strrep(data(dyad).SilEyesOpen{part}.label{elec}, '_', '\_'), ...
-          trl, dyad, part));     
-   case 'SilEyesClosed'
-    plot( data(dyad).SilEyesClosed{part}.time{trl}, ...
-          data(dyad).SilEyesClosed{part}.trial{trl}(elec,:));
-    title(sprintf('SilEyesClosed - Electrode: %s - Trial: %d - Dyad: %d - % d', ... 
-          strrep(data(dyad).SilEyesClosed{part}.label{elec}, '_', '\_'), ...
-          trl, dyad, part));     
+switch part
+  case 1
+    plot(data(dyad).part1.time{trl}, data(dyad).part1.trial{trl}(elec,:));
+    title(sprintf('Part.: %d/%d -Cond.: %d - Elec.: %s - Trial: %d - ', ...
+          dyad, part, cond, ...
+          strrep(data(dyad).part1.label{elec}, '_', '\_'), trl));      
+  case 2
+    plot(data(dyad).part2.time{trl}, data(dyad).part2.trial{trl}(elec,:));
+    title(sprintf('Part.: %d/%d -Cond.: %d - Elec.: %s - Trial: %d - ', ...
+          dyad, part, cond, ...
+          strrep(data(dyad).part2.label{elec}, '_', '\_'), trl));
 end
 
 xlabel('time in seconds');
 ylabel('voltage in \muV');
 
 end
-

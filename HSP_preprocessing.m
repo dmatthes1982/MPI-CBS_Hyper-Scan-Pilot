@@ -40,6 +40,7 @@ cfgBP.bpfilter      = 'yes';                                                % us
 cfgBP.bpfreq        = bpfreq;                                               % bandpass range  
 cfgBP.bpfilttype    = 'fir';                                                % bandpass filter type = fir      
 cfgBP.channel       = 'all';                                                % use all channels
+cfgBP.trials        = 'all';                                                % use all trials
 cfgBP.feedback      = 'no';                                                 % feedback should not be presented
 cfgBP.showcallinfo  = 'no';                                                 % prevent printing the time and memory after each function call
 
@@ -50,6 +51,7 @@ cfgReref.refchannel    = {refchannel 'REF'};                                % se
 cfgReref.implicitref   = 'REF';                                             % add implicit channel 'REF' to the channels
 cfgReref.refmethod     = 'avg';                                             % average over selected electrodes (in our case insignificant)
 cfgReref.channel       = {'all', '-V1', '-V2', '-F9', '-F10'};              % use all channels except 'V1', 'V2', 'F9' and 'F10'
+cfgReref.trials        = 'all';                                             % use all trials
 cfgReref.feedback      = 'no';                                              % feedback should not be presented
 cfgReref.showcallinfo  = 'no';                                              % prevent printing the time and memory after each function call
 cfgReref.calceogcomp   = 'yes';                                             % calculate eogh and eogv 
@@ -59,212 +61,20 @@ cfgReref.calceogcomp   = 'yes';                                             % ca
 % -------------------------------------------------------------------------
 
 parfor i=1:1:numOfPart
-  fprintf('Preproc set Earphone2HzS of dyad %d...\n', i);
-  if ~isempty(data(i).Earphone2HzS{1})
-    for j=1:1:2
-      data(i).Earphone2HzS{j}   = bpfilter(cfgBP, ...
-                                           data(i).Earphone2HzS{j});
-      data(i).Earphone2HzS{j}   = rereference(cfgReref, ...
-                                              data(i).Earphone2HzS{j});
-    end
-  else
-    data(i).Earphone2HzS{2}     = [];
-  end
+  fprintf('Preproc participant 1 of dyad %d...\n', i);
+  data(i).part1   = bpfilter(cfgBP, data(i).part1);
+  data(i).part1   = rereference(cfgReref, data(i).part1);
   
-  fprintf('Preproc set Speaker2HzS of dyad %d...\n', i);
-  if ~isempty(data(i).Speaker2HzS{1})
-    for j=1:1:2
-        data(i).Speaker2HzS{j}  = bpfilter(cfgBP, ...
-                                           data(i).Speaker2HzS{j});
-        data(i).Speaker2HzS{j}  = rereference(cfgReref, ...
-                                              data(i).Speaker2HzS{j});
-    end
-  else
-    data(i).Speaker2HzS{2}      = [];
-  end
-  
-  fprintf('Preproc set Tapping2HzS of dyad %d...\n', i);
-  if ~isempty(data(i).Tapping2HzS{1})
-    for j=1:1:2
-        data(i).Tapping2HzS{j}  = bpfilter(cfgBP, ...
-                                           data(i).Tapping2HzS{j});
-        data(i).Tapping2HzS{j}  = rereference(cfgReref, ...
-                                              data(i).Tapping2HzS{j});
-    end
-  else
-    data(i).Tapping2HzS{2}      = [];
-  end
-  
-  fprintf('Preproc set Dialogue2HzS of dyad %d...\n', i);
-  if ~isempty(data(i).Dialogue2HzS{1})
-    for j=1:1:2
-      data(i).Dialogue2HzS{j}   = bpfilter(cfgBP, ...
-                                           data(i).Dialogue2HzS{j});
-      data(i).Dialogue2HzS{j}   = rereference(cfgReref, ...
-                                              data(i).Dialogue2HzS{j});
-    end                                  
-  else
-    data(i).Dialogue2HzS{2}     = [];
-  end
-  
-  fprintf('Preproc set Speaker20HzS of dyad %d...\n', i);
-  if ~isempty(data(i).Speaker20HzS{1})
-    for j=1:1:2
-      data(i).Speaker20HzS{j}   = bpfilter(cfgBP, ...
-                                           data(i).Speaker20HzS{j});
-      data(i).Speaker20HzS{j}   = rereference(cfgReref, ...
-                                              data(i).Speaker20HzS{j});
-    end                                  
-  else
-    data(i).Speaker20HzS{2}     = [];
-  end
-  
-  fprintf('Preproc set Earphone20HzS of dyad %d...\n', i);
-  if ~isempty(data(i).Earphone20HzS{1})
-    for j=1:1:2
-      data(i).Earphone20HzS{j}  = bpfilter(cfgBP, ...
-                                           data(i).Earphone20HzS{j});
-      data(i).Earphone20HzS{j}  = rereference(cfgReref, ...
-                                              data(i).Earphone20HzS{j});
-    end                                 
-  else
-    data(i).Earphone20HzS{2}    = [];
-  end
-  
-  fprintf('Preproc set Speaker20HzA of dyad %d...\n', i);
-  if ~isempty(data(i).Speaker20HzA{1})
-    for j=1:1:2
-      data(i).Speaker20HzA{j}   = bpfilter(cfgBP, ...
-                                           data(i).Speaker20HzA{j});
-      data(i).Speaker20HzA{j}   = rereference(cfgReref, ...
-                                              data(i).Speaker20HzA{j});
-    end                                  
-  else
-    data(i).Speaker20HzA{2}     = [];
-  end
-  
-  fprintf('Preproc set Earphone20HzA of dyad %d...\n', i);
-  if ~isempty(data(i).Earphone20HzA{1})
-    for j=1:1:2
-      data(i).Earphone20HzA{j}  = bpfilter(cfgBP, ...
-                                           data(i).Earphone20HzA{j});
-      data(i).Earphone20HzA{j}  = rereference(cfgReref, ...
-                                             data(i).Earphone20HzA{j});
-    end                                  
-  else
-    data(i).Earphone20HzA{2}    = [];
-  end
-  
-  fprintf('Preproc set Earphone2HzA of dyad %d...\n', i);
-  if ~isempty(data(i).Earphone2HzA{1})
-    for j=1:1:2
-      data(i).Earphone2HzA{j}   = bpfilter(cfgBP, ...
-                                           data(i).Earphone2HzA{j});
-      data(i).Earphone2HzA{j}   = rereference(cfgReref, ...
-                                              data(i).Earphone2HzA{j});
-    end                                  
-  else
-    data(i).Earphone2HzA{2}     = [];
-  end
-  
-  fprintf('Preproc set Speaker2HzA of dyad %d...\n', i);
-  if ~isempty(data(i).Speaker2HzA{1})
-    for j=1:1:2
-      data(i).Speaker2HzA{j}    = bpfilter(cfgBP, ...
-                                           data(i).Speaker2HzA{j});
-      data(i).Speaker2HzA{j}    = rereference(cfgReref, ...
-                                              data(i).Speaker2HzA{j});
-    end                                  
-  else
-    data(i).Speaker2HzA{2}      = [];
-  end
-    
-  fprintf('Preproc set Earphone40HzS of dyad %d...\n', i);
-  if ~isempty(data(i).Earphone40HzS{1})
-    for j=1:1:2
-      data(i).Earphone40HzS{j}  = bpfilter(cfgBP, ...
-                                           data(i).Earphone40HzS{j});
-      data(i).Earphone40HzS{j}  = rereference(cfgReref, ...
-                                              data(i).Earphone40HzS{j});
-    end                                  
-  else
-    data(i).Earphone40HzS {2}   = [];
-  end
-  
-  fprintf('Preproc set Speaker40HzS of dyad %d...\n', i);
-  if ~isempty(data(i).Speaker40HzS{1})
-    for j=1:1:2
-      data(i).Speaker40HzS{j}   = bpfilter(cfgBP, ...
-                                           data(i).Speaker40HzS{j});
-      data(i).Speaker40HzS{j}   = rereference(cfgReref, ...
-                                              data(i).Speaker40HzS{j});
-    end                                  
-  else
-    data(i).Speaker40HzS{2}     = [];
-  end
-  
-  fprintf('Preproc set Atalks2B of dyad %d...\n', i);
-  if ~isempty(data(i).Atalks2B{1})
-    for j=1:1:2
-      data(i).Atalks2B{j}       = bpfilter(cfgBP, ...
-                                           data(i).Atalks2B{j});
-      data(i).Atalks2B{j}       = rereference(cfgReref, ...
-                                              data(i).Atalks2B{j});
-    end                                  
-  else
-    data(i).Atalks2B{2}         = [];
-  end
-  
-  fprintf('Preproc set Btalks2A of dyad %d...\n', i);
-  if ~isempty(data(i).Btalks2A{1})
-    for j=1:1:2
-      data(i).Btalks2A{j}       = bpfilter(cfgBP, ...
-                                           data(i).Btalks2A{j});
-      data(i).Btalks2A{j}       = rereference(cfgReref, ...
-                                              data(i).Btalks2A{j});
-    end                                  
-  else
-    data(i).Btalks2A{2}         = [];
-  end
-  
-  fprintf('Preproc set Dialogue of dyad %d...\n', i);
-  if ~isempty(data(i).Dialogue{1})
-    for j=1:1:2
-      data(i).Dialogue{j}       = bpfilter(cfgBP, ...
-                                           data(i).Dialogue{j});
-      data(i).Dialogue{j}       = rereference(cfgReref, ...
-                                              data(i).Dialogue{j});
-    end                                  
-  else
-    data(i).Dialogue{2}         = [];
-  end
-  
-  fprintf('Preproc set SilEyesOpen of dyad %d...\n', i);
-  if ~isempty(data(i).SilEyesOpen{1})
-    for j=1:1:2
-      data(i).SilEyesOpen{j}    = bpfilter(cfgBP, ...
-                                           data(i).SilEyesOpen{j});
-      data(i).SilEyesOpen{j}    = rereference(cfgReref, ...
-                                              data(i).SilEyesOpen{j});
-    end                                  
-  else
-    data(i).SilEyesOpen{2}      = [];
-  end
-  
-  fprintf('Preproc set SilEyesClosed of dyad %d...\n', i);
-  if ~isempty(data(i).SilEyesClosed{1})
-    for j=1:1:2
-      data(i).SilEyesClosed{j}  = bpfilter(cfgBP, ...
-                                           data(i).SilEyesClosed{j});
-      data(i).SilEyesClosed{j}  = rereference(cfgReref, ...
-                                              data(i).SilEyesClosed{j});
-    end                                  
-  else
-    data(i).SilEyesClosed{2}    = [];
-  end
+  fprintf('Preproc participant 2 of dyad %d...\n', i);
+  data(i).part2   = bpfilter(cfgBP, data(i).part2);
+  data(i).part2   = rereference(cfgReref, data(i).part2);  
 end
 
 end
+
+% -------------------------------------------------------------------------
+% Local functions
+% -------------------------------------------------------------------------
 
 function [ data_out ] = bpfilter( cfgB, data_in )
   

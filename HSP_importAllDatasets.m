@@ -59,23 +59,8 @@ for i=1:1:numOfPart
     fprintf('Import data from: %s ...\n', dataset);
     dataImport = HSP_importSingleDataset(cfg);
     
-    data(i).Earphone2HzS    = dataImport.Earphone2HzS;
-    data(i).Speaker2HzS     = dataImport.Speaker2HzS;
-    data(i).Tapping2HzS     = dataImport.Tapping2HzS;
-    data(i).Dialogue2HzS    = dataImport.Dialogue2HzS;
-    data(i).Speaker20HzS    = dataImport.Speaker20HzS;
-    data(i).Earphone20HzS   = dataImport.Earphone20HzS;
-    data(i).Speaker20HzA    = dataImport.Speaker20HzA;
-    data(i).Earphone20HzA   = dataImport.Earphone20HzA;
-    data(i).Earphone2HzA    = dataImport.Earphone2HzA;
-    data(i).Speaker2HzA     = dataImport.Speaker2HzA;
-    data(i).Earphone40HzS   = dataImport.Earphone40HzS;
-    data(i).Speaker40HzS    = dataImport.Speaker40HzS;
-    data(i).Atalks2B        = dataImport.Atalks2B;
-    data(i).Btalks2A        = dataImport.Btalks2A;
-    data(i).Dialogue        = dataImport.Dialogue;
-    data(i).SilEyesOpen     = dataImport.SilEyesOpen;
-    data(i).SilEyesClosed   = dataImport.SilEyesClosed;
+    data(i).part1    = dataImport.part1;
+    data(i).part2    = dataImport.part2;
   end
   
 end

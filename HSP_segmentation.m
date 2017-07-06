@@ -35,12 +35,39 @@ cfg.overlap         = 0;                                                    % no
 % Segmentation
 % -------------------------------------------------------------------------
 
-parfor i=1:1:numOfPart
+for i=1:1:numOfPart
+  sampleinfo = data(i).part1.sampleinfo;                                    % calc trialinfo for subsegmented data in case of overlapping trials
+  overlap = 0;
+  
+  for j=2:1:size(sampleinfo, 1)
+    if sampleinfo(j,1) < sampleinfo(j-1, 2)
+      overlap = 1;
+      break;
+    end
+  end
+  if (overlap == 1)
+    trialinfo = data(i).part1.trialinfo;
+    numOfTrials = length(trialinfo);
+%   fsample = data(i).part1.fsample;
+    subseg = (sampleinfo(1,2)-sampleinfo(1,1)+1) / (cfg.length * 500);
+    newTrialinfo = zeros(subseg * numOfTrials, 1);
+    for k=1:1:numOfTrials
+      for l=1:1:subseg
+        newTrialinfo((k-1)*subseg + l) = trialinfo(k);
+      end
+    end
+  end
+  
   fprintf('Segment data of participant 1 of dyad %d...\n', i);
-  data(i).part1 = ft_redefinetrial(cfg, data(i).part1);
+  data(i).part1 = ft_redefinetrial(cfg, data(i).part1);  
+  if (overlap == 1)                                                         % correct trialinfo for subsegmented data in case of overlapping trials
+    data(i).part1.trialinfo = newTrialinfo;
+  end
   
   fprintf('Segment data of participant 2 of dyad %d...\n', i);
   data(i).part2 = ft_redefinetrial(cfg, data(i).part2);
-  
+  if (overlap == 1)                                                         % correct trialinfo for subsegmented data in case of overlapping trials
+    data(i).part2.trialinfo =  newTrialinfo;
+  end
 end
 

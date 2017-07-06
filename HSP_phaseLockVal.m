@@ -47,7 +47,9 @@ centerFreq = (  data(1).part1.cfg.previous.bpfreq(1) + ...
 % -------------------------------------------------------------------------
 % Calculate Phase Locking Value (PLV)
 % -------------------------------------------------------------------------
-dataTmp(numOfPart) = [];
+dataTmp(numOfPart) = struct;
+dataTmp(numOfPart).part1 = [];
+dataTmp(numOfPart).part2 = [];
 
 for i=1:1:numOfPart
   fprintf('Calc PLVs of dyad %d with a center frequency of %d Hz...\n', ...           

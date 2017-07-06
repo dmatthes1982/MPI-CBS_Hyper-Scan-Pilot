@@ -95,10 +95,26 @@ for i=1:1:numOfTrials
   end
 end
 
+numOfDiffTrials = length(unique(dataPart1.trialinfo));                      % merge all PLV values of one condition in one trial
+trialinfo = zeros(numOfDiffTrials, 1);
+condPLV{numOfDiffTrials} = [];
+condTime{numOfDiffTrials} = [];
+
+begsample = 1;
+
+for i=1:1:numOfDiffTrials
+  stim = dataPart1.trialinfo(begsample);
+  endsample = find(dataPart1.trialinfo == stim, 1, 'last');
+  trialinfo(i) = stim;
+  condPLV{i} = cell2mat(PLV(begsample:endsample));
+  condTime{i} = cell2mat(time(begsample:endsample));
+  begsample = endsample + 1;
+end
+
 data_out                  = keepfields(dataPart1, {'hdr', 'fsample'});
-data_out.trialinfo        = dataPart1.trialinfo(1);
-data_out.PLV              = {cell2mat(PLV)};
-data_out.time             = {cell2mat(time)};
+data_out.trialinfo        = trialinfo;
+data_out.PLV              = condPLV;
+data_out.time             = condTime;
 data_out.label            = dataPart1.label;
 data_out.cfg              = cfgPLV;
 data_out.cfg.previous{1}  = dataPart1.cfg;

@@ -25,7 +25,7 @@ fprintf('Data stored!\n');
 
 %% preprocess the raw data
 cfg         = [];
-cfg.bpfreq  = [0.3 48];                                                     % passband from 0.3 to 48 Hz
+cfg.bpfreq  = [0.1 48];                                                     % passband from 0.3 to 48 Hz
 
 ft_info off;
 data_preproc = HSP_preprocessing( cfg, data_raw);

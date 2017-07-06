@@ -1,6 +1,4 @@
-%% general settings
 
-  
 %% import data from brain vision eeg files and bring it into an order
 cfg       = [];
 cfg.path  = '/data/pt_01821/DualEEG_AD_auditory_rawData/';
@@ -23,6 +21,7 @@ if exist(file_path, 'file') == 2
 end
 fprintf('The RAW data will be saved in %s ...\n', file_path);
 save(file_path, 'data_raw', '-v7.3');
+fprintf('data saved!\n');
 
 %% preprocess the raw data
 cfg         = [];
@@ -39,6 +38,7 @@ file_name = strcat(dest_folder, 'HSP_02_preproc');
 file_path = strcat(file_name, file_version);
 fprintf('The preprocessed data will be saved in %s ...\n', file_path);
 save(file_path, 'data_preproc', '-v7.3');
+fprintf('data saved!\n');
 
 %% calculate TFRs of the preprocessed data
 cfg         = [];
@@ -52,13 +52,12 @@ file_name = strcat(dest_folder, 'HSP_03_tfr1');
 file_path = strcat(file_name, file_version);
 fprintf('The time-frequency response data will be saved in %s ...\n', file_path);
 save(file_path, 'data_tfr1', '-v7.3');
+fprintf('data saved!\n');
 
 %% segmentation of the preprocessed trials
 % split every the data of every condition into subtrials with a length of 5
 % seconds
-ft_info off;
 data_seg1 = HSP_segmentation( data_preproc );
-ft_info on;
 
 clear data_preproc
 
@@ -67,6 +66,7 @@ file_name = strcat(dest_folder, 'HSP_04_seg1');
 file_path = strcat(file_name, file_version);
 fprintf('The segmented data will be saved in %s ...\n', file_path);
 save(file_path, 'data_seg1', '-v7.3');
+fprintf('data saved!\n');
 
 clear preproc path_generic numOfPart_generic path_raw numOfPart ...
       dest_folder file_name file_path file_version file_pattern file_num ...

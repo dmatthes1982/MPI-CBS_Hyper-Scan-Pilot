@@ -34,8 +34,10 @@ cfg.overlap         = 0;                                                    % no
 % -------------------------------------------------------------------------
 % Segmentation
 % -------------------------------------------------------------------------
+segLength = cfg.length;
 
-for i=1:1:numOfPart
+parfor i=1:1:numOfPart
+  ft_info off;
   sampleinfo = data(i).part1.sampleinfo;                                    % calc trialinfo for subsegmented data in case of overlapping trials
   overlap = 0;
   
@@ -49,7 +51,7 @@ for i=1:1:numOfPart
     trialinfo = data(i).part1.trialinfo;
     numOfTrials = length(trialinfo);
 %   fsample = data(i).part1.fsample;
-    subseg = (sampleinfo(1,2)-sampleinfo(1,1)+1) / (cfg.length * 500);
+    subseg = (sampleinfo(1,2)-sampleinfo(1,1)+1) / (segLength * 500);
     newTrialinfo = zeros(subseg * numOfTrials, 1);
     for k=1:1:numOfTrials
       for l=1:1:subseg
@@ -69,5 +71,7 @@ for i=1:1:numOfPart
   if (overlap == 1)                                                         % correct trialinfo for subsegmented data in case of overlapping trials
     data(i).part2.trialinfo =  newTrialinfo;
   end
+  
+  ft_info on;
 end
 

@@ -54,6 +54,7 @@ else
   if numTrials < trl                                                        % check cfg.trial definition
     error('The selected dataset contains only %d trials.', numTrials);
   else
+    trlInCond = trl;
     trl = trl-1 + trials(1);
   end
 end
@@ -81,14 +82,14 @@ end
 switch part
   case 1
     plot(data(dyad).part1.time{trl}, data(dyad).part1.trial{trl}(elec,:));
-    title(sprintf('Part.: %d/%d -Cond.: %d - Elec.: %s - Trial: %d - ', ...
+    title(sprintf('Part.: %d/%d - Cond.: %d - Elec.: %s - Trial: %d', ...
           dyad, part, cond, ...
-          strrep(data(dyad).part1.label{elec}, '_', '\_'), trl));      
+          strrep(data(dyad).part1.label{elec}, '_', '\_'), trlInCond));      
   case 2
     plot(data(dyad).part2.time{trl}, data(dyad).part2.trial{trl}(elec,:));
-    title(sprintf('Part.: %d/%d -Cond.: %d - Elec.: %s - Trial: %d - ', ...
+    title(sprintf('Part.: %d/%d - Cond.: %d - Elec.: %s - Trial: %d', ...
           dyad, part, cond, ...
-          strrep(data(dyad).part2.label{elec}, '_', '\_'), trl));
+          strrep(data(dyad).part2.label{elec}, '_', '\_'), trlInCond));
 end
 
 xlabel('time in seconds');

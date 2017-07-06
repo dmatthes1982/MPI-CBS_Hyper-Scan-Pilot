@@ -58,6 +58,7 @@ else
   if numTrials < trl                                                        % check cfg.trial definition
     error('The selected dataset contains only %d trials.', numTrials);
   else
+    trlInCond = trl;
     trl = trl-1 + trials(1);
   end
 end
@@ -100,14 +101,14 @@ colormap jet;                                                               % us
 switch part
   case 1
     ft_singleplotTFR(cfg, data(dyad).part1);
-    title(sprintf('Part.: %d/%d -Cond.: %d - Elec.: %s - Trial: %d - ', ...
+    title(sprintf('Part.: %d/%d - Cond.: %d - Elec.: %s - Trial: %d', ...
           dyad, part, cond, ...
-          strrep(data(dyad).part1.label{elec}, '_', '\_'), trl));      
+          strrep(data(dyad).part1.label{elec}, '_', '\_'), trlInCond));      
   case 2
     ft_singleplotTFR(cfg, data(dyad).part2);
-    title(sprintf('Part.: %d/%d -Cond.: %d - Elec.: %s - Trial: %d - ', ...
+    title(sprintf('Part.: %d/%d - Cond.: %d - Elec.: %s - Trial: %d', ...
           dyad, part, cond, ...
-          strrep(data(dyad).part2.label{elec}, '_', '\_'), trl));
+          strrep(data(dyad).part2.label{elec}, '_', '\_'), trlInCond));
 end
 
 xlabel('time in sec');                                                      % set xlabel

@@ -56,6 +56,7 @@ else
   if numTrials < trl                                                        % check cfg.trial definition
     error('The selected dataset contains only %d trials.', numTrials);
   else
+    trlInCond = trl;
     trl = trl-1 + trials(1);
   end
 end
@@ -77,7 +78,6 @@ cfg.zlim          = 'maxmin';
 cfg.trials        = trl;
 cfg.channel       = 1:1:28;
 cfg.layout        = 'mpi_customized_acticap32.mat';
-cfg.trials        = 1;
 
 cfg.showlabels    = 'no';
 cfg.showoutline   = 'yes';
@@ -88,12 +88,12 @@ cfg.showcallinfo  = 'no';                                                   % su
 switch part
   case 1
     ft_multiplotTFR(cfg, data(dyad).part1);
-    title(sprintf('Part.: %d/%d -Cond.: %d - Trial: %d - ', ...
-          dyad, part, cond, trl));      
+    title(sprintf('Part.: %d/%d - Cond.: %d - Trial: %d', ...
+          dyad, part, cond, trlInCond));      
   case 2
     ft_multiplotTFR(cfg, data(dyad).part2);
-    title(sprintf('Part.: %d/%d -Cond.: %d - Trial: %d - ', ...
-          dyad, part, cond, trl));
+    title(sprintf('Part.: %d/%d - Cond.: %d - Trial: %d', ...
+          dyad, part, cond, trlInCond));
 end
 
 ft_warning on;

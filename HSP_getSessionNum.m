@@ -19,17 +19,21 @@ filename    = ft_getopt(cfg, 'filename', 'HSP_01_raw');
 file_path = strcat(srcFolder, filename, '_*.mat');
 
 sessionList    = dir(file_path);
-sessionList    = struct2cell(sessionList);
-sessionList    = sessionList(1,:);
-numOfSessions  = length(sessionList);
+if isempty(sessionList)
+  num = 0;
+else
+  sessionList    = struct2cell(sessionList);
+  sessionList    = sessionList(1,:);
+  numOfSessions  = length(sessionList);
 
-sessionNum     = zeros(1, numOfSessions);
+  sessionNum     = zeros(1, numOfSessions);
 
-for i=1:1:numOfSessions
-  sessionNum(i) = sscanf(sessionList{i}, 'HSP_01_raw_%d.mat');
+  for i=1:1:numOfSessions
+    sessionNum(i) = sscanf(sessionList{i}, 'HSP_01_raw_%d.mat');
+  end
+
+  num = max(sessionNum);
 end
-
-num = max(sessionNum);
 
 end
 

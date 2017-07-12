@@ -6,7 +6,7 @@ function HSP_saveData( cfg, varargin )
 %   HSP_saveData( cfg, varargin )
 %
 % The configuration options are
-%   cfg.srcFolder   = source folder (default: '/data/pt_01821/DualEEG_AD_auditory_processedData/')
+%   cfg.desFolder   = source folder (default: '/data/pt_01821/DualEEG_AD_auditory_processedData/')
 %   cfg.filename    = filename (default: 'HSP_01_raw')
 %   cfg.sessionStr  = number of session, format: %03d, i.e.: '003' (default: '001')
 %
@@ -16,12 +16,11 @@ function HSP_saveData( cfg, varargin )
 
 % Copyright (C) 2017, Daniel Matthes, MPI CBS
 
-srcFolder   = ft_getopt(cfg, 'srcFolder', '/data/pt_01821/DualEEG_AD_auditory_processedData/');
+desFolder   = ft_getopt(cfg, 'desFolder', '/data/pt_01821/DualEEG_AD_auditory_processedData/');
 filename    = ft_getopt(cfg, 'filename', 'HSP_01_raw');
 sessionStr  = ft_getopt(cfg, 'sessionStr', '010');
 
-file_path = strcat(srcFolder, filename, '_', sessionStr, '.mat');
-
+file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
 inputElements = length(varargin);
 
 if inputElements == 0

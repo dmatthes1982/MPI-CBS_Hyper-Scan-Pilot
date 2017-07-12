@@ -54,20 +54,5 @@ fprintf('The time-frequency response data will be saved in %s ...\n', file_path)
 save(file_path, 'data_tfr1', '-v7.3');
 fprintf('Data stored!\n');
 
-%% segmentation of the preprocessed trials
-% split every the data of every condition into subtrials with a length of 5
-% seconds
-data_seg1 = HSP_segmentation( data_preproc );
-
-clear data_preproc
-
-%% export the segmented data into a *.mat file
-file_name = strcat(dest_folder, 'HSP_04_seg1');
-file_path = strcat(file_name, file_version);
-fprintf('The segmented data will be saved in %s ...\n', file_path);
-save(file_path, 'data_seg1', '-v7.3');
-fprintf('Data stored!\n');
-
-clear preproc path_generic numOfPart_generic path_raw numOfPart ...
-      dest_folder file_name file_path file_version file_pattern file_num ...
-      tfrOfpreproc cfg
+clear dest_folder file_name file_path file_version file_pattern file_num ...
+      cfg

@@ -10,6 +10,51 @@ fprintf('------------------------------------------------\n');
 srcPath = '/data/pt_01821/DualEEG_AD_auditory_rawData/';
 desPath = '/data/pt_01821/DualEEG_AD_auditory_processedData/';
 
+clear session sessionStr dyadSpec part numOfPartpart
+
+% -------------------------------------------------------------------------
+% Session selection
+% -------------------------------------------------------------------------
+selection = false;
+
+sessionList    = dir([desPath, '/HSP_02_preproc_*.mat']);
+sessionList    = struct2cell(sessionList);
+sessionList    = sessionList(1,:);
+numOfSessions  = length(sessionList);
+
+sessionNum     = zeros(1, numOfSessions);
+
+for i=1:1:numOfSessions
+  sessionNum(i) = sscanf(sessionList{i}, 'HSP_02_preproc_%d.mat');
+end
+
+y = sprintf('%d ', sessionNum);
+
+while selection == false
+  fprintf('\nThe following sessions are available: %s\n', y);
+  fprintf('Please select one session or create a new one:\n');
+  fprintf('[0] - Create new session\n');
+  fprintf('[num] - Select session\n\n');
+  x = input('Session: ');
+
+  if length(x) > 1
+    cprintf([1,0.5,0], 'Wrong input, select only one session!\n');
+  else
+    if ismember(x, sessionNum)
+      selection = true;
+      session = x;
+      sessionStr = sprintf('%03d', session);
+    elseif x == 0  
+      selection = true;
+      session = x;
+      sessionStr = sprintf('%03d', max(sessionNum) + 1);
+    else
+      cprintf([1,0.5,0], 'Wrong input, session does not exist!\n');
+    end
+  end
+end
+  
+
 % -------------------------------------------------------------------------
 % General selection of dyads
 % -------------------------------------------------------------------------
@@ -35,10 +80,10 @@ while selection == false
       dyadsSpec = 'specific';
     case 4
       fprintf('\nData processing aborted.\n');
-      clear selection x
+      clear selection i x y srcPath desPath session sessionList ...
+            sessionNum numOfSessions sessionStr
       return;
     otherwise
-      selection = false;
       cprintf([1,0.5,0], 'Wrong input!\n');
   end
 end
@@ -48,41 +93,48 @@ end
 % -------------------------------------------------------------------------
 selection = false;
 
-while selection == false
-  fprintf('\nPlease select what you want to do with the selected dyads:\n');
+if session == 0
+  fprintf('\nA new session always will start with part:\n');
   fprintf('[1] - Import and basic preprocessing\n');
-  fprintf('[2] - Rejection of eye artifacts (not available yet)\n');
-  fprintf('[3] - Segmentation of the data\n');
-  fprintf('[4] - Manual rejection of further artifacts (not available yet)\n');
-  fprintf('[5] - Calculation of PLV\n');
-  fprintf('[6] - Quit data processing\n\n');
-  x = input('Option: ');
+  part = 1;
+else
+  while selection == false
+    fprintf('\nPlease select what you want to do with the selected dyads:\n');
+    fprintf('[1] - Import and basic preprocessing\n');
+    fprintf('[2] - Rejection of eye artifacts (not available yet)\n');
+    fprintf('[3] - Segmentation of the data\n');
+    fprintf('[4] - Manual rejection of further artifacts (not available yet)\n');
+    fprintf('[5] - Calculation of PLV\n');
+    fprintf('[6] - Quit data processing\n\n');
+    x = input('Option: ');
   
-  switch x
-    case 1
-      state = 1;
-      selection = true;
-    case 2
-      state = 2;
-      selection = false;
-      cprintf([1,0.5,0], 'This option is currently unsupported!\n');
-    case 3
-      state = 3;
-      selection = true;
-    case 4
-      state = 4;
-      selection = false;
-      cprintf([1,0.5,0], 'This option is currently unsupported!\n');
-    case 5
-      state = 5;
-      selection = true;
-    case 6
-      fprintf('\nData processing aborted.\n');
-      clear selection x dyads
-      return;
-    otherwise
-      selection = false;
-      cprintf([1,0.5,0], 'Wrong input!\n');
+    switch x
+      case 1
+        part = 1;
+        selection = true;
+      case 2
+        part = 2;
+        selection = false;
+        cprintf([1,0.5,0], 'This option is currently unsupported!\n');
+      case 3
+        part = 3;
+        selection = true;
+      case 4
+        part = 4;
+        selection = false;
+        cprintf([1,0.5,0], 'This option is currently unsupported!\n');
+      case 5
+        part = 5;
+        selection = true;
+      case 6
+        fprintf('\nData processing aborted.\n');
+        clear selection i x y srcPath desPath session sessionList ...
+            sessionNum numOfSessions dyadsSpec sessionStr
+        return;
+      otherwise
+        selection = false;
+        cprintf([1,0.5,0], 'Wrong input!\n');
+    end
   end
 end
 
@@ -100,39 +152,37 @@ for i=1:1:numOfSources
   fileNum(i)     = sscanf(sourceList{i}, 'DualEEG_AD_auditory_%d.vhdr');
 end
 
-switch state
+switch part
   case 1
     fileNamePre = [];
-    fileNamePost = strcat(desPath, 'HSP_02_preproc');
+    fileNamePost = strcat(desPath, 'HSP_02_preproc_', sessionStr, '.mat');
   case 2
     error('This option is currently unsupported!');
   case 3
-    fileNamePre = strcat(desPath, 'HSP_02_preproc');
-    fileNamePost = strcat(desPath, 'HSP_04_seg1');
+    fileNamePre = strcat(desPath, 'HSP_02_preproc_', sessionStr, '.mat');
+    fileNamePost = strcat(desPath, 'HSP_04_seg1_', sessionStr, '.mat');
   case 4
     error('This option is currently unsupported!');
   case 5
-    fileNamePre = strcat(desPath, 'HSP_04_seg1');
-    fileNamePost = strcat(desPath, 'HSP_07a_plv2Hz');
+    fileNamePre = strcat(desPath, 'HSP_04_seg1_', sessionStr, '.mat');
+    fileNamePost = strcat(desPath, 'HSP_07a_plv2Hz_', sessionStr, '.mat');
   otherwise
-    error('Something unexpected happend. state = %d is not defined' ...
-          , state);
+    error('Something unexpected happend. part = %d is not defined' ...
+          , part);
 end
 
 if isempty(fileNamePre)
   numOfPrePart = fileNum;
 else
-  fileListPre = dir(strcat(fileNamePre,'_*.mat'));
+  fileListPre = dir(fileNamePre);
   if isempty(fileListPre)
-    error(['Selected step [%d] can not be executed, no input data '...
-           'available']);
+    error(['Selected part [%d] can not be executed, no input data '...
+           'available\n Please choose a previous part.']);
   else
-    fileNamePre = strcat(desPath, fileListPre(end).name);
     load(fileNamePre, 'dyads');
     numOfPrePart = squeeze(cell2mat(struct2cell(dyads)))';
   end
 end
-
 
 if strcmp(dyadsSpec, 'all')                                                 % process all participants
   numOfPart = numOfPrePart;
@@ -145,7 +195,7 @@ elseif strcmp(dyadsSpec, 'specific')                                        % pr
     fprintf('\nThe following participants are available: %s\n', y);
     fprintf(['Comma-seperate your selection and put it in squared ' ...
                'brackets!\n']);
-    x = input('Please make your choice! (i.e. [1,2,3]): ');
+    x = input('\nPlease make your choice! (i.e. [1,2,3]): ');
       
     if ~all(ismember(x, numOfPrePart))
       cprintf([1,0.5,0], 'Wrong input!\n');
@@ -155,31 +205,35 @@ elseif strcmp(dyadsSpec, 'specific')                                        % pr
     end
   end
 elseif strcmp(dyadsSpec, 'new')                                             % process only new participants
-  fileListPost = dir(strcat(fileNamePost,'_*.mat'));
-  if isempty(fileListPost)
-    numOfPostPart = [];
+  if session == 0
+    numOfPart = numOfPrePart;
   else
-    fileNamePost = strcat(desPath, fileListPost(end).name);
-    load(fileNamePost, 'dyads');
-    numOfPostPart = squeeze(cell2mat(struct2cell(dyads)))';
-  end
+    fileListPost = dir(fileNamePost);
+    if isempty(fileListPost)
+      numOfPostPart = [];
+    else
+      load(fileNamePost, 'dyads');
+      numOfPostPart = squeeze(cell2mat(struct2cell(dyads)))';
+    end
   
-  numOfPart = numOfPrePart(~ismember(numOfPrePart, numOfPostPart));
-  if isempty(numOfPart)
-    cprintf([1,0.5,0], 'No new dyads available!\n');
-    fprintf('Data processing aborted.\n');
-    clear desPath fileNamePost fileNamePre fileNum i numOfPrePart ...
-          numOfSources selection sourceList srcPath x y dyads ...
-          fileListPost fileListPre numOfPostPart
-    return;
+    numOfPart = numOfPrePart(~ismember(numOfPrePart, numOfPostPart));
+    if isempty(numOfPart)
+      cprintf([1,0.5,0], 'No new dyads available!\n');
+      fprintf('Data processing aborted.\n');
+      clear desPath fileNamePost fileNamePre fileNum i numOfPrePart ...
+          numOfSources selection sourceList srcPath x y dyadsSpec ...
+          fileListPost fileListPre numOfPostPart sessionList ...
+          sessionNum numOfSessions session numOfPart part sessionStr dyads
+      return;
+    end
   end
 end
 
 y = sprintf('%d ', numOfPart);
 fprintf(['\nThe following participants will be processed ' ... 
-         'in the selected state [%d]:\n'],  state);
+         'in the selected part [%d]:\n'],  part);
 fprintf('%s\n', y);
 
 clear desPath fileNamePost fileNamePre fileNum i numOfPrePart ...
       numOfSources selection sourceList srcPath x y dyads fileListPost ...
-      fileListPre numOfPostPart
+      fileListPre numOfPostPart sessionList sessionNum numOfSessions

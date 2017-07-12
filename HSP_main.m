@@ -17,7 +17,7 @@ clear session sessionStr dyadSpec part numOfPartpart
 % -------------------------------------------------------------------------
 selection = false;
 
-sessionList    = dir([desPath, '/HSP_02_preproc_*.mat']);
+sessionList    = dir([desPath, 'HSP_02_preproc_*.mat']);
 sessionList    = struct2cell(sessionList);
 sessionList    = sessionList(1,:);
 numOfSessions  = length(sessionList);

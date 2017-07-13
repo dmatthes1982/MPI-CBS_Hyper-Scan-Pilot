@@ -10,11 +10,11 @@ if ~exist('desPath', 'var')
 end
 
 cfg             = [];
-cfg.desFolder   = desFolder;
+cfg.desFolder   = desPath;
 cfg.filename    = 'HSP_04_seg1';
 cfg.sessionStr  = sessionStr;
 
-file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 
 fprintf('Loading %s ...\n', file_path);
 HSP_load( cfg );                                                            % load segmented data
@@ -35,11 +35,11 @@ data_bpfilt_2HzNew = HSP_bpFiltering(cfg, data_seg1);
 
 %% export the filtered data into a *.mat file
 cfg             = [];
-cfg.desFolder   = desFolder;
+cfg.desFolder   = desPath;
 cfg.filename    = 'HSP_05a_bpfilt2Hz';
 cfg.sessionStr  = sessionStr;
 
-file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 file_num = length(dir(file_path));
 
 if file_num == 0
@@ -66,11 +66,11 @@ clear data_bpfilt_2HzNew
 
 %% export the hilbert phase data into a *.mat file
 cfg             = [];
-cfg.desFolder   = desFolder;
+cfg.desFolder   = desPath;
 cfg.filename    = 'HSP_06a_hilbert2Hz';
 cfg.sessionStr  = sessionStr;
 
-file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 file_num = length(dir(file_path));
 
 if file_num == 0
@@ -98,11 +98,11 @@ clear data_hilbert_2Hz
 
 %% export the PLVs into a *.mat file
 cfg             = [];
-cfg.desFolder   = desFolder;
+cfg.desFolder   = desPath;
 cfg.filename    = 'HSP_07a_plv2Hz';
 cfg.sessionStr  = sessionStr;
 
-file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 file_num = length(dir(file_path));
 
 if file_num == 0
@@ -132,11 +132,11 @@ data_bpfilt_10HzNew = HSP_bpFiltering(cfg, data_seg1);
 
 %% export the filtered data into a *.mat file
 cfg             = [];
-cfg.desFolder   = desFolder;
+cfg.desFolder   = desPath;
 cfg.filename    = 'HSP_05a_bpfilt10Hz';
 cfg.sessionStr  = sessionStr;
 
-file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 file_num = length(dir(file_path));
 
 if file_num == 0
@@ -163,11 +163,11 @@ clear data_bpfilt_10HzNew
 
 %% export the hilbert phase data into a *.mat file
 cfg             = [];
-cfg.desFolder   = desFolder;
+cfg.desFolder   = desPath;
 cfg.filename    = 'HSP_06a_hilbert10Hz';
 cfg.sessionStr  = sessionStr;
 
-file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 file_num = length(dir(file_path));
 
 if file_num == 0
@@ -195,11 +195,11 @@ clear data_hilbert_10Hz
 
 %% export the PLVs into a *.mat file
 cfg             = [];
-cfg.desFolder   = desFolder;
+cfg.desFolder   = desPath;
 cfg.filename    = 'HSP_07a_plv10Hz';
 cfg.sessionStr  = sessionStr;
 
-file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 file_num = length(dir(file_path));
 
 if file_num == 0
@@ -229,11 +229,11 @@ data_bpfilt_20HzNew = HSP_bpFiltering(cfg, data_seg1);
 
 %% export the filtered data into a *.mat file
 cfg             = [];
-cfg.desFolder   = desFolder;
+cfg.desFolder   = desPath;
 cfg.filename    = 'HSP_05a_bpfilt20Hz';
 cfg.sessionStr  = sessionStr;
 
-file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 file_num = length(dir(file_path));
 
 if file_num == 0
@@ -260,11 +260,11 @@ clear data_bpfilt_20HzNew
 
 %% export the hilbert phase data into a *.mat file
 cfg             = [];
-cfg.desFolder   = desFolder;
+cfg.desFolder   = desPath;
 cfg.filename    = 'HSP_06a_hilbert20Hz';
 cfg.sessionStr  = sessionStr;
 
-file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 file_num = length(dir(file_path));
 
 if file_num == 0
@@ -292,11 +292,11 @@ clear data_hilbert_20Hz
 
 %% export the PLVs into a *.mat file
 cfg             = [];
-cfg.desFolder   = desFolder;
+cfg.desFolder   = desPath;
 cfg.filename    = 'HSP_07a_plv20Hz';
 cfg.sessionStr  = sessionStr;
 
-file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 file_num = length(dir(file_path));
 
 if file_num == 0
@@ -326,11 +326,11 @@ data_bpfilt_40HzNew = HSP_bpFiltering(cfg, data_seg1);
 
 %% export the filtered data into a *.mat file
 cfg             = [];
-cfg.desFolder   = desFolder;
+cfg.desFolder   = desPath;
 cfg.filename    = 'HSP_05a_bpfilt40Hz';
 cfg.sessionStr  = sessionStr;
 
-file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 file_num = length(dir(file_path));
 
 if file_num == 0
@@ -357,11 +357,11 @@ clear data_bpfilt_40HzNew
 
 %% export the hilbert phase data into a *.mat file
 cfg             = [];
-cfg.desFolder   = desFolder;
+cfg.desFolder   = desPath;
 cfg.filename    = 'HSP_06a_hilbert40Hz';
 cfg.sessionStr  = sessionStr;
 
-file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 file_num = length(dir(file_path));
 
 if file_num == 0
@@ -389,11 +389,11 @@ clear data_hilbert_40Hz
 
 %% export the PLVs into a *.mat file
 cfg             = [];
-cfg.desFolder   = desFolder;
+cfg.desFolder   = desPath;
 cfg.filename    = 'HSP_07a_plv40Hz';
 cfg.sessionStr  = sessionStr;
 
-file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 file_num = length(dir(file_path));
 
 if file_num == 0

@@ -10,11 +10,11 @@ if ~exist('desPath', 'var')
 end
 
 cfg             = [];
-cfg.desFolder   = desFolder;
+cfg.desFolder   = desPath;
 cfg.filename    = 'HSP_02_preproc';
 cfg.sessionStr  = sessionStr;
 
-file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 
 fprintf('Loading %s ...\n', file_path);
 HSP_load( cfg );                                                            % load preprocessed data
@@ -35,11 +35,11 @@ clear data_preproc
 
 %% export the segmented data into a *.mat file
 cfg             = [];
-cfg.desFolder   = desFolder;
+cfg.desFolder   = desPath;
 cfg.filename    = 'HSP_03_seg1';
 cfg.sessionStr  = sessionStr;
 
-file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 file_num = length(dir(file_path));
 
 if file_num == 0

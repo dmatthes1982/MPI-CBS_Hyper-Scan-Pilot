@@ -36,12 +36,12 @@ ft_info on;
 
 %% export the imported and sorted data into an *.mat file
 cfg             = [];
-cfg.desFolder   = desFolder;
+cfg.desFolder   = desPath;
 cfg.filename    = 'HSP_01_raw';
 cfg.sessionStr  = sessionStr;
 dyads(max(numOfPart)).number = [];
 
-file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 file_num = length(dir(file_path));
 
 if file_num == 0
@@ -77,11 +77,11 @@ clear data_rawNew
 
 %% export the preprocessed data into a *.mat file
 cfg             = [];
-cfg.desFolder   = desFolder;
+cfg.desFolder   = desPath;
 cfg.filename    = 'HSP_02_preproc';
 cfg.sessionStr  = sessionStr;
 
-file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 file_num = length(dir(file_path));
 
 if file_num == 0
@@ -110,11 +110,11 @@ clear data_preprocNew
 
 %% export the preprocessed data into a *.mat file
 cfg             = [];
-cfg.desFolder   = desFolder;
+cfg.desFolder   = desPath;
 cfg.filename    = 'HSP_03_tfr1';
 cfg.sessionStr  = sessionStr;
 
-file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 file_num = length(dir(file_path));
 
 if file_num == 0

@@ -235,4 +235,9 @@ fprintf('%s\n', y);
 
 clear desPath fileNamePost fileNamePre fileNum i numOfPrePart ...
       numOfSources selection sourceList srcPath x y dyads fileListPost ...
-      fileListPre numOfPostPart sessionList sessionNum numOfSessions
+      fileListPre numOfPostPart sessionList sessionNum numOfSessions ...
+      session 
+
+% -------------------------------------------------------------------------
+% Data processing main loop
+% -------------------------------------------------------------------------

@@ -1,30 +1,60 @@
-%% import preprocessed data
-dest_folder = '/data/pt_01821/DualEEG_AD_auditory_processedData/';
-file_name = strcat(dest_folder, 'HSP_02_preproc');
-file_path = strcat(file_name, '_*.mat');
-file_num = length(dir(file_path));
-if file_num ~= 0
-  file_version = sprintf('_%03d.mat', file_num);
-  file_path = strcat(file_name, file_version);
-  fprintf('Loading %s ...\n', file_path);
-  load(file_path);
-else
-  error('A dataset with preprocessed data seems not available.');
+%% check if basic variables are defined and import preprocessed data
+if ~exist('sessionStr', 'var')
+  cfg           = [];
+  cfg.filename  = 'HSP_02_preproc';
+  sessionStr    = sprintf('%03d', HSP_getSessionNum( cfg ));                % estimate current session number
+end
+
+if ~exist('desPath', 'var')
+  desPath       = '/data/pt_01821/DualEEG_AD_auditory_processedData/';      % destination path for processed data  
+end
+
+cfg             = [];
+cfg.desFolder   = desFolder;
+cfg.filename    = 'HSP_02_preproc';
+cfg.sessionStr  = sessionStr;
+
+file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+
+fprintf('Loading %s ...\n', file_path);
+HSP_load( cfg );                                                            % load preprocessed data
+
+if ~exist('numOfPart', 'var')                                               % number of participants
+  numOfPart = squeeze(cell2mat(struct2cell(dyads)))';
 end
 
 %% segmentation of the preprocessed trials
-% split every the data of every condition into subtrials with a length of 5
+% split the data of every condition into subtrials with a length of 5
 % seconds
-data_seg1 = HSP_segmentation( data_preproc );
+cfg           = [];
+cfg.numOfPart = numOfPart;
+
+data_seg1New  = HSP_segmentation( cfg, data_preproc );
 
 clear data_preproc
 
 %% export the segmented data into a *.mat file
-file_name = strcat(dest_folder, 'HSP_04_seg1');
-file_path = strcat(file_name, file_version);
+cfg             = [];
+cfg.desFolder   = desFolder;
+cfg.filename    = 'HSP_03_seg1';
+cfg.sessionStr  = sessionStr;
+
+file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
+file_num = length(dir(file_path));
+
+if file_num == 0
+  data_seg1 = data_seg1New;
+else
+  HSP_load( cfg );
+  cfgMerge.numOfNewPart = numOfPart;
+  data_seg1 = HSP_mergeDataset(cfgMerge, data_seg1New, data_seg1);
+  clear cfgMerge;
+end
+
 fprintf('The segmented data will be saved in %s ...\n', file_path);
-save(file_path, 'data_seg1', '-v7.3');
+HSP_saveData(cfg, 'data_seg1', data_seg1, 'dyads', dyads);
 fprintf('Data stored!\n');
 
+%% clear workspace
 clear dest_folder file_name file_path file_version file_pattern file_num ...
       cfg

@@ -6,17 +6,17 @@ function [ num ] = HSP_getSessionNum( cfg )
 %   [ num ] = HSP_getSessionNum( cfg )
 %
 % The configuration options are
-%   cfg.srcFolder   = source folder (default: '/data/pt_01821/DualEEG_AD_auditory_processedData/')
+%   cfg.desFolder   = destination folder (default: '/data/pt_01821/DualEEG_AD_auditory_processedData/')
 %   cfg.filename    = filename (default: HSP_01_raw)
 %
 % This function requires the fieldtrip toolbox.
 
 % Copyright (C) 2017, Daniel Matthes, MPI CBS
 
-srcFolder   = ft_getopt(cfg, 'srcFolder', '/data/pt_01821/DualEEG_AD_auditory_processedData/');
+desFolder   = ft_getopt(cfg, 'srcFolder', '/data/pt_01821/DualEEG_AD_auditory_processedData/');
 filename    = ft_getopt(cfg, 'filename', 'HSP_01_raw');
 
-file_path = strcat(srcFolder, filename, '_*.mat');
+file_path = strcat(desFolder, filename, '_*.mat');
 
 sessionList    = dir(file_path);
 if isempty(sessionList)

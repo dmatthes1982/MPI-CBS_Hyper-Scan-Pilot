@@ -1,4 +1,4 @@
-function [ data ] = HSP_segmentation( data )
+function [ data ] = HSP_segmentation( cfg, data )
 % HSP_SEGMENTATION segments the data of each condition into segments with a
 % duration of 5 seconds
 %
@@ -8,6 +8,9 @@ function [ data ] = HSP_segmentation( data )
 % where the input data can be the result from HSP_IMPORTALLDATASETS or
 % HSP_PREPROCESSING
 %
+% The configuration options are
+%   cfg.numOfPart = numbers of participants, i.e. [1:1:6] or [1,3,5] (default: [])
+%
 % This function requires the fieldtrip toolbox.
 %
 % See also HSP_IMPORTALLDATASETS, HSP_PREPROCESSING, FT_REDEFINETRIAL,
@@ -15,11 +18,20 @@ function [ data ] = HSP_segmentation( data )
 
 % Copyright (C) 2017, Daniel Matthes, MPI CBS
 
-
 % -------------------------------------------------------------------------
+% Get and check config options
 % Get number of participants
 % -------------------------------------------------------------------------
-numOfPart = size(data, 2);
+numOfPart = ft_getopt(cfg, 'numOfPart', []);
+
+if isempty(numOfPart)
+  numOfSources = size(data, 2);
+  notEmpty = zeros(1, numOfSources);
+  for i=1:1:numOfSources
+      notEmpty(i) = (~isempty(data(i).part1));
+  end
+  numOfPart = find(notEmpty);  
+end
 
 % -------------------------------------------------------------------------
 % Segmentation settings
@@ -36,7 +48,7 @@ cfg.overlap         = 0;                                                    % no
 % -------------------------------------------------------------------------
 segLength = cfg.length;
 
-parfor i=1:1:numOfPart
+parfor i = numOfPart
   ft_info off;
   sampleinfo = data(i).part1.sampleinfo;                                    % calc trialinfo for subsegmented data in case of overlapping trials
   trialinfo = data(i).part1.trialinfo;

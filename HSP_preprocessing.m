@@ -11,6 +11,7 @@ function [ data ] = HSP_preprocessing( cfg, data )
 %   cfg.bpfreq      = passband range [begin end] (default: [0.1 48])
 %   cfg.reref       = re-referencing: 'yes' or 'no' (default: 'yes')
 %   cfg.refchannel  = re-reference channel (default: 'TP10')
+%   cfg.numOfPart = numbers of participants, i.e. [1:1:6] or [1,3,5] (default: [])
 %
 % Currently this function applies only a bandpass filter to the data.
 %
@@ -27,8 +28,16 @@ function [ data ] = HSP_preprocessing( cfg, data )
 bpfreq      = ft_getopt(cfg, 'bpfreq', [0.1 48]);
 reref       = ft_getopt(cfg, 'reref', 'yes');
 refchannel  = ft_getopt(cfg, 'refchannel', 'TP10');
+numOfPart   = ft_getopt(cfg, 'numOfPart', []);
 
-numOfPart = size(data, 2);
+if isempty(numOfPart)
+  numOfSources = size(data, 2);
+  notEmpty = zeros(1, numOfSources);
+  for i=1:1:numOfSources
+      notEmpty(i) = (~isempty(data(i).part1));
+  end
+  numOfPart = find(notEmpty);  
+end
 
 % -------------------------------------------------------------------------
 % Preprocessing settings
@@ -60,7 +69,7 @@ cfgReref.calceogcomp   = 'yes';                                             % ca
 % Preprocessing
 % -------------------------------------------------------------------------
 
-parfor i=1:1:numOfPart
+parfor i = numOfPart
   fprintf('Preproc participant 1 of dyad %d...\n', i);
   data(i).part1   = bpfilter(cfgBP, data(i).part1);
   data(i).part1   = rereference(cfgReref, data(i).part1);

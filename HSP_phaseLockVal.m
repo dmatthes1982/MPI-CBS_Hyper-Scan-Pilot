@@ -9,8 +9,9 @@ function [ data ] = HSP_phaseLockVal( cfg, data )
 % where the input data have to be the result from HSP_HILBERTPHASE
 %
 % The configuration options are
-%   cfg.winlen = length of window over which the PLV will be calculated. (default: 5 sec)
-%                minimum = 1 sec
+%   cfg.winlen    = length of window over which the PLV will be calculated. (default: 5 sec)
+%                   minimum = 1 sec
+%   cfg.numOfPart = numbers of participants, i.e. [1:1:6] or [1,3,5] (default: [])
 % 
 % Theoretical Background:                                    T
 % The phase locking value is originally defined by Lachaux as a summation
@@ -35,8 +36,16 @@ function [ data ] = HSP_phaseLockVal( cfg, data )
 % Get number of participants
 % -------------------------------------------------------------------------
 cfg.winlen = ft_getopt(cfg, 'winlen', 5);
+numOfPart   = ft_getopt(cfg, 'numOfPart', []);
 
-numOfPart = size(data, 2);
+if isempty(numOfPart)
+  numOfSources = size(data, 2);
+  notEmpty = zeros(1, numOfSources);
+  for i=1:1:numOfSources
+      notEmpty(i) = (~isempty(data(i).part1));
+  end
+  numOfPart = find(notEmpty);  
+end
 
 % -------------------------------------------------------------------------
 % Get center frequency of fildered input signal
@@ -47,10 +56,10 @@ centerFreq = (  data(1).part1.cfg.previous.bpfreq(1) + ...
 % -------------------------------------------------------------------------
 % Calculate Phase Locking Value (PLV)
 % -------------------------------------------------------------------------
-dataTmp(numOfPart) = struct;
-dataTmp(numOfPart).dyad = [];
+dataTmp(max(numOfPart)) = struct;
+dataTmp(max(numOfPart)).dyad = [];
 
-for i=1:1:numOfPart
+for i = numOfPart
   fprintf('Calc PLVs of dyad %d with a center frequency of %d Hz...\n', ...           
             i, centerFreq);
   dataTmp(i).dyad  = phaseLockingValue(cfg, data(i).part1, data(i).part2);

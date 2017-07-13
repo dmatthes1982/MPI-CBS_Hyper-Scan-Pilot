@@ -11,6 +11,7 @@ function [ data ] = HSP_bpFiltering( cfg, data)
 % The configuration options are
 %   cfg.bpfreq      = passband range [begin end] (default: [1.9 2.1])
 %   cfg.filtorder   = define order of bandpass filter (default: 250)
+%   cfg.numOfPart = numbers of participants, i.e. [1:1:6] or [1,3,5] (default: [])
 %
 % This function is configured with a fixed filter order, to generate
 % comparable filter charakteristics for every operating point.
@@ -26,10 +27,18 @@ function [ data ] = HSP_bpFiltering( cfg, data)
 % Get and check config options
 % Get number of participants
 % -------------------------------------------------------------------------
-bpfreq = ft_getopt(cfg, 'bpfreq', [1.9 2.1]);
-order  = ft_getopt(cfg, 'filtorder', 250);
+bpfreq    = ft_getopt(cfg, 'bpfreq', [1.9 2.1]);
+order     = ft_getopt(cfg, 'filtorder', 250);
+numOfPart = ft_getopt(cfg, 'numOfPart', []);
 
-numOfPart = size(data, 2);
+if isempty(numOfPart)
+  numOfSources = size(data, 2);
+  notEmpty = zeros(1, numOfSources);
+  for i=1:1:numOfSources
+      notEmpty(i) = (~isempty(data(i).part1));
+  end
+  numOfPart = find(notEmpty);  
+end
 
 % -------------------------------------------------------------------------
 % Filtering settings
@@ -50,7 +59,7 @@ centerFreq = (bpfreq(2) + bpfreq(1))/2;
 % Bandpass filtering
 % -------------------------------------------------------------------------
 
-parfor i=1:1:numOfPart
+parfor i = numOfPart
   fprintf('Apply bandpass to participant 1 of dyad %d with a center frequency of %d Hz...\n', ...           
             i, centerFreq);
   data(i).part1   = ft_preprocessing(cfg, data(i).part1);        

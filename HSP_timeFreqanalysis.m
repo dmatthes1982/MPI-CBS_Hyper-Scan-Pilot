@@ -11,6 +11,7 @@ function [ data ] = HSP_timeFreqanalysis( cfg, data )
 % The configuration options are
 %   config.foi = frequency of interest - begin:resolution:end (default: 2:1:50)
 %   config.toi = time of interest - begin:resolution:end (default: 4:0.5:176)
+%   cfg.numOfPart = numbers of participants, i.e. [1:1:6] or [1,3,5] (default: [])
 %
 % This function requires the fieldtrip toolbox.
 %
@@ -23,10 +24,18 @@ function [ data ] = HSP_timeFreqanalysis( cfg, data )
 % Get and check config options
 % Get number of participants
 % -------------------------------------------------------------------------
-foi = ft_getopt(cfg, 'foi', 2:1:50);
-toi = ft_getopt(cfg, 'toi', 4:0.5:176);
+foi       = ft_getopt(cfg, 'foi', 2:1:50);
+toi       = ft_getopt(cfg, 'toi', 4:0.5:176);
+numOfPart = ft_getopt(cfg, 'numOfPart', []);
 
-numOfPart = size(data, 2);
+if isempty(numOfPart)
+  numOfSources = size(data, 2);
+  notEmpty = zeros(1, numOfSources);
+  for i=1:1:numOfSources
+      notEmpty(i) = (~isempty(data(i).part1));
+  end
+  numOfPart = find(notEmpty);  
+end
 
 % -------------------------------------------------------------------------
 % TFR settings
@@ -51,7 +60,7 @@ cfg.showcallinfo    = 'no';                                                 % su
 % -------------------------------------------------------------------------
 % Time-Frequency Response (Analysis)
 % -------------------------------------------------------------------------
-parfor i=1:1:numOfPart
+parfor i = numOfPart
   fprintf('Calc TFRs of participant 1 of dyad %d...\n', i);
   data(i).part1 = ft_freqanalysis(cfg, data(i).part1);
   

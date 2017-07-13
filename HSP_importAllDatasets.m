@@ -6,7 +6,8 @@ function [data] = HSP_importAllDatasets( cfg )
 %   [data] = HSP_importAllDatasets(cfg)
 %
 % The configuration options are
-%   cfg.path = 'source folder' (default: '/data/pt_01821/DualEEG_AD_auditory_rawData/')
+%   cfg.path      = 'source folder' (default: '/data/pt_01821/DualEEG_AD_auditory_rawData/')
+%   cfg.numOfPart = numbers of participants, i.e. [1:1:6] or [1,3,5] (default: [])
 %
 % You can use relativ path specifications (i.e. '/home/user/MATLAB/data/') 
 % or absolute path specifications like in the default settings. Please be 
@@ -22,7 +23,8 @@ function [data] = HSP_importAllDatasets( cfg )
 % -------------------------------------------------------------------------
 % Get and check config options
 % -------------------------------------------------------------------------
-path = ft_getopt(cfg, 'path', '/data/pt_01821/DualEEG_AD_auditory_rawData/');
+path      = ft_getopt(cfg, 'path', '/data/pt_01821/DualEEG_AD_auditory_rawData/');
+numOfPart = ft_getopt(cfg, 'numOfPart', []);
 
 % -------------------------------------------------------------------------
 % Import data
@@ -32,21 +34,27 @@ filelist    = dir([folder, '/*.vhdr']);                                     % ge
 filelist    = struct2cell(filelist);
 filelist    = filelist(1,:);
 
-numOfPart = length(filelist);                                               % get number of participants
-
-if(numOfPart == 0)
+numOfSources = length(filelist);
+if(numOfSources == 0)
   error('No files *.vhdr under specified location found');                  % throw error if no files were found
+end
+
+if isempty(numOfPart)
+  numOfPart     = zeros(1, numOfSources);                                   % get number of participants
+  for i=1:1:numOfSources
+    numOfPart(i)  = sscanf(filelist{i}, 'DualEEG_AD_auditory_%d.vhdr');
+  end
 end
 
 % -------------------------------------------------------------------------
 % General definitions & Allocating memory
 % -------------------------------------------------------------------------
-data(numOfPart) = struct;
+data(max(numOfPart)) = struct;
 
 % -------------------------------------------------------------------------
 % Import of all data in the data folder
 % -------------------------------------------------------------------------
-for i=1:1:numOfPart                                                        
+for i = numOfPart                                                        
   
   cellnumber  = find(contains(filelist, num2str(i,'%02.0f')), 1);
   

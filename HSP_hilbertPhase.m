@@ -1,4 +1,4 @@
-function [ data ] = HSP_hilbertPhase( data )
+function [ data ] = HSP_hilbertPhase( cfg, data )
 % HSP_HILBERTPHASE estimates the Hilbert phase of every channel in every 
 % trial in the HSP_DATASTRUCTURE
 %
@@ -6,6 +6,9 @@ function [ data ] = HSP_hilbertPhase( data )
 %   [ data ] = HSP_hilbertPhase( data )
 %
 % where the input data have to be the result from HSP_BPFILTERING
+%
+% The configuration options are
+%   cfg.numOfPart = numbers of participants, i.e. [1:1:6] or [1,3,5] (default: [])
 %
 % This functions calculates also the Hilbert average ratio as described in
 % the Paper of M. Chavez (2005). This value could be used to check the
@@ -22,9 +25,19 @@ function [ data ] = HSP_hilbertPhase( data )
 % Copyright (C) 2017, Daniel Matthes, MPI CBS
 
 % -------------------------------------------------------------------------
+% Get and check config options
 % Get number of participants
 % -------------------------------------------------------------------------
-numOfPart = size(data, 2);
+numOfPart = ft_getopt(cfg, 'numOfPart', []);
+
+if isempty(numOfPart)
+  numOfSources = size(data, 2);
+  notEmpty = zeros(1, numOfSources);
+  for i=1:1:numOfSources
+      notEmpty(i) = (~isempty(data(i).part1));
+  end
+  numOfPart = find(notEmpty);  
+end
 
 % -------------------------------------------------------------------------
 % General Hilbert transform settings
@@ -44,7 +57,7 @@ centerFreq = (  data(1).part1.cfg.bpfreq(1) + ...
 % Calculate Hilbert phase
 % -------------------------------------------------------------------------
 
-parfor i=1:1:numOfPart
+parfor i= numOfPart
   fprintf('Calc Hilbert phase of participant 1 of dyad %d at %d Hz...\n', ...           
             i, centerFreq);
   data(i).part1   = hilbertTransform(cfg, data(i).part1);        

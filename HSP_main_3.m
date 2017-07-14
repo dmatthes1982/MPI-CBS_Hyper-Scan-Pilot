@@ -17,7 +17,7 @@ cfg.sessionStr  = sessionStr;
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 
 fprintf('Loading %s ...\n', file_path);
-HSP_load( cfg );                                                            % load preprocessed data
+HSP_loadData( cfg );                                                            % load preprocessed data
 
 if ~exist('numOfPart', 'var')                                               % number of participants
   numOfPart = squeeze(cell2mat(struct2cell(dyads)))';
@@ -45,7 +45,7 @@ file_num = length(dir(file_path));
 if file_num == 0
   data_seg1 = data_seg1New;
 else
-  HSP_load( cfg );
+  HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_seg1 = HSP_mergeDataset(cfgMerge, data_seg1New, data_seg1);
   clear cfgMerge;
@@ -54,7 +54,7 @@ end
 fprintf('The segmented data will be saved in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_seg1', data_seg1, 'dyads', dyads);
 fprintf('Data stored!\n');
+clear data_seg1 data_seg1New
 
 %% clear workspace
-clear dest_folder file_name file_path file_version file_pattern file_num ...
-      cfg
+clear file_path file_num cfg dyads

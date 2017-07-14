@@ -129,8 +129,7 @@ end
 fprintf('The time-frequency response data will be saved in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_tfr1', data_tfr1, 'dyads', dyads);
 fprintf('Data stored!\n');
-clear data_tfr1 data_tfr1new
+clear data_tfr1 data_tfr1New
 
 %% clear workspace
-clear dest_folder file_name file_path file_version file_pattern file_num ...
-      cfg
+clear file_path file_num cfg sourceList numOfSources dyads i

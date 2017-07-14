@@ -1,5 +1,5 @@
 function [ data ] = HSP_phaseLockVal( cfg, data )
-% HSP_PHASELOCKVAL calculates the phase locking value between the
+% HSP_PHASELOCKVAL estimates the phase locking value between the
 % the participants of the dyads over all conditions and trials in the 
 % HSP_DATASTRUCTURE
 %
@@ -26,6 +26,8 @@ function [ data ] = HSP_phaseLockVal( cfg, data )
 %
 % Reference:
 %   [Lachaux1999]   "Measuring Phase Synchrony in Brain Signals"
+%
+% This function requires the fieldtrip toolbox
 %
 % See also HSP_DATASTRUCTURE, HSP_HILBERTPHASE
 
@@ -54,7 +56,7 @@ centerFreq = (  data(1).part1.cfg.previous.bpfreq(1) + ...
                 data(1).part1.cfg.previous.bpfreq(2)  ) ./ 2;
 
 % -------------------------------------------------------------------------
-% Calculate Phase Locking Value (PLV)
+% Estimate Phase Locking Value (PLV)
 % -------------------------------------------------------------------------
 dataTmp(max(numOfPart)) = struct;
 dataTmp(max(numOfPart)).dyad = [];

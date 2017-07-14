@@ -22,14 +22,15 @@ sessionList    = dir(file_path);
 if isempty(sessionList)
   num = 0;
 else
-  sessionList    = struct2cell(sessionList);
-  sessionList    = sessionList(1,:);
-  numOfSessions  = length(sessionList);
+  sessionList   = struct2cell(sessionList);
+  sessionList   = sessionList(1,:);
+  numOfSessions = length(sessionList);
 
-  sessionNum     = zeros(1, numOfSessions);
-
+  sessionNum    = zeros(1, numOfSessions);
+  filenameStr   = strcat(filename, '_%d.mat');
+  
   for i=1:1:numOfSessions
-    sessionNum(i) = sscanf(sessionList{i}, 'HSP_01_raw_%d.mat');
+    sessionNum(i) = sscanf(sessionList{i}, filenameStr);
   end
 
   num = max(sessionNum);

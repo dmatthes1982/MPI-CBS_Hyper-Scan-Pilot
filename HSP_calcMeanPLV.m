@@ -34,8 +34,8 @@ end
 % -------------------------------------------------------------------------
 % Get center frequency of fildered input signal
 % -------------------------------------------------------------------------
-centerFreq = (  data(1).dyad.cfg.previous{1}.previous.bpfreq(1) + ...
-                data(1).dyad.cfg.previous{1}.previous.bpfreq(2)  ) ./ 2;
+centerFreq = (  data(numOfPart(1)).dyad.cfg.previous{1}.previous.bpfreq(1) + ...
+                data(numOfPart(1)).dyad.cfg.previous{1}.previous.bpfreq(2)  ) ./ 2;
 
 % -------------------------------------------------------------------------
 % Estimate mean Phase Locking Value (mPLV)

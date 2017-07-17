@@ -52,8 +52,8 @@ end
 % -------------------------------------------------------------------------
 % Get center frequency of fildered input signal
 % -------------------------------------------------------------------------
-centerFreq = (  data(1).part1.cfg.previous.bpfreq(1) + ...
-                data(1).part1.cfg.previous.bpfreq(2)  ) ./ 2;
+centerFreq = (  data(numOfPart(1)).part1.cfg.previous.bpfreq(1) + ...
+                data(numOfPart(1)).part1.cfg.previous.bpfreq(2)  ) ./ 2;
 
 % -------------------------------------------------------------------------
 % Estimate Phase Locking Value (PLV)

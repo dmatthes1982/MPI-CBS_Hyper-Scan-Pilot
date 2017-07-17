@@ -24,6 +24,12 @@ if ~exist('numOfPart', 'var')                                               % es
   end
 end
 
+dyadsNew(max(numOfPart)).number = [];                                       % initialize dyadsNew structure
+
+for i = numOfPart                                                           
+  dyadsNew(i).number = i;
+end
+
 %% import data from brain vision eeg files and bring it into an order
 cfg           = [];
 cfg.path      = srcPath;
@@ -46,16 +52,12 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_raw = data_rawNew;
-  for i = numOfPart
-    dyads(i).number = i;
-  end
+  dyads = dyadsNew;
 else
-  HSP_load( cfg );
+  HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_raw = HSP_mergeDataset(cfgMerge, data_rawNew, data_raw);
-  for i = numOfPart
-    dyads(i).number = i;
-  end
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 
@@ -86,10 +88,12 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_preproc = data_preprocNew;
+  dyads = dyadsNew;
 else
-  HSP_load( cfg );
+  HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_preproc = HSP_mergeDataset(cfgMerge, data_preprocNew, data_preproc);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 
@@ -119,10 +123,12 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_tfr1 = data_tfr1New;
+  dyads = dyadsNew;
 else
-  HSP_load( cfg );
+  HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_tfr1 = HSP_mergeDataset(cfgMerge, data_tfr1New, data_tfr1);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 
@@ -132,4 +138,4 @@ fprintf('Data stored!\n');
 clear data_tfr1 data_tfr1New
 
 %% clear workspace
-clear file_path file_num cfg sourceList numOfSources dyads i
+clear file_path file_num cfg sourceList numOfSources dyads dyadsNew i

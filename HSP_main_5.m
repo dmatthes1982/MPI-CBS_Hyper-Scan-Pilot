@@ -17,10 +17,23 @@ cfg.sessionStr  = sessionStr;
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 
 fprintf('Loading %s ...\n', file_path);
-HSP_loadData( cfg );                                                            % load segmented data
+HSP_loadData( cfg );                                                        % load segmented data
 
 if ~exist('numOfPart', 'var')                                               % number of participants
   numOfPart = squeeze(cell2mat(struct2cell(dyads)))';
+end
+
+dyadsNew(max(numOfPart)).number = [];                                       % initialize dyadsNew structure
+
+for i = numOfPart                                                           
+  dyadsNew(i).number = i;
+end
+
+for i = 1:1:length(data_seg1)                                               % remove dyads which are not selected from input
+  if ~ismember(i, numOfPart)
+    data_seg1(i).part1 = []; %#ok<SAGROW>
+    data_seg1(i).part2 = []; %#ok<SAGROW>
+  end
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -44,11 +57,13 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_bpfilt_2Hz = data_bpfilt_2HzNew;
+  dyads = dyadsNew;
 else
   HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_bpfilt_2Hz = HSP_mergeDataset(cfgMerge, data_bpfilt_2HzNew, ...
                                     data_bpfilt_2Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 
@@ -75,11 +90,13 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_hilbert_2Hz = data_hilbert_2HzNew;
+  dyads = dyadsNew;
 else
   HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_hilbert_2Hz = HSP_mergeDataset(cfgMerge, data_hilbert_2HzNew, ...
                                     data_hilbert_2Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 
@@ -107,11 +124,13 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_plv_2Hz = data_plv_2HzNew;
+  dyads = dyadsNew;
 else
   HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_plv_2Hz = HSP_mergeDataset(cfgMerge, data_plv_2HzNew, ...
                                     data_plv_2Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 
@@ -138,11 +157,13 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_mplv_2Hz = data_mplv_2HzNew;
+  dyads = dyadsNew;
 else
   HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_mplv_2Hz = HSP_mergeDataset(cfgMerge, data_mplv_2HzNew, ...
                                     data_mplv_2Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 
@@ -172,11 +193,13 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_bpfilt_10Hz = data_bpfilt_10HzNew;
+  dyads = dyadsNew;
 else
   HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_bpfilt_10Hz = HSP_mergeDataset(cfgMerge, data_bpfilt_10HzNew, ...
                                     data_bpfilt_10Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 
@@ -203,11 +226,13 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_hilbert_10Hz = data_hilbert_10HzNew;
+  dyads = dyadsNew;
 else
   HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_hilbert_10Hz = HSP_mergeDataset(cfgMerge, data_hilbert_10HzNew, ...
                                     data_hilbert_10Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 
@@ -235,11 +260,13 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_plv_10Hz = data_plv_10HzNew;
+  dyads = dyadsNew;
 else
   HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_plv_10Hz = HSP_mergeDataset(cfgMerge, data_plv_10HzNew, ...
                                     data_plv_10Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 
@@ -266,11 +293,13 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_mplv_10Hz = data_mplv_10HzNew;
+  dyads = dyadsNew;
 else
   HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_mplv_10Hz = HSP_mergeDataset(cfgMerge, data_mplv_10HzNew, ...
                                     data_mplv_10Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 
@@ -300,11 +329,13 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_bpfilt_20Hz = data_bpfilt_20HzNew;
+  dyads = dyadsNew;
 else
   HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_bpfilt_20Hz = HSP_mergeDataset(cfgMerge, data_bpfilt_20HzNew, ...
                                     data_bpfilt_20Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 
@@ -331,11 +362,13 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_hilbert_20Hz = data_hilbert_20HzNew;
+  dyads = dyadsNew;
 else
   HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_hilbert_20Hz = HSP_mergeDataset(cfgMerge, data_hilbert_20HzNew, ...
                                     data_hilbert_20Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 
@@ -363,11 +396,13 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_plv_20Hz = data_plv_20HzNew;
+  dyads = dyadsNew;
 else
   HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_plv_20Hz = HSP_mergeDataset(cfgMerge, data_plv_20HzNew, ...
                                     data_plv_20Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 
@@ -394,11 +429,13 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_mplv_20Hz = data_mplv_20HzNew;
+  dyads = dyadsNew;
 else
   HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_mplv_20Hz = HSP_mergeDataset(cfgMerge, data_mplv_20HzNew, ...
                                     data_mplv_20Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 
@@ -428,11 +465,13 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_bpfilt_40Hz = data_bpfilt_40HzNew;
+  dyads = dyadsNew;
 else
   HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_bpfilt_40Hz = HSP_mergeDataset(cfgMerge, data_bpfilt_40HzNew, ...
                                     data_bpfilt_40Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 
@@ -459,11 +498,13 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_hilbert_40Hz = data_hilbert_40HzNew;
+  dyads = dyadsNew;
 else
   HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_hilbert_40Hz = HSP_mergeDataset(cfgMerge, data_hilbert_40HzNew, ...
                                     data_hilbert_40Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 
@@ -491,11 +532,13 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_plv_40Hz = data_plv_40HzNew;
+  dyads = dyadsNew;
 else
   HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_plv_40Hz = HSP_mergeDataset(cfgMerge, data_plv_40HzNew, ...
                                     data_plv_40Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 
@@ -522,11 +565,13 @@ file_num = length(dir(file_path));
 
 if file_num == 0
   data_mplv_40Hz = data_mplv_40HzNew;
+  dyads = dyadsNew;
 else
   HSP_loadData( cfg );
   cfgMerge.numOfNewPart = numOfPart;
   data_mplv_40Hz = HSP_mergeDataset(cfgMerge, data_mplv_40HzNew, ...
                                     data_mplv_40Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
   clear cfgMerge;
 end
 

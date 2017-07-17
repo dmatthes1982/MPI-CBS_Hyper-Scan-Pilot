@@ -50,8 +50,8 @@ cfg.showcallinfo    = 'no';
 % -------------------------------------------------------------------------
 % Get center frequency of fildered input signal
 % -------------------------------------------------------------------------
-centerFreq = (  data(1).part1.cfg.bpfreq(1) + ...
-                data(1).part1.cfg.bpfreq(2)  ) ./ 2;
+centerFreq = (  data(numOfPart(1)).part1.cfg.bpfreq(1) + ...
+                data(numOfPart(1)).part1.cfg.bpfreq(2)  ) ./ 2;
 
 % -------------------------------------------------------------------------
 % Calculate Hilbert phase

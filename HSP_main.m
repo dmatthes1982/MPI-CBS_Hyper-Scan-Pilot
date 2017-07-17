@@ -1,5 +1,5 @@
 fprintf('------------------------------------------------\n');
-fprintf('<strong>Hyperscanning pilot project - data preprocessing</strong>\n');
+fprintf('<strong>Hyperscanning pilot project - data processing</strong>\n');
 fprintf('Version: 0.1\n');
 fprintf('Copyright (C) 2017, Daniel Matthes, MPI CBS\n');
 fprintf('------------------------------------------------\n');
@@ -10,7 +10,7 @@ fprintf('------------------------------------------------\n');
 srcPath = '/data/pt_01821/DualEEG_AD_auditory_rawData/';
 desPath = '/data/pt_01821/DualEEG_AD_auditory_processedData/';
 
-clear session sessionStr dyadSpec part numOfPartpart
+clear sessionStr numOfPart part
 
 % -------------------------------------------------------------------------
 % Session selection
@@ -164,7 +164,7 @@ switch part
     error('This option is currently unsupported!');
   case 5
     fileNamePre = strcat(desPath, 'HSP_04_seg1_', sessionStr, '.mat');
-    fileNamePost = strcat(desPath, 'HSP_07a_plv2Hz_', sessionStr, '.mat');
+    fileNamePost = strcat(desPath, 'HSP_07d_plv40Hz_', sessionStr, '.mat');
   otherwise
     error('Something unexpected happend. part = %d is not defined' ...
           , part);
@@ -231,13 +231,69 @@ end
 y = sprintf('%d ', numOfPart);
 fprintf(['\nThe following participants will be processed ' ... 
          'in the selected part [%d]:\n'],  part);
-fprintf('%s\n', y);
+fprintf('%s\n\n', y);
 
-clear desPath fileNamePost fileNamePre fileNum i numOfPrePart ...
-      numOfSources selection sourceList srcPath x y dyads fileListPost ...
+clear fileNamePost fileNamePre fileNum i numOfPrePart ...
+      numOfSources selection sourceList x y dyads fileListPost ...
       fileListPre numOfPostPart sessionList sessionNum numOfSessions ...
-      session 
+      session dyadsSpec
 
 % -------------------------------------------------------------------------
 % Data processing main loop
 % -------------------------------------------------------------------------
+sessionStatus = true;
+sessionPart = part;
+
+clear part;
+
+while sessionStatus == true
+  switch sessionPart
+    case 1
+      HSP_main_1;
+      selection = false;
+      while selection == false
+        fprintf('\nContinue data processing with:\n');
+        fprintf('[3] - Segmentation of the data?\n');
+        x = input('\nSelect [y/n]: ','s');
+        if strcmp('y', x)
+          selection = true;
+          sessionStatus = true;
+          sessionPart = 3;
+        elseif strcmp('n', x)
+          selection = true;
+          sessionStatus = false;
+        else
+          selection = false;
+        end
+      end
+    case 3
+      HSP_main_3;
+      selection = false;
+      while selection == false
+        fprintf('\nContinue data processing with:\n');
+        fprintf('[5] - Calculation of PLV?\n');
+        x = input('\nSelect [y/n]: ','s');
+        if strcmp('y', x)
+          selection = true;
+          sessionStatus = true;
+          sessionPart = 5;
+        elseif strcmp('n', x)
+          selection = true;
+          sessionStatus = false;
+        else
+          selection = false;
+        end
+      end        
+    case 5
+      HSP_main_5;
+      sessionStatus = false;
+    otherwise
+      sessionStatus = false;
+  end
+ 
+end
+
+fprintf('\nData processing finished\n.');
+fprintf('Session will be closed.\n');
+
+clear sessionStr numOfPart srcPath desPath

@@ -38,7 +38,11 @@ else
   end
 end
 
-save(file_path, '-regexp','^data','^dyads', '-v7.3');
+if (~isempty(who('-regexp', '^data')))
+  save(file_path, '-regexp','^data','^dyads', '-v7.3');
+elseif (~isempty(who('-regexp', '^cfg_')))
+  save(file_path, '-regexp','^cfg_','^dyads', '-v7.3');
+end
 
 end
 

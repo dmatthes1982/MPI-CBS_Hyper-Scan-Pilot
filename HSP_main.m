@@ -293,7 +293,7 @@ while sessionStatus == true
  
 end
 
-fprintf('\nData processing finished\n.');
+fprintf('\nData processing finished.\n');
 fprintf('Session will be closed.\n');
 
-clear sessionStr numOfPart srcPath desPath
+clear sessionStr numOfPart srcPath desPath sessionPart sessionStatus

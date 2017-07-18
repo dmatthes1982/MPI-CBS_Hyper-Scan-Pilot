@@ -581,4 +581,4 @@ fprintf('Data stored!\n');
 clear data_mplv_40Hz data_mplv_40HzNew
 
 %% clear workspace
-clear cfg data_seg1 file_path file_num dyads
+clear cfg data_seg1 file_path file_num dyads dyadsNew i

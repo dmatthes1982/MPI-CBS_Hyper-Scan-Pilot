@@ -73,4 +73,4 @@ fprintf('Data stored!\n');
 clear data_seg1 data_seg1New
 
 %% clear workspace
-clear file_path file_num cfg dyads dyadsNew
+clear file_path file_num cfg dyads dyadsNew i

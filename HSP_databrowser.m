@@ -1,4 +1,4 @@
-function HSP_databrowser( cfg, data )
+function cfgArtifacts = HSP_databrowser( cfg, data )
 % HSP_DATABROWSER displays a certain hyperscanning pilot project dataset 
 % using a appropriate scaling.
 %
@@ -45,10 +45,10 @@ cfg.channel = 'all';
 
 switch part
   case 1
-    ft_databrowser(cfg, data(dyad).part1);
+    cfgArtifacts = ft_databrowser(cfg, data(dyad).part1);
     windowTitle = sprintf('Participant: %d/%d', dyad, part);     
   case 2
-    ft_databrowser(cfg, data(dyad).part2);
+    cfgArtifacts = ft_databrowser(cfg, data(dyad).part2);
     windowTitle = sprintf('Participant: %d/%d', dyad, part);
 end
 

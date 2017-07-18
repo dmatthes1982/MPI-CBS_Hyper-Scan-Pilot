@@ -3,7 +3,7 @@ function [ data ] = HSP_segmentation( cfg, data )
 % duration of 5 seconds
 %
 % Use as
-%   [ data ] = HSP_segmentation(data)
+%   [ data ] = HSP_segmentation(cfg, data)
 %
 % where the input data can be the result from HSP_IMPORTALLDATASETS or
 % HSP_PREPROCESSING

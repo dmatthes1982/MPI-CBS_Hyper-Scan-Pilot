@@ -101,9 +101,9 @@ else
   while selection == false
     fprintf('\nPlease select what you want to do with the selected dyads:\n');
     fprintf('[1] - Import and basic preprocessing\n');
-    fprintf('[2] - Rejection of eye artifacts (not available yet)\n');
+    cprintf([0.5,0.5,0.5], '[2] - Rejection of eye artifacts (not available yet)\n');
     fprintf('[3] - Segmentation of the data\n');
-    fprintf('[4] - Manual rejection of further artifacts (not available yet)\n');
+    cprintf([0.5,0.5,0.5], '[4] - Manual rejection of further artifacts (not available yet)\n');
     fprintf('[5] - Calculation of PLV\n');
     fprintf('[6] - Quit data processing\n\n');
     x = input('Option: ');

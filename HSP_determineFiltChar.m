@@ -58,10 +58,16 @@ clear f
 f(1,:) = s;                                                                 % the raw signal
 f(2,:) = ft_preproc_bandpassfilter(s, fSample, [1 3], order(1), ...         % apply first bandpass
   type, 'twopass', 'no');
-f(3,:) = ft_preproc_bandpassfilter(s, fSample, [9 11], order(2), ...        % apply second bandpass
+f(3,:) = ft_preproc_bandpassfilter(s, fSample, [1 3], 5, ...              
+  'but', 'twopass', 'split');
+f(4,:) = ft_preproc_bandpassfilter(s, fSample, [9 11], order(2), ...        % apply second bandpass
   type, 'twopass', 'no');
-f(4,:) = ft_preproc_bandpassfilter(s, fSample, [39 41], order(3), ...       % apply third bandpass
+f(5,:) = ft_preproc_bandpassfilter(s, fSample, [9 11], 1, ...             
+  'but', 'twopass', 'split');
+f(6,:) = ft_preproc_bandpassfilter(s, fSample, [39 41], order(3), ...       % apply third bandpass
   type, 'twopass', 'no');
+f(7,:) = ft_preproc_bandpassfilter(s, fSample, [39 41], 2, ...             
+  'but', 'twopass', 'split');
 
 F       = fft(f, [], 2).^2;                                                 % fast fourier transformation
 F2side  = abs(F/L);                                                         % amplitude response
@@ -71,9 +77,9 @@ figure(1);
 str = 'compare different cutoff frequencies';
 
 subplot(1,2,1);                                                             % plot the different time courses
-plot(t, f-repmat((0:50:150)',1,L)); 
+plot(t, f-repmat([0, 40, 40, 60, 60, 70, 70]',1,L)); 
 grid on; 
-set(gca, 'ylim', [-180 50]); 
+set(gca, 'ylim', [-80 50]); 
 xlabel('time (s)'); 
 ylabel(str);
 title('Raw, 10 Hz, 20 Hz, 30 Hz');

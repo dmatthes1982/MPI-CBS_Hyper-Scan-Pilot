@@ -8,10 +8,12 @@ function [ data ] = HSP_preprocessing( cfg, data )
 % where the input data have to be the result from HSP_IMPORTALLDATASETS
 %
 % The configuration options are
-%   cfg.bpfreq      = passband range [begin end] (default: [0.1 48])
-%   cfg.reref       = re-referencing: 'yes' or 'no' (default: 'yes')
-%   cfg.refchannel  = re-reference channel (default: 'TP10')
-%   cfg.numOfPart = numbers of participants, i.e. [1:1:6] or [1,3,5] (default: [])
+%   cfg.bpfreq            = passband range [begin end] (default: [0.1 48])
+%   cfg.bpfilttype        = bandpass filter type, 'but' or 'fir' (default: fir')
+%   cfg.bpinstabilityfix  = deal with filter instability, 'no' or 'split' (default: 'no')
+%   cfg.reref             = re-referencing: 'yes' or 'no' (default: 'yes')
+%   cfg.refchannel        = re-reference channel (default: 'TP10')
+%   cfg.numOfPart         = number of participants, i.e. [1:1:6] or [1,3,5] (default: [])
 %
 % Currently this function applies only a bandpass filter to the data.
 %
@@ -25,10 +27,12 @@ function [ data ] = HSP_preprocessing( cfg, data )
 % Get and check config options
 % Get number of participants
 % -------------------------------------------------------------------------
-bpfreq      = ft_getopt(cfg, 'bpfreq', [0.1 48]);
-reref       = ft_getopt(cfg, 'reref', 'yes');
-refchannel  = ft_getopt(cfg, 'refchannel', 'TP10');
-numOfPart   = ft_getopt(cfg, 'numOfPart', []);
+bpfreq            = ft_getopt(cfg, 'bpfreq', [0.1 48]);
+bpfilttype        = ft_getopt(cfg, 'bpfilttype', 'fir');
+bpinstabilityfix  = ft_getopt(cfg, 'bpinstabilityfix', 'no');
+reref             = ft_getopt(cfg, 'reref', 'yes');
+refchannel        = ft_getopt(cfg, 'refchannel', 'TP10');
+numOfPart         = ft_getopt(cfg, 'numOfPart', []);
 
 if isempty(numOfPart)
   numOfSources = size(data, 2);
@@ -44,14 +48,15 @@ end
 % -------------------------------------------------------------------------
 
 % general filtering
-cfgBP               = [];
-cfgBP.bpfilter      = 'yes';                                                % use bandpass filter
-cfgBP.bpfreq        = bpfreq;                                               % bandpass range  
-cfgBP.bpfilttype    = 'fir';                                                % bandpass filter type = fir      
-cfgBP.channel       = 'all';                                                % use all channels
-cfgBP.trials        = 'all';                                                % use all trials
-cfgBP.feedback      = 'no';                                                 % feedback should not be presented
-cfgBP.showcallinfo  = 'no';                                                 % prevent printing the time and memory after each function call
+cfgBP                   = [];
+cfgBP.bpfilter          = 'yes';                                            % use bandpass filter
+cfgBP.bpfreq            = bpfreq;                                           % bandpass range  
+cfgBP.bpfilttype        = bpfilttype;                                       % bandpass filter type = fir      
+cfgBP.bpinstabilityfix  = bpinstabilityfix;                                 % deal with filter instability
+cfgBP.channel           = 'all';                                            % use all channels
+cfgBP.trials            = 'all';                                            % use all trials
+cfgBP.feedback          = 'no';                                             % feedback should not be presented
+cfgBP.showcallinfo      = 'no';                                             % prevent printing the time and memory after each function call
 
 % re-referencing
 cfgReref               = [];

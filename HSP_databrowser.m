@@ -11,6 +11,7 @@ function cfgArtifacts = HSP_databrowser( cfg, data )
 % The configuration options are
 %   cfg.dyad      = number of dyad (default: 1)
 %   cfg.part      = number of participant (default: 1)
+%   cfg.artifact  = Nx2 matrix with artifact segments (default: [])
 %
 % This function requires the fieldtrip toolbox
 %
@@ -22,8 +23,9 @@ function cfgArtifacts = HSP_databrowser( cfg, data )
 % -------------------------------------------------------------------------
 % Get and check config options
 % -------------------------------------------------------------------------
-dyad = ft_getopt(cfg, 'dyad', 1);
-part = ft_getopt(cfg, 'part', 1);
+dyad      = ft_getopt(cfg, 'dyad', 1);
+part      = ft_getopt(cfg, 'part', 1);
+artifact  = ft_getopt(cfg, 'artifact', []);
 
 numOfDyads = length(data);                                                  % check cfg.dyad definition
 if numOfDyads < dyad
@@ -37,22 +39,21 @@ end
 % -------------------------------------------------------------------------
 % Configure and start databrowser
 % -------------------------------------------------------------------------
-cfg = [];
-cfg.ylim      = [-80 80];
-cfg.viewmode = 'vertical';
-cfg.continuous = 'no';
-cfg.channel = 'all';
+cfg                               = [];
+cfg.ylim                          = [-80 80];
+cfg.viewmode                      = 'vertical';
+cfg.artfctdef.threshold.artifact  = artifact;
+cfg.continuous                    = 'no';
+cfg.channel                       = 'all';
+cfg.showcallinfo                  = 'no';
+
+fprintf('Databrowser - Participant: %d/%d\n', dyad, part);
 
 switch part
   case 1
     cfgArtifacts = ft_databrowser(cfg, data(dyad).part1);
-    windowTitle = sprintf('Participant: %d/%d', dyad, part);     
   case 2
     cfgArtifacts = ft_databrowser(cfg, data(dyad).part2);
-    windowTitle = sprintf('Participant: %d/%d', dyad, part);
 end
-
-h = gcf;
-h.Name = (windowTitle);
 
 end

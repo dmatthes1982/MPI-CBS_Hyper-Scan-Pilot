@@ -68,7 +68,7 @@ clear data_raw
 
 %% preprocess the raw data
 cfg                   = [];
-cfg.bpfreq            = [0.1 48];                                           % passband from 0.1 to 48 Hz
+cfg.bpfreq            = [1 48];                                             % passband from 0.3 to 48 Hz
 cfg.bpfilttype        = 'but';
 cfg.bpinstabilityfix  = 'split';
 cfg.numOfPart         = numOfPart;

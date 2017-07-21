@@ -56,41 +56,64 @@ freq    = fSample * (0:(L/2)) / L;                                          % ca
 
 clear f
 f(1,:) = s;                                                                 % the raw signal
-f(2,:) = ft_preproc_bandpassfilter(s, fSample, [1 3], order(1), ...         % apply first bandpass
-  type, 'twopass', 'no');
-f(3,:) = ft_preproc_bandpassfilter(s, fSample, [1 3], 5, ...              
+f(2,:) = ft_preproc_bandpassfilter(s, fSample, [0.3 48], 4, ...             % apply generall bandpass
   'but', 'twopass', 'split');
-f(4,:) = ft_preproc_bandpassfilter(s, fSample, [9 11], order(2), ...        % apply second bandpass
-  type, 'twopass', 'no');
-f(5,:) = ft_preproc_bandpassfilter(s, fSample, [9 11], 1, ...             
+f(3,:) = ft_preproc_bandpassfilter(s, fSample, [1 48], 4, ...               % apply generall bandpass
   'but', 'twopass', 'split');
-f(6,:) = ft_preproc_bandpassfilter(s, fSample, [39 41], order(3), ...       % apply third bandpass
+f(4,:) = ft_preproc_bandpassfilter(f(2,:), fSample, [1.9 2.1], order(1), ... % apply 2 Hz narrow band bandpass
   type, 'twopass', 'no');
-f(7,:) = ft_preproc_bandpassfilter(s, fSample, [39 41], 2, ...             
-  'but', 'twopass', 'split');
+f(5,:) = ft_preproc_bandpassfilter(f(3,:), fSample, [1.9 2.1], order(1), ... % apply 2 Hz narrow band bandpass
+  type, 'twopass', 'no');
+f(6,:) = ft_preproc_bandpassfilter(f(2,:), fSample, [9 11], order(2), ...   % apply 10 Hz narrow band bandpass
+  type, 'twopass', 'no');
+f(7,:) = ft_preproc_bandpassfilter(f(3,:), fSample, [9 11], order(2), ...   % apply 10 Hz narrow band bandpass
+  type, 'twopass', 'no');
 
 F       = fft(f, [], 2).^2;                                                 % fast fourier transformation
 F2side  = abs(F/L);                                                         % amplitude response
 F1side  = F2side(:, 1:floor(L/2)+1);                                        % single-side amplitude spectrum
 
 figure(1);
-str = 'compare different cutoff frequencies';
+str = 'compare different filter cascades';
 
 subplot(1,2,1);                                                             % plot the different time courses
-plot(t, f-repmat([0, 40, 40, 60, 60, 70, 70]',1,L)); 
+a = ...
+      plot(t, f(1:end,:)-repmat([-100, -100, -100, 0, 0, 15, 15]',1,L)); 
 grid on; 
-set(gca, 'ylim', [-80 50]); 
+set(gca, 'ylim', [-20 10]);
+set(gca, 'xlim', [0 5]);
 xlabel('time (s)'); 
 ylabel(str);
-title('Raw, 10 Hz, 20 Hz, 30 Hz');
+legend([a(4),a(5),a(6),a(7)], '2Hz - 0.3 Hz', '2Hz - 1 Hz', ...
+                              '10Hz - 0.3 Hz','10Hz - 1 Hz');
+title('Filtered, 2 Hz, 10 Hz');
 
 subplot(1,2,2);                                                             % plot the different amplitude spectra                                 
 semilogy(freq, F1side'); 
 grid on; 
-set(gca, 'ylim', [10^-5 10^ 5]); 
-set(gca, 'xlim', [0 50]); 
+set(gca, 'ylim', [10^-2 10^ 5]); 
+set(gca, 'xlim', [0 5]); 
 xlabel('freq (Hz)');   
 ylabel(str);
-title('FIR-Filter');
+title('Filter responses');
+
+% -------------------------------------------------------------------------
+% Save graphic as pdf-File
+% -------------------------------------------------------------------------
+h=gcf;
+set(h, 'PaperOrientation','landscape');
+set(h, 'PaperType','a3');
+set(h, 'PaperUnit', 'centimeters');
+set(h, 'PaperSize', [42 29.7]);
+set(h, 'unit', 'normalized', 'Position', [0 0 0.9 0.9]);
+doc_title = '/data/pt_01821/DualEEG_AD_auditory_results/FiltChar';
+file_path = strcat(doc_title, '_001.pdf');
+if exist(file_path, 'file') == 2
+  file_pattern = strcat(doc_title, '_*.pdf');
+  file_num = length(dir(file_pattern))+1;
+  file_path = sprintf('/data/pt_01821/DualEEG_AD_auditory_results/FiltChar_%03d.pdf', ... 
+              file_num);
+end
+print(gcf, '-dpdf', file_path);
 
 end

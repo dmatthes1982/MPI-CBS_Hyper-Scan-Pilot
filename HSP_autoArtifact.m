@@ -3,7 +3,7 @@ function [ cfgAutoArt ] = HSP_autoArtifact( cfg, data )
 % 'O2' and 'O4' exceeds or fall below +/- 75 mV.
 %
 % Use as
-%   [ data ] = HSP_autoArtifact(cfg, data)
+%   [ cfgAutoArt ] = HSP_autoArtifact(cfg, data)
 %
 % where data has to be a result of HSP_SEGMENTATION
 %
@@ -38,7 +38,7 @@ if isempty(numOfPart)                                                       % ge
 end
 
 % -------------------------------------------------------------------------
-% Segmentation settings
+% Artifact detection settings
 % -------------------------------------------------------------------------
 ft_info off;
 

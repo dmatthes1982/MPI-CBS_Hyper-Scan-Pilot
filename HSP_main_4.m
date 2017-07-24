@@ -25,7 +25,7 @@ end
 
 dyadsNew(max(numOfPart)).number = [];                                       % initialize dyadsNew structure
 
-for i = numOfPart                                                           
+for i = numOfPart
   dyadsNew(i).number = i;
 end
 
@@ -44,8 +44,6 @@ cfg.maxVal    = 75;
 cfg.numOfPart = numOfPart;
 
 cfg_autoArtNew = HSP_autoArtifact(cfg, data_seg1);
-
-clear data_seg1
 
 %% export the automatic selected artifacts into a *.mat file
 cfg             = [];
@@ -70,7 +68,52 @@ end
 fprintf('The automatic selected artifacts will be saved in %s ...\n', file_path);
 HSP_saveData(cfg, 'cfg_autoArt', cfg_autoArt, 'dyads', dyads);
 fprintf('Data stored!\n');
-clear cfg_autoArt cfg_autoArtNew
+clear cfg_autoArt
+
+%% verify automatic detected artifacts / manual artifact detection
+cfg           = [];
+cfg.artifact  = cfg_autoArtNew;
+cfg.numOfPart = numOfPart;
+
+cfg_allArtNew = HSP_manArtifact(cfg, data_seg1);
+
+clear data_seg1 cfg_autoArtNew
+
+dyadsArti     = [];
+numOfPartArti = [];
+
+for i = 1:1:length(cfg_allArtNew)
+  if ~isempty(cfg_allArtNew(i).part1)
+    dyadsArti(i).number = i; %#ok<SAGROW>
+    numOfPartArti       = [numOfPartArti, i]; %#ok<AGROW>
+  end
+end
+
+%% export the verified and the additional artifacts into a *.mat file
+cfg             = [];
+cfg.desFolder   = desPath;
+cfg.filename    = 'HSP_06_allArt';
+cfg.sessionStr  = sessionStr;
+
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
+file_num = length(dir(file_path));
+
+if file_num == 0
+  cfg_allArt = cfg_allArtNew;
+  dyads = dyadsArti;
+else
+  HSP_loadData( cfg );
+  cfgMerge.numOfNewPart = numOfPartArti;
+  cfg_allArt = HSP_mergeDataset(cfgMerge, cfg_allArtNew, cfg_allArt);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsArti, dyads);
+  clear cfgMerge;
+end
+
+fprintf('The visual verified artifacts will be saved in %s ...\n', file_path);
+HSP_saveData(cfg, 'cfg_allArt', cfg_allArt, 'dyads', dyads);
+fprintf('Data stored!\n');
+clear cfg_allArt cfg_allArtNew dyadsArti numOfPartArti
+
 
 %% clear workspace
 clear file_path file_num cfg dyads dyadsNew i

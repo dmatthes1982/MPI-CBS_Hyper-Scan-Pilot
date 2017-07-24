@@ -58,16 +58,18 @@ for i = numOfPart
   cfg.artifact = artifact(i).part2.artfctdef.threshold.artifact;
   cfgAllArt(i).part2 = HSP_databrowser(cfg, data);
   
-  selection = false;
-  while selection == false
-    fprintf('\nProceed with the next dyad?\n');
-    x = input('\nSelect [y/n]: ','s');
-    if strcmp('y', x)
-      selection = true;
-    elseif strcmp('n', x)
-      return;
-    else
-      selection = false;
+  if(i < max(numOfPart))
+    selection = false;
+    while selection == false
+      fprintf('\nProceed with the next dyad?\n');
+      x = input('\nSelect [y/n]: ','s');
+      if strcmp('y', x)
+        selection = true;
+      elseif strcmp('n', x)
+        return;
+      else
+        selection = false;
+      end
     end
   end
 end

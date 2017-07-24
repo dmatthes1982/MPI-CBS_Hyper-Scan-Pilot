@@ -49,7 +49,7 @@ data_bpfilt_2HzNew = HSP_bpFiltering(cfg, data_seg1);
 %% export the filtered data into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_06a_bpfilt2Hz';
+cfg.filename    = 'HSP_07a_bpfilt2Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -82,7 +82,7 @@ clear data_bpfilt_2HzNew
 %% export the hilbert phase data into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_07a_hilbert2Hz';
+cfg.filename    = 'HSP_08a_hilbert2Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -116,7 +116,7 @@ clear data_hilbert_2HzNew
 %% export the PLVs into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_08a_plv2Hz';
+cfg.filename    = 'HSP_09a_plv2Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -149,7 +149,7 @@ clear data_plv_2HzNew
 %% export the mean PLVs into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_09a_mplv2Hz';
+cfg.filename    = 'HSP_10a_mplv2Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -185,7 +185,7 @@ data_bpfilt_10HzNew = HSP_bpFiltering(cfg, data_seg1);
 %% export the filtered data into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_06b_bpfilt10Hz';
+cfg.filename    = 'HSP_07b_bpfilt10Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -218,7 +218,7 @@ clear data_bpfilt_10HzNew
 %% export the hilbert phase data into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_07b_hilbert10Hz';
+cfg.filename    = 'HSP_08b_hilbert10Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -252,7 +252,7 @@ clear data_hilbert_10HzNew
 %% export the PLVs into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_08b_plv10Hz';
+cfg.filename    = 'HSP_09b_plv10Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -285,7 +285,7 @@ clear data_plv_10HzNew
 %% export the mean PLVs into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_09b_mplv10Hz';
+cfg.filename    = 'HSP_10b_mplv10Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -321,7 +321,7 @@ data_bpfilt_20HzNew = HSP_bpFiltering(cfg, data_seg1);
 %% export the filtered data into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_06c_bpfilt20Hz';
+cfg.filename    = 'HSP_07c_bpfilt20Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -354,7 +354,7 @@ clear data_bpfilt_20HzNew
 %% export the hilbert phase data into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_07c_hilbert20Hz';
+cfg.filename    = 'HSP_08c_hilbert20Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -388,7 +388,7 @@ clear data_hilbert_20HzNew
 %% export the PLVs into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_08c_plv20Hz';
+cfg.filename    = 'HSP_09c_plv20Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -421,7 +421,7 @@ clear data_plv_20HzNew
 %% export the mean PLVs into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_09c_mplv20Hz';
+cfg.filename    = 'HSP_10c_mplv20Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -457,7 +457,7 @@ data_bpfilt_40HzNew = HSP_bpFiltering(cfg, data_seg1);
 %% export the filtered data into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_06d_bpfilt40Hz';
+cfg.filename    = 'HSP_07d_bpfilt40Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -490,7 +490,7 @@ clear data_bpfilt_40HzNew
 %% export the hilbert phase data into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_07d_hilbert40Hz';
+cfg.filename    = 'HSP_08d_hilbert40Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -524,7 +524,7 @@ clear data_hilbert_40HzNew
 %% export the PLVs into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_08d_plv40Hz';
+cfg.filename    = 'HSP_09d_plv40Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -557,7 +557,7 @@ clear data_plv_40HzNew
 %% export the mean PLVs into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_09d_mplv40Hz';
+cfg.filename    = 'HSP_10d_mplv40Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');

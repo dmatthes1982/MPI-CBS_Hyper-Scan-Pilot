@@ -104,8 +104,9 @@ else
     cprintf([0.5,0.5,0.5], '[2] - Rejection of eye artifacts (not available yet)\n');
     fprintf('[3] - Segmentation of the data\n');
     cprintf('[4] - Automatic and manual rejection of further artifacts\n');
-    fprintf('[5] - Calculation of PLV\n');
-    fprintf('[6] - Quit data processing\n\n');
+    fprintf('[5] - Application of narrow band filtering and Hilbert transform\n'); 
+    fprintf('[6] - Calculation of PLV\n');
+    fprintf('[7] - Quit data processing\n\n');
     x = input('Option: ');
   
     switch x
@@ -126,6 +127,9 @@ else
         part = 5;
         selection = true;
       case 6
+        part = 6;
+        selection = true;
+      case 7
         fprintf('\nData processing aborted.\n');
         clear selection i x y srcPath desPath session sessionList ...
             sessionNum numOfSessions dyadsSpec sessionStr
@@ -161,10 +165,13 @@ switch part
     fileNamePost = strcat(desPath, 'HSP_04_seg1_', sessionStr, '.mat');
   case 4
     fileNamePre = strcat(desPath, 'HSP_04_seg1_', sessionStr, '.mat');
-    fileNamePost = strcat(desPath, 'HSP_05_autoArt_', sessionStr, '.mat');
+    fileNamePost = strcat(desPath, 'HSP_06_allArt_', sessionStr, '.mat');
   case 5
     fileNamePre = strcat(desPath, 'HSP_04_seg1_', sessionStr, '.mat');
-    fileNamePost = strcat(desPath, 'HSP_09d_mplv40Hz_', sessionStr, '.mat');
+    fileNamePost = strcat(desPath, 'HSP_08_hilbert40Hz_', sessionStr, '.mat');
+  case 6
+    fileNamePre = strcat(desPath, 'HSP_08_hilbert2Hz_', sessionStr, '.mat');
+    fileNamePost = strcat(desPath, 'HSP_10d_mplv40Hz_', sessionStr, '.mat');
   otherwise
     error('Something unexpected happend. part = %d is not defined' ...
           , part);
@@ -289,7 +296,7 @@ while sessionStatus == true
       selection = false;
       while selection == false
         fprintf('\nContinue data processing with:\n');
-        fprintf('[5] - Calculation of PLV?\n');
+        fprintf('[5] - Application of narrow band filtering and Hilbert transform?\n');
         x = input('\nSelect [y/n]: ','s');
         if strcmp('y', x)
           selection = true;
@@ -304,6 +311,24 @@ while sessionStatus == true
       end
     case 5
       HSP_main_5;
+      selection = false;
+      while selection == false
+        fprintf('\nContinue data processing with:\n');
+        fprintf('[6] - Calculation of PLV?\n');
+        x = input('\nSelect [y/n]: ','s');
+        if strcmp('y', x)
+          selection = true;
+          sessionStatus = true;
+          sessionPart = 6;
+        elseif strcmp('n', x)
+          selection = true;
+          sessionStatus = false;
+        else
+          selection = false;
+        end
+      end  
+    case 6
+      HSP_main_6;
       sessionStatus = false;
     otherwise
       sessionStatus = false;

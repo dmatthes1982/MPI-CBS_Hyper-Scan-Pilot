@@ -1,5 +1,5 @@
 function [ cfgAllArt ] = HSP_manArtifact( cfg, data )
-% HSP_MANUALREJECT - this function could be use to is verify the automatic 
+% HSP_MANARTIFACT - this function could be use to is verify the automatic 
 % detected artifacts remove some of them or add additional ones if
 % required.
 %

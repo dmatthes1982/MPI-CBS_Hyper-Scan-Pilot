@@ -1,6 +1,6 @@
 function [ cfgAutoArt ] = HSP_autoArtifact( cfg, data )
-% HSP_AUTOREJECT marks timeslots as an artifact in which the level of 'Cz',
-% 'O2' and 'O4' exceeds or fall below +/- 75 mV.
+% HSP_AUTOARTIFACT marks timeslots as an artifact in which the level of 
+% 'Cz', 'O2' and 'O4' exceeds or fall below +/- 75 mV.
 %
 % Use as
 %   [ cfgAutoArt ] = HSP_autoArtifact(cfg, data)

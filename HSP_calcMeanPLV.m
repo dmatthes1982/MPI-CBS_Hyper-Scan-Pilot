@@ -32,17 +32,11 @@ if isempty(numOfPart)
 end
 
 % -------------------------------------------------------------------------
-% Get center frequency of fildered input signal
-% -------------------------------------------------------------------------
-centerFreq = (  data(numOfPart(1)).dyad.cfg.previous{1}.previous.bpfreq(1) + ...
-                data(numOfPart(1)).dyad.cfg.previous{1}.previous.bpfreq(2)  ) ./ 2;
-
-% -------------------------------------------------------------------------
 % Estimate mean Phase Locking Value (mPLV)
 % -------------------------------------------------------------------------
 for i = numOfPart
   fprintf('Calc mean PLVs of dyad %d with a center frequency of %d Hz...\n', ...           
-            i, centerFreq);
+            i, data(i).centerFreq);
   numOfTrials = length(data(i).dyad.PLV);
   data(i).dyad.mPLV{1,numOfTrials} = [];
   for j=1:1:numOfTrials

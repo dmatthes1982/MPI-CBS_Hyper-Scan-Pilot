@@ -168,9 +168,9 @@ switch part
     fileNamePost = strcat(desPath, 'HSP_06_allArt_', sessionStr, '.mat');
   case 5
     fileNamePre = strcat(desPath, 'HSP_04_seg1_', sessionStr, '.mat');
-    fileNamePost = strcat(desPath, 'HSP_08_hilbert40Hz_', sessionStr, '.mat');
+    fileNamePost = strcat(desPath, 'HSP_08d_hilbert40Hz_', sessionStr, '.mat');
   case 6
-    fileNamePre = strcat(desPath, 'HSP_08_hilbert2Hz_', sessionStr, '.mat');
+    fileNamePre = strcat(desPath, 'HSP_08a_hilbert2Hz_', sessionStr, '.mat');
     fileNamePost = strcat(desPath, 'HSP_10d_mplv40Hz_', sessionStr, '.mat');
   otherwise
     error('Something unexpected happend. part = %d is not defined' ...

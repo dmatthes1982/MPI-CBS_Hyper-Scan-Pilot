@@ -50,21 +50,17 @@ if isempty(numOfPart)
 end
 
 % -------------------------------------------------------------------------
-% Get center frequency of filtered input signal
-% -------------------------------------------------------------------------
-centerFreq = (  data(numOfPart(1)).part1.cfg.previous.bpfreq(1) + ...
-                data(numOfPart(1)).part1.cfg.previous.bpfreq(2)  ) ./ 2;
-
-% -------------------------------------------------------------------------
 % Estimate Phase Locking Value (PLV)
 % -------------------------------------------------------------------------
 dataTmp(max(numOfPart)) = struct;
 dataTmp(max(numOfPart)).dyad = [];
+dataTmp(max(numOfPart)).dyad = [];
 
 for i = numOfPart
   fprintf('Calc PLVs of dyad %d with a center frequency of %d Hz...\n', ...           
-            i, centerFreq);
+            i,  data(i).centerFreq);
   dataTmp(i).dyad  = phaseLockingValue(cfg, data(i).part1, data(i).part2);
+  dataTmp(i).centerFreq = data(i).centerFreq; 
 end
 
 data = dataTmp;

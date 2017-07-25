@@ -48,22 +48,16 @@ cfg.feedback        = 'no';
 cfg.showcallinfo    = 'no';
 
 % -------------------------------------------------------------------------
-% Get center frequency of fildered input signal
-% -------------------------------------------------------------------------
-centerFreq = (  data(numOfPart(1)).part1.cfg.bpfreq(1) + ...
-                data(numOfPart(1)).part1.cfg.bpfreq(2)  ) ./ 2;
-
-% -------------------------------------------------------------------------
 % Calculate Hilbert phase
 % -------------------------------------------------------------------------
 
 parfor i= numOfPart
   fprintf('Calc Hilbert phase of participant 1 of dyad %d at %d Hz...\n', ...           
-            i, centerFreq);
+            i,  data(i).centerFreq);
   data(i).part1   = hilbertTransform(cfg, data(i).part1);        
           
   fprintf('Calc Hilbert phase of participant 2 of dyad %d at %d Hz...\n', ...           
-            i, centerFreq);
+            i, data(i).centerFreq);
   data(i).part2   = hilbertTransform(cfg, data(i).part2);
 end
 

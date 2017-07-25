@@ -58,6 +58,7 @@ centerFreq = (bpfreq(2) + bpfreq(1))/2;
 % -------------------------------------------------------------------------
 % Bandpass filtering
 % -------------------------------------------------------------------------
+data(max(numOfPart)).centerFreq = [];
 
 parfor i = numOfPart
   fprintf('Apply bandpass to participant 1 of dyad %d with a center frequency of %d Hz...\n', ...           
@@ -67,6 +68,8 @@ parfor i = numOfPart
   fprintf('Apply bandpass to participant 2 of dyad %d with a center frequency of %d Hz...\n', ...           
             i, centerFreq);
   data(i).part2   = ft_preprocessing(cfg, data(i).part2);
+  
+  data(i).centerFreq = centerFreq;
 end
 
 end

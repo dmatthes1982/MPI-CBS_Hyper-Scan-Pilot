@@ -36,9 +36,50 @@ for i = 1:1:length(data_hilbert_2Hz)                                        % re
     data_hilbert_2Hz(i).part2 = []; %#ok<SAGROW>
   end
 end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% general adjustment
+selection = false;
+while selection == false
+  fprintf('\nShould rejection of detected artifacts be applied before PLV estimation?\n');
+  x = input('Select [y/n]: ','s');
+  if strcmp('y', x)
+    selection = true;
+    artifactRejection = true;
+  elseif strcmp('n', x)
+    selection = true;
+    artifactRejection = false;
+  else
+    selection = false;
+  end
+end
+if artifactRejection == true
+  cfg             = [];
+  cfg.desFolder   = desPath;
+  cfg.filename    = 'HSP_06_allArt';
+  cfg.sessionStr  = sessionStr;
+
+  file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
+  if ~isempty(dir(file_path))
+    fprintf('\nLoading %s ...\n', file_path);
+    HSP_loadData( cfg );                                                      % load artifact definitions
+  else
+    fprintf('File %s is not existent, artifact rejection is not possible!\n', file_path);
+    artifactRejection = false;
+  end
+end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 2 Hz branch
+%% artifact rejection at 2 Hz
+if artifactRejection == true
+  cfg           = [];
+  cfg.artifact  = cfg_allArt;
+  cfg.numOfPart = numOfPart;
+  
+  fprintf('Artifact Rejection of Hilbert phase data at 2 Hz.\n');
+  data_hilbert_2Hz = HSP_rejectArtifacts(cfg, data_hilbert_2Hz);
+end
+
 %% calculate PLV at 2Hz
 cfg           = [];
 cfg.winlen    = 5;                                                          % window length for one PLV value in seconds
@@ -124,6 +165,16 @@ for i = 1:1:length(data_hilbert_10Hz)                                       % re
     data_hilbert_10Hz(i).part1 = []; %#ok<SAGROW>
     data_hilbert_10Hz(i).part2 = []; %#ok<SAGROW>
   end
+end
+
+%% artifact rejection at 10 Hz
+if artifactRejection == true
+  cfg           = [];
+  cfg.artifact  = cfg_allArt;
+  cfg.numOfPart = numOfPart;
+  
+  fprintf('Artifact Rejection of Hilbert phase data at 10 Hz.\n');
+  data_hilbert_10Hz = HSP_rejectArtifacts(cfg, data_hilbert_10Hz);
 end
 
 %% calculate PLV at 10Hz
@@ -213,6 +264,16 @@ for i = 1:1:length(data_hilbert_20Hz)                                       % re
   end
 end
 
+%% artifact rejection at 20 Hz
+if artifactRejection == true
+  cfg           = [];
+  cfg.artifact  = cfg_allArt;
+  cfg.numOfPart = numOfPart;
+  
+  fprintf('Artifact Rejection of Hilbert phase data at 20 Hz.\n');
+  data_hilbert_20Hz = HSP_rejectArtifacts(cfg, data_hilbert_20Hz);
+end
+
 %% calculate PLV at 20Hz
 cfg           = [];
 cfg.winlen    = 1;                                                          % window length for one PLV value in seconds
@@ -300,6 +361,16 @@ for i = 1:1:length(data_hilbert_40Hz)                                       % re
   end
 end
 
+%% artifact rejection at 40 Hz
+if artifactRejection == true
+  cfg           = [];
+  cfg.artifact  = cfg_allArt;
+  cfg.numOfPart = numOfPart;
+  
+  fprintf('Artifact Rejection of Hilbert phase data at 40 Hz.\n');
+  data_hilbert_40Hz = HSP_rejectArtifacts(cfg, data_hilbert_40Hz);
+end
+
 %% calculate PLV at 40Hz
 cfg           = [];
 cfg.winlen    = 1;                                                          % window length for one PLV value in seconds
@@ -368,4 +439,4 @@ fprintf('Data stored!\n');
 clear data_mplv_40Hz data_mplv_40HzNew
 
 %% clear workspace
-clear cfg file_path file_num dyads dyadsNew i
+clear cfg file_path file_num dyads dyadsNew i cfg_allArt

@@ -1,4 +1,4 @@
-function [ data ] = HSP_rejectartifacts( cfg, data )
+function [ data ] = HSP_rejectArtifacts( cfg, data )
 % HSP_REJECTARTIFACTS is a function which removes trials containing 
 % artifacts. It returns clean data.
 %
@@ -39,22 +39,24 @@ end
 % Clean Data
 % -------------------------------------------------------------------------
 for i = numOfPart
-  ft_warning off;
-  
   if ~isempty(artifact(i).part1) && ~isempty(artifact(i).part2)
     fprintf('\nCleaning data of part 1 of dyad %d\n', i);
+    ft_warning off;
     data(i).part1 = ft_rejectartifact(artifact(i).part1, data(i).part1);
+    ft_warning off;
     data(i).part1 = ft_rejectartifact(artifact(i).part2, data(i).part1);
   else
     fprintf('\nArtifact rejection with part 1 of dyad %d not possible.\n', i);
     fprintf('No artifact definition available.\n');
   end
   
-  ft_warning off;
+  
   
   if ~isempty(artifact(i).part1) && ~isempty(artifact(i).part2)
     fprintf('\nCleaning data of part 2 of dyad %d\n', i);
+    ft_warning off;
     data(i).part2 = ft_rejectartifact(artifact(i).part1, data(i).part2);
+    ft_warning off;
     data(i).part2 = ft_rejectartifact(artifact(i).part2, data(i).part2);
   else
     fprintf('\nArtifact rejection with part 2 of dyad %d not possible.\n', i);

@@ -64,13 +64,17 @@ for i = numOfPart
   
   cfg.trl = data(i).part1.cfg.previous.trl;
   fprintf('Estimate artifacts in participant 1 of dyad %d...\n', i);
-  cfgAutoArt(i).part1    = ft_artifact_threshold(cfg, data(i).part1); 
+  cfgAutoArt(i).part1    = ft_artifact_threshold(cfg, data(i).part1);
+  cfgAutoArt(i).part1    = keepfields(cfgAutoArt(i).part1, ...
+                                      {'artfctdef', 'showcallinfo'});
   cfgAutoArt(i).bad1Num = length(cfgAutoArt(i).part1.artfctdef.threshold.artifact);
   fprintf('%d artifacts detected!\n', cfgAutoArt(i).bad1Num);
   
   cfg.trl = data(i).part2.cfg.previous.trl;
   fprintf('Estimate artifacts in participant 2 of dyad %d...\n', i);
   cfgAutoArt(i).part2    = ft_artifact_threshold(cfg, data(i).part2);
+  cfgAutoArt(i).part2    = keepfields(cfgAutoArt(i).part2, ...
+                                      {'artfctdef', 'showcallinfo'});
   cfgAutoArt(i).bad2Num = length(cfgAutoArt(i).part2.artfctdef.threshold.artifact);
   fprintf('%d artifacts detected!\n', cfgAutoArt(i).bad2Num);
 end

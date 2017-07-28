@@ -1,4 +1,4 @@
-function HSP_determineFiltChar(cfg, data)
+function HSP_detFiltChar(cfg, data)
 % HSP_DETERMINEFILTCHAR illustrates and compares the frequency response and 
 % the output of three different bandpass filters. It could be used to 
 % evaluate different filter types and orders

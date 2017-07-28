@@ -41,7 +41,7 @@ end
 %% bandpass filter data at 2Hz
 cfg           = [];
 cfg.bpfreq    = [1.9 2.1];
-cfg.filtorder = 500;
+cfg.filtorder = 125;
 cfg.numOfPart = numOfPart;
 
 data_bpfilt_2HzNew = HSP_bpFiltering(cfg, data_seg1);
@@ -110,7 +110,7 @@ clear data_hilbert_2Hz data_hilbert_2HzNew
 %% bandpass filter data at 10Hz
 cfg           = [];
 cfg.bpfreq    = [9 11];
-cfg.filtorder = 250;
+cfg.filtorder = 62;
 cfg.numOfPart = numOfPart;
 
 data_bpfilt_10HzNew = HSP_bpFiltering(cfg, data_seg1);
@@ -179,7 +179,7 @@ clear data_hilbert_10Hz data_hilbert_10HzNew
 %% bandpass filter data at 20Hz
 cfg           = [];
 cfg.bpfreq    = [19 21];
-cfg.filtorder = 250;
+cfg.filtorder = 62;
 cfg.numOfPart = numOfPart;
 
 data_bpfilt_20HzNew = HSP_bpFiltering(cfg, data_seg1);
@@ -248,7 +248,7 @@ clear data_hilbert_20Hz data_hilbert_20HzNew
 %% bandpass filter data at 40Hz
 cfg           = [];
 cfg.bpfreq    = [39 41];
-cfg.filtorder = 250;
+cfg.filtorder = 62;
 cfg.numOfPart = numOfPart;
 
 data_bpfilt_40HzNew = HSP_bpFiltering(cfg, data_seg1);

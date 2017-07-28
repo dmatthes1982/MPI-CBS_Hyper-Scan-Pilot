@@ -68,6 +68,7 @@ cfg.feedback            = 'error';
 cfg.trialdef.eventvalue = eventvalues;
 
 cfg = ft_definetrial(cfg);                                                  % generate config for segmentation
+cfg = rmfield(cfg, {'notification'});                                       % workarround for mergeconfig bug                       
 
 for i = size(cfg.trl):-1:2                                                  % reject duplicates
   if cfg.trl(i,4) == cfg.trl(i-1,4)

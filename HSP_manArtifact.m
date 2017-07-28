@@ -51,6 +51,7 @@ for i = numOfPart
   fprintf('\nSearch for artifacts with part 1 of dyad %d\n', i);
   cfg.part = 1;
   cfg.artifact = artifact(i).part1.artfctdef.threshold.artifact;
+  ft_warning off;
   cfgAllArt(i).part1 = HSP_databrowser(cfg, data);
   cfgAllArt(i).part1    = keepfields(cfgAllArt(i).part1, ...
                                       {'artfctdef', 'showcallinfo'});
@@ -58,6 +59,7 @@ for i = numOfPart
   fprintf('\nSearch for artifacts with part 2 of dyad %d\n', i);
   cfg.part = 2;
   cfg.artifact = artifact(i).part2.artfctdef.threshold.artifact;
+  ft_warning off;
   cfgAllArt(i).part2 = HSP_databrowser(cfg, data);
   cfgAllArt(i).part2    = keepfields(cfgAllArt(i).part2, ...
                                       {'artfctdef', 'showcallinfo'});
@@ -79,6 +81,6 @@ for i = numOfPart
 end
 
 fprintf('\n');
+ft_warning on;
 
 end
-

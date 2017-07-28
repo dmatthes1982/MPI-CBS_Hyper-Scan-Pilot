@@ -439,4 +439,4 @@ fprintf('Data stored!\n');
 clear data_mplv_40Hz data_mplv_40HzNew
 
 %% clear workspace
-clear cfg file_path file_num dyads dyadsNew i cfg_allArt
+clear cfg file_path file_num dyads dyadsNew i cfg_allArt artifactRejection

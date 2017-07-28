@@ -80,6 +80,7 @@ for i=1:1:numOfTrials
   trialdiff{i}          = trial1{i} - trial2{i};
 end
 
+
 N                       = cfgPLV.winlen * dataPart1.fsample;
 PLV{numOfTrials}        = []; 
 time{numOfTrials}       = [];
@@ -91,7 +92,12 @@ for i=1:1:numOfTrials
   else
     numOfPLV = fix(lenOfTrial/N);
     for j=1:1:numOfPLV
-      time{i}(1,j) = timeOrg{i}((j-1)*N + (N./2+1));
+      if mod(N, 2) == 0
+        time{i}(1,j) = timeOrg{i}((j-1)*N + (N./2+1));
+      else
+        time{i}(1,j) = (timeOrg{i}((j-1)*N + (fix(N./2)+1)) + ...
+                        timeOrg{i}((j-1)*N + (fix(N./2)+2))) / 2;
+      end
     end
   end
   for k=1:1:numOfElec

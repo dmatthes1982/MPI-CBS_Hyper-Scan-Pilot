@@ -70,6 +70,12 @@ cfgReref.feedback      = 'no';                                              % fe
 cfgReref.showcallinfo  = 'no';                                              % prevent printing the time and memory after each function call
 cfgReref.calceogcomp   = 'yes';                                             % calculate eogh and eogv 
 
+% downsampling
+cfgDS                  = [];
+cfgDS.resamplefs       = 125;
+cfgDS.feedback         = 'no';                                              % feedback should not be presented
+cfgDS.showcallinfo     = 'no';                                              % prevent printing the time and memory after each function call
+
 % -------------------------------------------------------------------------
 % Preprocessing
 % -------------------------------------------------------------------------
@@ -78,10 +84,12 @@ parfor i = numOfPart
   fprintf('Preproc participant 1 of dyad %d...\n', i);
   data(i).part1   = bpfilter(cfgBP, data(i).part1);
   data(i).part1   = rereference(cfgReref, data(i).part1);
+  data(i).part1   = downsampling(cfgDS, data(i).part1); 
   
   fprintf('Preproc participant 2 of dyad %d...\n', i);
   data(i).part2   = bpfilter(cfgBP, data(i).part2);
-  data(i).part2   = rereference(cfgReref, data(i).part2);  
+  data(i).part2   = rereference(cfgReref, data(i).part2);
+  data(i).part2   = downsampling(cfgDS, data(i).part2);
 end
 
 end
@@ -95,6 +103,15 @@ function [ data_out ] = bpfilter( cfgB, data_in )
 data_out = ft_preprocessing(cfgB, data_in);
   
 end
+
+function [ data_out ] = downsampling( cfgD, data_in )
+
+ft_info off;
+data_out = ft_resampledata(cfgD, data_in);
+ft_info on;
+
+end
+
 
 function [ data_out ] = rereference( cfgR, data_in )
 

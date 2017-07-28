@@ -40,8 +40,6 @@ end
 % -------------------------------------------------------------------------
 % TFR settings
 % -------------------------------------------------------------------------
-ft_warning off;
-
 cfg                 = [];
 cfg.method          = 'wavelet';
 cfg.output          = 'pow';
@@ -62,9 +60,11 @@ cfg.showcallinfo    = 'no';                                                 % su
 % -------------------------------------------------------------------------
 parfor i = numOfPart
   fprintf('Calc TFRs of participant 1 of dyad %d...\n', i);
+  ft_warning off;
   data(i).part1 = ft_freqanalysis(cfg, data(i).part1);
   
   fprintf('Calc TFRs of participant 2 of dyad %d...\n', i);
+  ft_warning off;
   data(i).part2 = ft_freqanalysis(cfg, data(i).part2); 
 end
 

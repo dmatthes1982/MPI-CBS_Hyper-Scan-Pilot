@@ -40,7 +40,7 @@ end
 %% general adjustment
 selection = false;
 while selection == false
-  cprintf([0,0.6,0], '\n<strong>Should rejection of detected artifacts be applied before PLV estimation?</strong>\n');
+  cprintf([0,0.6,0], '\nShould rejection of detected artifacts be applied before PLV estimation?\n');
   x = input('Select [y/n]: ','s');
   if strcmp('y', x)
     selection = true;
@@ -52,6 +52,7 @@ while selection == false
     selection = false;
   end
 end
+
 if artifactRejection == true
   cfg             = [];
   cfg.desFolder   = desPath;
@@ -439,4 +440,5 @@ fprintf('Data stored!\n');
 clear data_mplv_40Hz data_mplv_40HzNew
 
 %% clear workspace
-clear cfg file_path file_num dyads dyadsNew i cfg_allArt artifactRejection
+clear cfg file_path file_num dyads dyadsNew i cfg_allArt artifactRejection ...
+      x selection

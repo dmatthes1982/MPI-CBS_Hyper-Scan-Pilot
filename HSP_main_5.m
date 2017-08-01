@@ -36,12 +36,14 @@ for i = 1:1:length(data_seg1)                                               % re
   end
 end
 
+filtCoeffDiv = 500 / data_seg1(min(numOfPart)).part1.fsample;               % estimate sample frequency dependent divisor of filter length
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 2 Hz branch
 %% bandpass filter data at 2Hz
 cfg           = [];
 cfg.bpfreq    = [1.9 2.1];
-cfg.filtorder = 125;
+cfg.filtorder = fix(500 / filtCoeffDiv);
 cfg.numOfPart = numOfPart;
 
 data_bpfilt_2HzNew = HSP_bpFiltering(cfg, data_seg1);
@@ -69,7 +71,7 @@ end
 
 fprintf('Saving bandpass filtered data (2Hz) in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_bpfilt_2Hz', data_bpfilt_2Hz, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_bpfilt_2Hz
 
 %% calculate hilbert phase at 2Hz
@@ -102,7 +104,7 @@ end
 
 fprintf('Saving Hilbert phase data (2Hz) in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_hilbert_2Hz', data_hilbert_2Hz, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_hilbert_2Hz data_hilbert_2HzNew
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -110,7 +112,7 @@ clear data_hilbert_2Hz data_hilbert_2HzNew
 %% bandpass filter data at 10Hz
 cfg           = [];
 cfg.bpfreq    = [9 11];
-cfg.filtorder = 62;
+cfg.filtorder = fix(250 / filtCoeffDiv);
 cfg.numOfPart = numOfPart;
 
 data_bpfilt_10HzNew = HSP_bpFiltering(cfg, data_seg1);
@@ -138,7 +140,7 @@ end
 
 fprintf('Saving bandpass filtered data (10Hz) in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_bpfilt_10Hz', data_bpfilt_10Hz, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_bpfilt_10Hz
 
 %% calculate hilbert phase at 10Hz
@@ -171,7 +173,7 @@ end
 
 fprintf('Saving Hilbert phase data (10Hz) in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_hilbert_10Hz', data_hilbert_10Hz, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_hilbert_10Hz data_hilbert_10HzNew
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -179,7 +181,7 @@ clear data_hilbert_10Hz data_hilbert_10HzNew
 %% bandpass filter data at 20Hz
 cfg           = [];
 cfg.bpfreq    = [19 21];
-cfg.filtorder = 62;
+cfg.filtorder = fix(250 / filtCoeffDiv);
 cfg.numOfPart = numOfPart;
 
 data_bpfilt_20HzNew = HSP_bpFiltering(cfg, data_seg1);
@@ -207,7 +209,7 @@ end
 
 fprintf('Saving bandpass filtered data (20Hz) in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_bpfilt_20Hz', data_bpfilt_20Hz, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_bpfilt_20Hz
 
 %% calculate hilbert phase at 20Hz
@@ -240,7 +242,7 @@ end
 
 fprintf('Saving Hilbert phase data (20Hz) in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_hilbert_20Hz', data_hilbert_20Hz, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_hilbert_20Hz data_hilbert_20HzNew
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -248,7 +250,7 @@ clear data_hilbert_20Hz data_hilbert_20HzNew
 %% bandpass filter data at 40Hz
 cfg           = [];
 cfg.bpfreq    = [39 41];
-cfg.filtorder = 62;
+cfg.filtorder = fix(250 / filtCoeffDiv);
 cfg.numOfPart = numOfPart;
 
 data_bpfilt_40HzNew = HSP_bpFiltering(cfg, data_seg1);
@@ -276,7 +278,7 @@ end
 
 fprintf('Saving bandpass filtered data (40Hz) in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_bpfilt_40Hz', data_bpfilt_40Hz, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_bpfilt_40Hz
 
 %% calculate hilbert phase at 40Hz
@@ -313,4 +315,4 @@ fprintf('Data stored!\n');
 clear data_hilbert_40Hz data_hilbert_40HzNew
 
 %% clear workspace
-clear cfg data_seg1 file_path file_num dyads dyadsNew i
+clear cfg data_seg1 file_path file_num dyads dyadsNew i filtCoeffDiv

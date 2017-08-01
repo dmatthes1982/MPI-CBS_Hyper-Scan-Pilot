@@ -333,10 +333,10 @@ while sessionStatus == true
     otherwise
       sessionStatus = false;
   end
- 
+  frprintf('\n');
 end
 
-fprintf('\nData processing finished.\n');
+fprintf('Data processing finished.\n');
 fprintf('Session will be closed.\n');
 
 clear sessionStr numOfPart srcPath desPath sessionPart sessionStatus ...

@@ -13,6 +13,7 @@ function [ data ] = HSP_preprocessing( cfg, data )
 %   cfg.bpinstabilityfix  = deal with filter instability, 'no' or 'split' (default: 'no')
 %   cfg.reref             = re-referencing: 'yes' or 'no' (default: 'yes')
 %   cfg.refchannel        = re-reference channel (default: 'TP10')
+%   cfg.samplingRate      = sampling rate in Hz (default: 500)
 %   cfg.numOfPart         = number of participants, i.e. [1:1:6] or [1,3,5] (default: [])
 %
 % Currently this function applies only a bandpass filter to the data.
@@ -32,6 +33,7 @@ bpfilttype        = ft_getopt(cfg, 'bpfilttype', 'fir');
 bpinstabilityfix  = ft_getopt(cfg, 'bpinstabilityfix', 'no');
 reref             = ft_getopt(cfg, 'reref', 'yes');
 refchannel        = ft_getopt(cfg, 'refchannel', 'TP10');
+samplingRate      = ft_getopt(cfg, 'samplingRate', 500);
 numOfPart         = ft_getopt(cfg, 'numOfPart', []);
 
 if isempty(numOfPart)
@@ -42,6 +44,10 @@ if isempty(numOfPart)
   end
   numOfPart = find(notEmpty);  
 end
+
+if ~(samplingRate == 500 || samplingRate == 250 || samplingRate == 125)     
+  error('Only the following sampling rates are permitted: 500, 250 or 125 Hz');
+end  
 
 % -------------------------------------------------------------------------
 % Preprocessing settings
@@ -72,7 +78,7 @@ cfgReref.calceogcomp   = 'yes';                                             % ca
 
 % downsampling
 cfgDS                  = [];
-cfgDS.resamplefs       = 125;
+cfgDS.resamplefs       = samplingRate;
 cfgDS.feedback         = 'no';                                              % feedback should not be presented
 cfgDS.showcallinfo     = 'no';                                              % prevent printing the time and memory after each function call
 

@@ -73,6 +73,30 @@ cfg.bpfilttype        = 'but';
 cfg.bpinstabilityfix  = 'split';
 cfg.numOfPart         = numOfPart;
 
+selection = false;
+while selection == false
+  cprintf([0,0.6,0], '\nPlease select sampling rate:\n');
+  fprintf('[1] - 500 Hz (original sampling rate)\n');
+  fprintf('[2] - 250 Hz (downsampling factor 2)\n');
+  fprintf('[3] - 125 Hz (downsampling factor 4)\n');
+  x = input('Option: ');
+  
+  switch x
+    case 1
+      selection = true;
+      cfg.samplingRate = 500;
+    case 2
+      selection = true;
+      cfg.samplingRate = 250;
+    case 3
+      selection = true;
+      cfg.samplingRate = 125;
+    otherwise
+      cprintf([1,0.5,0], 'Wrong input!\n');
+  end
+end
+fprintf('\n');
+
 ft_info off;
 data_preprocNew = HSP_preprocessing( cfg, data_rawNew);
 ft_info on;
@@ -136,8 +160,9 @@ end
 
 fprintf('The time-frequency response data will be saved in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_tfr1', data_tfr1, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_tfr1 data_tfr1New
 
 %% clear workspace
-clear file_path file_num cfg sourceList numOfSources dyads dyadsNew i
+clear file_path file_num cfg sourceList numOfSources dyads dyadsNew i ...
+      selection

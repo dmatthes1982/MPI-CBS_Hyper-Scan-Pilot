@@ -333,7 +333,7 @@ while sessionStatus == true
     otherwise
       sessionStatus = false;
   end
-  frprintf('\n');
+  fprintf('\n');
 end
 
 fprintf('Data processing finished.\n');

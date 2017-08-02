@@ -52,6 +52,7 @@ while selection == false
     selection = false;
   end
 end
+fprintf('\n');
 
 if artifactRejection == true
   cfg             = [];
@@ -79,6 +80,7 @@ if artifactRejection == true
   
   fprintf('Artifact Rejection of Hilbert phase data at 2 Hz.\n');
   data_hilbert_2Hz = HSP_rejectArtifacts(cfg, data_hilbert_2Hz);
+  fprintf('\n');
 end
 
 %% calculate PLV at 2Hz
@@ -112,7 +114,7 @@ end
 
 fprintf('Saving PLVs (2Hz) in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_plv_2Hz', data_plv_2Hz, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_plv_2Hz
 
 %% calculate mean PLV at 2Hz
@@ -145,7 +147,7 @@ end
 
 fprintf('Saving mean PLVs (2Hz) in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_mplv_2Hz', data_mplv_2Hz, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_mplv_2Hz data_mplv_2HzNew
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -176,6 +178,7 @@ if artifactRejection == true
   
   fprintf('Artifact Rejection of Hilbert phase data at 10 Hz.\n');
   data_hilbert_10Hz = HSP_rejectArtifacts(cfg, data_hilbert_10Hz);
+  fprintf('\n');
 end
 
 %% calculate PLV at 10Hz
@@ -209,7 +212,7 @@ end
 
 fprintf('Saving PLVs (10Hz) in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_plv_10Hz', data_plv_10Hz, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_plv_10Hz
 
 %% calculate mean PLV at 10Hz
@@ -242,7 +245,7 @@ end
 
 fprintf('Saving mean PLVs (10Hz) in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_mplv_10Hz', data_mplv_10Hz, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_mplv_10Hz data_mplv_10HzNew
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -273,6 +276,7 @@ if artifactRejection == true
   
   fprintf('Artifact Rejection of Hilbert phase data at 20 Hz.\n');
   data_hilbert_20Hz = HSP_rejectArtifacts(cfg, data_hilbert_20Hz);
+  fprintf('\n');
 end
 
 %% calculate PLV at 20Hz
@@ -306,7 +310,7 @@ end
 
 fprintf('Saving PLVs (20Hz) in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_plv_20Hz', data_plv_20Hz, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_plv_20Hz
 
 %% calculate mean PLV at 20Hz
@@ -339,7 +343,7 @@ end
 
 fprintf('Saving mean PLVs (20Hz) in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_mplv_20Hz', data_mplv_20Hz, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_mplv_20Hz data_mplv_20HzNew
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -370,6 +374,7 @@ if artifactRejection == true
   
   fprintf('Artifact Rejection of Hilbert phase data at 40 Hz.\n');
   data_hilbert_40Hz = HSP_rejectArtifacts(cfg, data_hilbert_40Hz);
+  fprintf('\n');
 end
 
 %% calculate PLV at 40Hz
@@ -403,7 +408,7 @@ end
 
 fprintf('Saving PLVs (40Hz) in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_plv_40Hz', data_plv_40Hz, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_plv_40Hz
 
 %% calculate mean PLV at 40Hz

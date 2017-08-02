@@ -125,7 +125,7 @@ end
 
 fprintf('The preprocessed data will be saved in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_preproc', data_preproc, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_preproc
 
 %% calculate TFRs of the preprocessed data
@@ -160,7 +160,7 @@ end
 
 fprintf('The time-frequency response data will be saved in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_tfr1', data_tfr1, 'dyads', dyads);
-fprintf('Data stored!\n\n');
+fprintf('Data stored!\n');
 clear data_tfr1 data_tfr1New
 
 %% clear workspace

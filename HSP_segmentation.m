@@ -47,11 +47,9 @@ cfg.overlap         = 0;                                                    % no
 % Segmentation
 % -------------------------------------------------------------------------
 fSample = data(min(numOfPart)).part1.fsample;
-if fSample == 500
-  segLength = cfg.length;
-  trialLength = length(data(min(numOfPart)).part1.trial{1}(1,:));
-  subseg = trialLength / (segLength * fSample);
-end
+segLength = cfg.length;
+trialLength = length(data(min(numOfPart)).part1.trial{1}(1,:));
+subseg = trialLength / (segLength * fSample);
 
 parfor i = numOfPart
   if fSample == 500

@@ -4,7 +4,7 @@ function [ data ] = HSP_phaseLockVal( cfg, data )
 % HSP_DATASTRUCTURE
 %
 % Use as
-%   [ data ] = HSP_phaseLockVal( data )
+%   [ data ] = HSP_phaseLockVal( cfg, data )
 %
 % where the input data have to be the result from HSP_HILBERTPHASE
 %

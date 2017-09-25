@@ -3,7 +3,7 @@ function [ data ] = HSP_hilbertPhase( cfg, data )
 % trial in the HSP_DATASTRUCTURE
 %
 % Use as
-%   [ data ] = HSP_hilbertPhase( data )
+%   [ data ] = HSP_hilbertPhase( cfg, data )
 %
 % where the input data have to be the result from HSP_BPFILTERING
 %

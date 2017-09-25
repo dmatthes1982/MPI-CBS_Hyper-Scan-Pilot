@@ -7,7 +7,7 @@ function [ num ] = HSP_getSessionNum( cfg )
 %
 % The configuration options are
 %   cfg.desFolder   = destination folder (default: '/data/pt_01821/DualEEG_AD_auditory_processedData/')
-%   cfg.filename    = filename (default: HSP_01_raw)
+%   cfg.filename    = filename (default: 'HSP_01_raw')
 %
 % This function requires the fieldtrip toolbox.
 

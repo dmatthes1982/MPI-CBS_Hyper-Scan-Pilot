@@ -18,7 +18,7 @@ function HSP_saveData( cfg, varargin )
 
 desFolder   = ft_getopt(cfg, 'desFolder', '/data/pt_01821/DualEEG_AD_auditory_processedData/');
 filename    = ft_getopt(cfg, 'filename', 'HSP_01_raw');
-sessionStr  = ft_getopt(cfg, 'sessionStr', '010');
+sessionStr  = ft_getopt(cfg, 'sessionStr', '001');
 
 file_path = strcat(desFolder, filename, '_', sessionStr, '.mat');
 inputElements = length(varargin);

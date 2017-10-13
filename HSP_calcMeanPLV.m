@@ -38,9 +38,17 @@ for i = numOfPart
   fprintf('Calc mean PLVs of dyad %d with a center frequency of %d Hz...\n', ...           
             i, data(i).centerFreq);
   numOfTrials = length(data(i).dyad.PLV);
-  data(i).dyad.mPLV{1,numOfTrials} = [];
+  numOfElecA = size(data(i).dyad.PLV{1}, 1);
+  numOfElecB = size(data(i).dyad.PLV{1}, 2);
+  
+  data(i).dyad.mPLV{1, numOfTrials} = [];
   for j=1:1:numOfTrials
-    data(i).dyad.mPLV{j} = mean(data(i).dyad.PLV{j}, 2);
+    data(i).dyad.mPLV{j} = zeros(numOfElecA, numOfElecB);
+    for k=1:1:numOfElecA
+      for l=1:1:numOfElecB
+      data(i).dyad.mPLV{j}(k,l) = mean(cell2mat(data(i).dyad.PLV{j}(k,l)));
+      end
+    end
   end
   data(i).dyad = rmfield(data(i).dyad, {'time', 'PLV'});
 end

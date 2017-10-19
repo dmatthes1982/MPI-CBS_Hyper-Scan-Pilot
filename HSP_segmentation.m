@@ -10,6 +10,7 @@ function [ data ] = HSP_segmentation( cfg, data )
 %
 % The configuration options are
 %   cfg.numOfPart = numbers of participants, i.e. [1:1:6] or [1,3,5] (default: [])
+%   cfg.length    = length of segments (excepted values: 1, 5, 10 seconds)
 %
 % This function requires the fieldtrip toolbox.
 %
@@ -23,6 +24,13 @@ function [ data ] = HSP_segmentation( cfg, data )
 % Get number of participants
 % -------------------------------------------------------------------------
 numOfPart = ft_getopt(cfg, 'numOfPart', []);
+segLength = ft_getopt(cfg, 'length', 10);
+
+possibleLengths = [1, 5, 10];
+
+if ~any(ismember(possibleLengths, segLengths))
+  error('Excepted cfg.length values are only 1, 5 and 10 seconds');
+end
 
 if isempty(numOfPart)
   numOfSources = size(data, 2);
@@ -40,7 +48,7 @@ cfg                 = [];
 cfg.feedback        = 'no';
 cfg.showcallinfo    = 'no';
 cfg.trials          = 'all';                                                  
-cfg.length          = 5;                                                    % segmentation into 5 seconds long segments
+cfg.length          = segLength;                                            
 cfg.overlap         = 0;                                                    % no overlap
 
 % -------------------------------------------------------------------------

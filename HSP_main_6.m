@@ -52,7 +52,6 @@ while selection == false
     selection = false;
   end
 end
-fprintf('\n');
 
 if artifactRejection == true
   cfg             = [];
@@ -72,6 +71,43 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 2 Hz branch
+%% segmentation of hilbert phase trials at 2 Hz
+% split the data of every condition into subtrials with a length of 5
+% seconds
+cfg           = [];
+cfg.numOfPart = numOfPart;
+cfg.length    = 5;
+
+data_hseg_2HzNew  = HSP_segmentation( cfg, data_hilbert_2Hz );
+
+clear data_hilbert_2Hz
+
+%% export the segmented hilbert data into a *.mat file
+cfg             = [];
+cfg.desFolder   = desPath;
+cfg.filename    = 'HSP_09a_hseg2Hz';
+cfg.sessionStr  = sessionStr;
+
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
+file_num = length(dir(file_path));
+
+if file_num == 0
+  data_hseg_2Hz = data_hseg_2HzNew;
+  dyads = dyadsNew;
+else
+  HSP_loadData( cfg );
+  cfgMerge.numOfNewPart = numOfPart;
+  data_hseg_2Hz = HSP_mergeDataset(cfgMerge, data_hseg_2HzNew, ...
+                                  data_hseg_2Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
+  clear cfgMerge;
+end
+
+fprintf('The segmented hilbert data will be saved in %s ...\n', file_path);
+HSP_saveData(cfg, 'data_hseg_2Hz', data_hseg_2Hz, 'dyads', dyads);
+fprintf('Data stored!\n');
+clear data_hseg_2Hz
+
 %% artifact rejection at 2 Hz
 if artifactRejection == true
   cfg           = [];
@@ -79,7 +115,7 @@ if artifactRejection == true
   cfg.numOfPart = numOfPart;
   
   fprintf('Artifact Rejection of Hilbert phase data at 2 Hz.\n');
-  data_hilbert_2Hz = HSP_rejectArtifacts(cfg, data_hilbert_2Hz);
+  data_hseg_2HzNew = HSP_rejectArtifacts(cfg, data_hseg_2HzNew);
   fprintf('\n');
 end
 
@@ -88,13 +124,13 @@ cfg           = [];
 cfg.winlen    = 5;                                                          % window length for one PLV value in seconds
 cfg.numOfPart = numOfPart;
 
-data_plv_2HzNew = HSP_phaseLockVal(cfg, data_hilbert_2Hz);
-clear data_hilbert_2Hz
+data_plv_2HzNew = HSP_phaseLockVal(cfg, data_hseg_2HzNew);
+clear data_hseg_2HzNew
 
 %% export the PLVs into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_09a_plv2Hz';
+cfg.filename    = 'HSP_10a_plv2Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -127,7 +163,7 @@ clear data_plv_2HzNew
 %% export the mean PLVs into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_10a_mplv2Hz';
+cfg.filename    = 'HSP_11a_mplv2Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -170,6 +206,43 @@ for i = 1:1:length(data_hilbert_10Hz)                                       % re
   end
 end
 
+%% segmentation of hilbert phase trials at 10 Hz
+% split the data of every condition into subtrials with a length of 5
+% seconds
+cfg           = [];
+cfg.numOfPart = numOfPart;
+cfg.length    = 5;
+
+data_hseg_10HzNew  = HSP_segmentation( cfg, data_hilbert_10Hz );
+
+clear data_hilbert_10Hz
+
+%% export the segmented hilbert data into a *.mat file
+cfg             = [];
+cfg.desFolder   = desPath;
+cfg.filename    = 'HSP_09b_hseg10Hz';
+cfg.sessionStr  = sessionStr;
+
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
+file_num = length(dir(file_path));
+
+if file_num == 0
+  data_hseg_10Hz = data_hseg_10HzNew;
+  dyads = dyadsNew;
+else
+  HSP_loadData( cfg );
+  cfgMerge.numOfNewPart = numOfPart;
+  data_hseg_10Hz = HSP_mergeDataset(cfgMerge, data_hseg_10HzNew, ...
+                                  data_hseg_10Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
+  clear cfgMerge;
+end
+
+fprintf('The segmented hilbert data will be saved in %s ...\n', file_path);
+HSP_saveData(cfg, 'data_hseg_10Hz', data_hseg_10Hz, 'dyads', dyads);
+fprintf('Data stored!\n');
+clear data_hseg_10Hz
+
 %% artifact rejection at 10 Hz
 if artifactRejection == true
   cfg           = [];
@@ -177,7 +250,7 @@ if artifactRejection == true
   cfg.numOfPart = numOfPart;
   
   fprintf('Artifact Rejection of Hilbert phase data at 10 Hz.\n');
-  data_hilbert_10Hz = HSP_rejectArtifacts(cfg, data_hilbert_10Hz);
+  data_hseg_10HzNew = HSP_rejectArtifacts(cfg, data_hseg_10HzNew);
   fprintf('\n');
 end
 
@@ -186,13 +259,13 @@ cfg           = [];
 cfg.winlen    = 1;                                                          % window length for one PLV value in seconds
 cfg.numOfPart = numOfPart;
 
-data_plv_10HzNew = HSP_phaseLockVal(cfg, data_hilbert_10Hz);
-clear data_hilbert_10Hz
+data_plv_10HzNew = HSP_phaseLockVal(cfg, data_hseg_10HzNew);
+clear data_hseg_10HzNew
 
 %% export the PLVs into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_09b_plv10Hz';
+cfg.filename    = 'HSP_10b_plv10Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -225,7 +298,7 @@ clear data_plv_10HzNew
 %% export the mean PLVs into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_10b_mplv10Hz';
+cfg.filename    = 'HSP_11b_mplv10Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -268,6 +341,43 @@ for i = 1:1:length(data_hilbert_20Hz)                                       % re
   end
 end
 
+%% segmentation of hilbert phase trials at 20 Hz
+% split the data of every condition into subtrials with a length of 5
+% seconds
+cfg           = [];
+cfg.numOfPart = numOfPart;
+cfg.length    = 5;
+
+data_hseg_20HzNew  = HSP_segmentation( cfg, data_hilbert_20Hz );
+
+clear data_hilbert_20Hz
+
+%% export the segmented hilbert data into a *.mat file
+cfg             = [];
+cfg.desFolder   = desPath;
+cfg.filename    = 'HSP_09c_hseg20Hz';
+cfg.sessionStr  = sessionStr;
+
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
+file_num = length(dir(file_path));
+
+if file_num == 0
+  data_hseg_20Hz = data_hseg_20HzNew;
+  dyads = dyadsNew;
+else
+  HSP_loadData( cfg );
+  cfgMerge.numOfNewPart = numOfPart;
+  data_hseg_20Hz = HSP_mergeDataset(cfgMerge, data_hseg_20HzNew, ...
+                                  data_hseg_20Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
+  clear cfgMerge;
+end
+
+fprintf('The segmented hilbert data will be saved in %s ...\n', file_path);
+HSP_saveData(cfg, 'data_hseg_20Hz', data_hseg_20Hz, 'dyads', dyads);
+fprintf('Data stored!\n');
+clear data_hseg_20Hz
+
 %% artifact rejection at 20 Hz
 if artifactRejection == true
   cfg           = [];
@@ -275,7 +385,7 @@ if artifactRejection == true
   cfg.numOfPart = numOfPart;
   
   fprintf('Artifact Rejection of Hilbert phase data at 20 Hz.\n');
-  data_hilbert_20Hz = HSP_rejectArtifacts(cfg, data_hilbert_20Hz);
+  data_hseg_20HzNew = HSP_rejectArtifacts(cfg, data_hseg_20HzNew);
   fprintf('\n');
 end
 
@@ -284,13 +394,13 @@ cfg           = [];
 cfg.winlen    = 1;                                                          % window length for one PLV value in seconds
 cfg.numOfPart = numOfPart;
 
-data_plv_20HzNew = HSP_phaseLockVal(cfg, data_hilbert_20Hz);
-clear data_hilbert_20Hz
+data_plv_20HzNew = HSP_phaseLockVal(cfg, data_hseg_20HzNew);
+clear data_hseg_20HzNew
 
 %% export the PLVs into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_09c_plv20Hz';
+cfg.filename    = 'HSP_10c_plv20Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -323,7 +433,7 @@ clear data_plv_20HzNew
 %% export the mean PLVs into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_10c_mplv20Hz';
+cfg.filename    = 'HSP_11c_mplv20Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -366,6 +476,43 @@ for i = 1:1:length(data_hilbert_40Hz)                                       % re
   end
 end
 
+%% segmentation of hilbert phase trials at 40 Hz
+% split the data of every condition into subtrials with a length of 5
+% seconds
+cfg           = [];
+cfg.numOfPart = numOfPart;
+cfg.length    = 5;
+
+data_hseg_40HzNew  = HSP_segmentation( cfg, data_hilbert_40Hz );
+
+clear data_hilbert_40Hz
+
+%% export the segmented hilbert data into a *.mat file
+cfg             = [];
+cfg.desFolder   = desPath;
+cfg.filename    = 'HSP_09d_hseg40Hz';
+cfg.sessionStr  = sessionStr;
+
+file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
+file_num = length(dir(file_path));
+
+if file_num == 0
+  data_hseg_40Hz = data_hseg_40HzNew;
+  dyads = dyadsNew;
+else
+  HSP_loadData( cfg );
+  cfgMerge.numOfNewPart = numOfPart;
+  data_hseg_40Hz = HSP_mergeDataset(cfgMerge, data_hseg_40HzNew, ...
+                                  data_hseg_40Hz);
+  dyads = HSP_mergeDataset(cfgMerge, dyadsNew, dyads);
+  clear cfgMerge;
+end
+
+fprintf('The segmented hilbert data will be saved in %s ...\n', file_path);
+HSP_saveData(cfg, 'data_hseg_40Hz', data_hseg_40Hz, 'dyads', dyads);
+fprintf('Data stored!\n');
+clear data_hseg_40Hz
+
 %% artifact rejection at 40 Hz
 if artifactRejection == true
   cfg           = [];
@@ -373,7 +520,7 @@ if artifactRejection == true
   cfg.numOfPart = numOfPart;
   
   fprintf('Artifact Rejection of Hilbert phase data at 40 Hz.\n');
-  data_hilbert_40Hz = HSP_rejectArtifacts(cfg, data_hilbert_40Hz);
+  data_hseg_40HzNew = HSP_rejectArtifacts(cfg, data_hseg_40HzNew);
   fprintf('\n');
 end
 
@@ -382,13 +529,13 @@ cfg           = [];
 cfg.winlen    = 1;                                                          % window length for one PLV value in seconds
 cfg.numOfPart = numOfPart;
 
-data_plv_40HzNew = HSP_phaseLockVal(cfg, data_hilbert_40Hz);
-clear data_hilbert_40Hz
+data_plv_40HzNew = HSP_phaseLockVal(cfg, data_hseg_40HzNew);
+clear data_hseg_40HzNew
 
 %% export the PLVs into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_09d_plv40Hz';
+cfg.filename    = 'HSP_10d_plv40Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -421,7 +568,7 @@ clear data_plv_40HzNew
 %% export the mean PLVs into a *.mat file
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_10d_mplv40Hz';
+cfg.filename    = 'HSP_11d_mplv40Hz';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');

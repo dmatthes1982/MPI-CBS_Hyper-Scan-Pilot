@@ -28,7 +28,7 @@ segLength = ft_getopt(cfg, 'length', 10);
 
 possibleLengths = [1, 5, 10];
 
-if ~any(ismember(possibleLengths, segLengths))
+if ~any(ismember(possibleLengths, segLength))
   error('Excepted cfg.length values are only 1, 5 and 10 seconds');
 end
 
@@ -54,16 +54,7 @@ cfg.overlap         = 0;                                                    % no
 % -------------------------------------------------------------------------
 % Segmentation
 % -------------------------------------------------------------------------
-fSample = data(min(numOfPart)).part1.fsample;
-segLength = cfg.length;
-trialLength = length(data(min(numOfPart)).part1.trial{1}(1,:));
-subseg = trialLength / (segLength * fSample);
-
-parfor i = numOfPart
-  if fSample == 500
-    trialinfo = data(i).part1.trialinfo;
-  end
-    
+for i = numOfPart
   fprintf('Segment data of participant 1 of dyad %d...\n', i);
   ft_info off;
   ft_warning off;
@@ -72,32 +63,7 @@ parfor i = numOfPart
   fprintf('Segment data of participant 2 of dyad %d...\n', i);
   ft_info off;
   ft_warning off;
-  data(i).part2 = ft_redefinetrial(cfg, data(i).part2);
-    
-  if fSample == 500                                                         % calc trialinfo for subsegmented data in case of overlapping trials
-    sampleinfo = data(i).part1.sampleinfo;                                  % this step is only necessary if no downsampling is used
-    overlap = 0;
-  
-    for j=2:1:size(sampleinfo, 1)
-      if sampleinfo(j,1) < sampleinfo(j-1, 2)
-        overlap = 1;
-        break;
-      end
-    end
-    if (overlap == 1)
-      numOfTrials = length(trialinfo);
-      tmpTrialinfo = zeros(subseg * numOfTrials, 1);
-      for k=1:1:numOfTrials
-        for l=1:1:subseg
-          tmpTrialinfo((k-1)*subseg + l) = trialinfo(k);
-        end
-      end
-      trialinfo = tmpTrialinfo;
-      data(i).part1.trialinfo = trialinfo;                                  % correct trialinfo for subsegmented data in case of overlapping trials
-      data(i).part2.trialinfo = trialinfo;
-    end
-  end
-  
+  data(i).part2 = ft_redefinetrial(cfg, data(i).part2);  
 end
 
 ft_info on;

@@ -17,7 +17,7 @@ cfg.sessionStr  = sessionStr;
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
 
 fprintf('Loading %s ...\n', file_path);
-HSP_loadData( cfg );                                                        % load segmented data
+HSP_loadData( cfg );                                                        % load preprocessed data
 
 if ~exist('numOfPart', 'var')                                               % number of participants
   numOfPart = squeeze(cell2mat(struct2cell(dyads)))';

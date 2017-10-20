@@ -106,7 +106,8 @@ else
     cprintf('[4] - Automatic and manual rejection of further artifacts\n');
     fprintf('[5] - Application of narrow band filtering and Hilbert transform\n'); 
     fprintf('[6] - Calculation of PLV\n');
-    fprintf('[7] - Quit data processing\n\n');
+    fprintf('[7] - Calculation of ITPC\n');
+    fprintf('[8] - Quit data processing\n\n');
     x = input('Option: ');
   
     switch x
@@ -130,6 +131,9 @@ else
         part = 6;
         selection = true;
       case 7
+        part = 7;
+        selection = true;
+      case 8
         fprintf('\nData processing aborted.\n');
         clear selection i x y srcPath desPath session sessionList ...
             sessionNum numOfSessions dyadsSpec sessionStr
@@ -172,6 +176,9 @@ switch part
   case 6
     fileNamePre = strcat(desPath, 'HSP_08a_hilbert2Hz_', sessionStr, '.mat');
     fileNamePost = strcat(desPath, 'HSP_11d_mplv40Hz_', sessionStr, '.mat');
+  case 7
+    fileNamePre = strcat(desPath, 'HSP_02_preproc_', sessionStr, '.mat');
+    fileNamePost = strcat(desPath, 'HSP_13_itpc_', sessionStr, '.mat');
   otherwise
     error('Something unexpected happend. part = %d is not defined' ...
           , part);
@@ -326,9 +333,27 @@ while sessionStatus == true
         else
           selection = false;
         end
-      end  
+      end
     case 6
       HSP_main_6;
+      sessionStatus = false;
+      while selection == false
+        fprintf('\nContinue data processing with:\n');
+        fprintf('[7] - Calculation of ITPC\n');
+        x = input('\nSelect [y/n]: ','s');
+        if strcmp('y', x)
+          selection = true;
+          sessionStatus = true;
+          sessionPart = 7;
+        elseif strcmp('n', x)
+          selection = true;
+          sessionStatus = false;
+        else
+          selection = false;
+        end
+      end
+    case 7
+      HSP_main_7;
       sessionStatus = false;
     otherwise
       sessionStatus = false;

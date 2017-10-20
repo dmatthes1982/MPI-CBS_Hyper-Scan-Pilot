@@ -42,7 +42,7 @@ end
 % seconds
 cfg           = [];
 cfg.numOfPart = numOfPart;
-cfg.length    = 10;
+cfg.length    = 5;
 
 data_seg1New  = HSP_segmentation( cfg, data_preproc );
 

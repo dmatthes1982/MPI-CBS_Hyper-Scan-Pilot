@@ -1,7 +1,7 @@
 %% check if basic variables are defined and import segmented data
 if ~exist('sessionStr', 'var')
   cfg           = [];
-  cfg.filename  = 'HSP_04_seg1';
+  cfg.filename  = 'HSP_02_preproc';
   sessionStr    = sprintf('%03d', HSP_getSessionNum( cfg ));                % estimate current session number
 end
 
@@ -11,7 +11,7 @@ end
 
 cfg             = [];
 cfg.desFolder   = desPath;
-cfg.filename    = 'HSP_04_seg1';
+cfg.filename    = 'HSP_02_preproc';
 cfg.sessionStr  = sessionStr;
 
 file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
@@ -29,14 +29,14 @@ for i = numOfPart
   dyadsNew(i).number = i;
 end
 
-for i = 1:1:length(data_seg1)                                               % remove dyads which are not selected from input
+for i = 1:1:length(data_preproc)                                            % remove dyads which are not selected from input
   if ~ismember(i, numOfPart)
-    data_seg1(i).part1 = []; %#ok<SAGROW>
-    data_seg1(i).part2 = []; %#ok<SAGROW>
+    data_preproc(i).part1 = []; %#ok<SAGROW>
+    data_preproc(i).part2 = []; %#ok<SAGROW>
   end
 end
 
-filtCoeffDiv = 500 / data_seg1(min(numOfPart)).part1.fsample;               % estimate sample frequency dependent divisor of filter length
+filtCoeffDiv = 500 / data_preproc(min(numOfPart)).part1.fsample;            % estimate sample frequency dependent divisor of filter length
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 2 Hz branch
@@ -46,7 +46,7 @@ cfg.bpfreq    = [1.9 2.1];
 cfg.filtorder = fix(500 / filtCoeffDiv);
 cfg.numOfPart = numOfPart;
 
-data_bpfilt_2HzNew = HSP_bpFiltering(cfg, data_seg1);
+data_bpfilt_2HzNew = HSP_bpFiltering(cfg, data_preproc);
 
 %% export the filtered data into a *.mat file
 cfg             = [];
@@ -115,7 +115,7 @@ cfg.bpfreq    = [9 11];
 cfg.filtorder = fix(250 / filtCoeffDiv);
 cfg.numOfPart = numOfPart;
 
-data_bpfilt_10HzNew = HSP_bpFiltering(cfg, data_seg1);
+data_bpfilt_10HzNew = HSP_bpFiltering(cfg, data_preproc);
 
 %% export the filtered data into a *.mat file
 cfg             = [];
@@ -184,7 +184,7 @@ cfg.bpfreq    = [19 21];
 cfg.filtorder = fix(250 / filtCoeffDiv);
 cfg.numOfPart = numOfPart;
 
-data_bpfilt_20HzNew = HSP_bpFiltering(cfg, data_seg1);
+data_bpfilt_20HzNew = HSP_bpFiltering(cfg, data_preproc);
 
 %% export the filtered data into a *.mat file
 cfg             = [];
@@ -253,7 +253,7 @@ cfg.bpfreq    = [39 41];
 cfg.filtorder = fix(250 / filtCoeffDiv);
 cfg.numOfPart = numOfPart;
 
-data_bpfilt_40HzNew = HSP_bpFiltering(cfg, data_seg1);
+data_bpfilt_40HzNew = HSP_bpFiltering(cfg, data_preproc);
 
 %% export the filtered data into a *.mat file
 cfg             = [];
@@ -315,4 +315,4 @@ fprintf('Data stored!\n');
 clear data_hilbert_40Hz data_hilbert_40HzNew
 
 %% clear workspace
-clear cfg data_seg1 file_path file_num dyads dyadsNew i filtCoeffDiv
+clear cfg data_preproc file_path file_num dyads dyadsNew i filtCoeffDiv

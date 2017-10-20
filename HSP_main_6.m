@@ -61,7 +61,7 @@ if artifactRejection == true
 
   file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
   if ~isempty(dir(file_path))
-    fprintf('\nLoading %s ...\n', file_path);
+    fprintf('\nLoading %s ...\n\n', file_path);
     HSP_loadData( cfg );                                                      % load artifact definitions
   else
     fprintf('File %s is not existent, artifact rejection is not possible!\n', file_path);
@@ -105,7 +105,7 @@ end
 
 fprintf('The segmented hilbert data will be saved in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_hseg_2Hz', data_hseg_2Hz, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_hseg_2Hz
 
 %% artifact rejection at 2 Hz
@@ -240,7 +240,7 @@ end
 
 fprintf('The segmented hilbert data will be saved in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_hseg_10Hz', data_hseg_10Hz, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_hseg_10Hz
 
 %% artifact rejection at 10 Hz
@@ -375,7 +375,7 @@ end
 
 fprintf('The segmented hilbert data will be saved in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_hseg_20Hz', data_hseg_20Hz, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_hseg_20Hz
 
 %% artifact rejection at 20 Hz
@@ -510,7 +510,7 @@ end
 
 fprintf('The segmented hilbert data will be saved in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_hseg_40Hz', data_hseg_40Hz, 'dyads', dyads);
-fprintf('Data stored!\n');
+fprintf('Data stored!\n\n');
 clear data_hseg_40Hz
 
 %% artifact rejection at 40 Hz

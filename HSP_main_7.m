@@ -71,7 +71,7 @@ HSP_saveData(cfg, 'data_iseg', data_iseg, 'dyads', dyads);
 fprintf('Data stored!\n\n');
 clear data_iseg
 
-%% calculation of the inter-trial-phase coherence (ITPC)
+%% calculation of the inter-trial phase coherence (ITPC)
 cfg           = [];
 cfg.numOfPArt = numOfPart;
 cfg.toi       = 0:0.02:10;

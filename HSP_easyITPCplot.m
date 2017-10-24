@@ -1,25 +1,22 @@
-function HSP_easyTFRplot(cfg, data)
-% HSP_EASYTFRPLOT is a function, which makes it easier to plot a
-% time-frequency-spectrum of a specific condition and trial from the 
-% HSP_DATASTRUCTURE.
+function HSP_easyITPCplot(cfg, data)
+% HSP_EASYITPCPLOT is a function, which makes it easier to plot a
+% inter-trial phase coherence representation of a specific condition from 
+% the HSP_DATASTRUCTURE.
 %
 % Use as
-%   HSP_easyTFRPlot(cfg, data)
+%   HSP_easyITCplot(cfg, data)
 %
-% where the input data is a results from HSP_TIMEFREQANALYSIS.
+% where the input data have to be a result from HSP_INTERTRAILPHASECOH.
 %
 % The configuration options are 
 %   cfg.dyad        = number of dyad (default: 1)
 %   cfg.part        = number of participant (default: 1)
-%   cfg.condition   = condition (default: 100 or 'SilEyesClosed', see HSP_DATASTRUCTURE)
+%   cfg.condition   = condition (default: 22 or 'Speaker2HzS', see HSP_DATASTRUCTURE)
 %   cfg.electrode   = number of electrode (default: 'Cz')
-%   cfg.trial       = number of trial (default: 1)
-%   cfg.freqlimits  = [begin end] (default: [2 50])
-%   cfg.timelimits  = [begin end] (default: [4 176])
-%
+%  
 % This function requires the fieldtrip toolbox
 %
-% See also FT_SINGLEPLOTTFR, HSP_TIMEFREQANALYSIS
+% See also HSP_INTERTRAILPHASECOH, HSP_DATASTRUCTURE
 
 % Copyright (C) 2017, Daniel Matthes, MPI CBS
 
@@ -28,11 +25,8 @@ function HSP_easyTFRplot(cfg, data)
 % -------------------------------------------------------------------------
 dyad    = ft_getopt(cfg, 'dyad', 1);
 part    = ft_getopt(cfg, 'part', 1);
-cond    = ft_getopt(cfg, 'condition', 100);
+cond    = ft_getopt(cfg, 'condition', 22);
 elec    = ft_getopt(cfg, 'electrode', 'Cz');
-trl     = ft_getopt(cfg, 'trial', 1);
-freqlim = ft_getopt(cfg, 'freqlimits', [2 50]);
-timelim = ft_getopt(cfg, 'timelimits', [4 176]);
 
 numOfDyads = length(data);                                                  % check cfg.dyad definition
 if numOfDyads < dyad
@@ -50,17 +44,10 @@ elseif part == 2
 end
 
 cond    = HSP_checkCondition( cond );                                       % check cfg.condition definition    
-trials  = find(trialinfo == cond);
-if isempty(trials)
+if isempty(find(trialinfo == cond, 1))
   error('The selected dataset contains no condition %d.', cond);
 else
-  numTrials = length(trials);
-  if numTrials < trl                                                        % check cfg.trial definition
-    error('The selected dataset contains only %d trials.', numTrials);
-  else
-    trlInCond = trl;
-    trl = trl-1 + trials(1);
-  end
+  trialNum = find(ismember(trialinfo, cond));
 end
 
 if part == 1                                                                % get labels
@@ -81,39 +68,25 @@ else
 end
 
 % -------------------------------------------------------------------------
-% Plot time frequency spectrum
+% inter-trial phase coherence representation
 % -------------------------------------------------------------------------
-
-ft_warning off;
-
-cfg                 = [];                                                       
-cfg.maskstyle       = 'saturation';
-cfg.xlim            = timelim;
-cfg.ylim            = freqlim;
-cfg.zlim            = 'maxmin';
-cfg.trials          = trl;                                                  % select trial (or 'all' trials)
-cfg.channel         = elec;
-cfg.feedback        = 'no';                                                 % suppress feedback output
-cfg.showcallinfo    = 'no';                                                 % suppress function call output
-
-colormap jet;                                                               % use the older and more common colormap
-
 switch part
   case 1
-    ft_singleplotTFR(cfg, data(dyad).part1);
-    title(sprintf('Part.: %d/%d - Cond.: %d - Elec.: %s - Trial: %d', ...
+    imagesc(data(dyad).part1.time{trialNum}, data(dyad).part1.freq, ...
+              squeeze(data(dyad).part1.itpc{trialNum}(elec,:,:)));
+    title(sprintf('ITPC - Part.: %d/%d - Cond.: %d - Elec.: %s', ...
           dyad, part, cond, ...
-          strrep(data(dyad).part1.label{elec}, '_', '\_'), trlInCond));      
+          strrep(data(dyad).part1.label{elec}, '_', '\_')));
   case 2
-    ft_singleplotTFR(cfg, data(dyad).part2);
-    title(sprintf('Part.: %d/%d - Cond.: %d - Elec.: %s - Trial: %d', ...
+    imagesc(data(dyad).part2.time{trialNum}, data(dyad).part2.freq, ...
+              squeeze(data(dyad).part2.itpc{trialNum}(elec,:,:)));
+    title(sprintf('ITPC - Part.: %d/%d - Cond.: %d - Elec.: %s', ...
           dyad, part, cond, ...
-          strrep(data(dyad).part2.label{elec}, '_', '\_'), trlInCond));
+          strrep(data(dyad).part2.label{elec}, '_', '\_')));
 end
 
+axis xy;
 xlabel('time in sec');                                                      % set xlabel
 ylabel('frequency in Hz');                                                  % set ylabel
-
-ft_warning on;
 
 end

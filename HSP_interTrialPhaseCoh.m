@@ -102,7 +102,6 @@ ft_notice on;
 data_out = [];
 data_out.label     = data_freq.label;
 data_out.freq      = data_freq.freq;
-data_out.time      = data_freq.time;
 data_out.dimord    = 'rpt_chan_freq_time';
 data_out.trialinfo = trialinfo;
 
@@ -110,6 +109,7 @@ F = data_freq.fourierspctrm;                                                % co
 F = F./abs(F);                                                              % divide by amplitude
 
 data_out.itpc{1, length(trialinfo)} = [];
+data_out.time{1, length(trialinfo)} = [];
 
 for i = 1:1:length(trialinfo)
   trials = find(data_in.trialinfo == trialinfo(i));
@@ -117,6 +117,7 @@ for i = 1:1:length(trialinfo)
   data_out.itpc{i} = sum(F(trials,:,:,:), 1);                               % sum angles
   data_out.itpc{i} = abs(data_out.itpc{i})/N;                               % take the absolute value and normalize
   data_out.itpc{i} = squeeze(data_out.itpc{i});                             % remove the first singleton dimension
+  data_out.time{i} = data_freq.time;
 end
 
 end

@@ -1,6 +1,6 @@
 fprintf('------------------------------------------------\n');
 fprintf('<strong>Hyperscanning pilot project - data processing</strong>\n');
-fprintf('Version: 0.1\n');
+fprintf('Version: 0.2\n');
 fprintf('Copyright (C) 2017, Daniel Matthes, MPI CBS\n');
 fprintf('------------------------------------------------\n');
 
@@ -103,7 +103,7 @@ else
     fprintf('[1] - Import and basic preprocessing\n');
     cprintf([0.5,0.5,0.5], '[2] - Rejection of eye artifacts (not available yet)\n');
     fprintf('[3] - Segmentation of the data\n');
-    cprintf('[4] - Automatic and manual rejection of further artifacts\n');
+    fprintf('[4] - Automatic and manual rejection of further artifacts\n');
     fprintf('[5] - Application of narrow band filtering and Hilbert transform\n'); 
     fprintf('[6] - Calculation of PLV\n');
     fprintf('[7] - Calculation of ITPC\n');

@@ -42,7 +42,7 @@ function [ data ] = HSP_interTrialPhaseCoh(cfg, data)
 % Get and check config options
 % Get number of participants
 % -------------------------------------------------------------------------
-cfgSub.toi  = ft_getopt(cfg, 'toi', 0:0.02:10);
+cfgSub.toi  = ft_getopt(cfg, 'toi', 0:0.2:9.8);
 cfgSub.foi  = ft_getopt(cfg, 'foi', 1:0.5:48);
 numOfPart   = ft_getopt(cfg, 'numOfPart', []);
 
@@ -58,19 +58,19 @@ end
 % -------------------------------------------------------------------------
 % Estimate inter-trial phase coherence (PLV)
 % ------------------------------------------------------------------------
-for i = numOfPart
+parfor i = numOfPart
   fprintf('Estimate ITPC for participant 1 of dyad %d...\n', i);
-  data = interTrialPhaseCoh(cfgSub, data(i).part1);
+  data(i).part1 = interTrialPhaseCoh(cfgSub, data(i).part1);
   
   fprintf('Estimate ITPC for participant 2 of dyad %d...\n', i);
-  data = interTrialPhaseCoh(cfgSub, data(i).part2);
+  data(i).part2 = interTrialPhaseCoh(cfgSub, data(i).part2);
 end
 
 end
 
 function [data_out] = interTrialPhaseCoh(cfgITPC, data_in)
 
-if cfgITPC.toi < length(data_in.trial{1}(1,:))                              % check if trial length is long enough
+if max(cfgITPC.toi) > max(data_in.time{1})                                   % check if trial length is long enough
   error('toi is larger than the trial length. - Use another toi or resegment the trials.');
 end
 
@@ -79,13 +79,20 @@ trialinfo = unique(data_in.trialinfo, 'stable');                            % ex
 % -------------------------------------------------------------------------
 % Calculate spectrum
 % -------------------------------------------------------------------------
-cfgFrq = [];
-cfgFrq.method  = 'wavelet';
-cfgFrq.toi     = cfgITPC.toi;
-cfgFrq.output  = 'fourier';
-cfgFrq.foi     = cfgITPC.foi;
+cfgFrq              = [];
+cfgFrq.method       = 'wavelet';
+cfgFrq.toi          = cfgITPC.toi;
+cfgFrq.output       = 'fourier';
+cfgFrq.foi          = cfgITPC.foi;
+cfgFrq.showcallinfo = 'no';
+cfgFrq.feedback     = 'no';
 
+ft_notice off;
+for i=1:1:length(data_in.time)
+  data_in.time{i} = data_in.time{1};
+end
 data_freq = ft_freqanalysis(cfgFrq, data_in);
+ft_notice on;
 
 % -------------------------------------------------------------------------
 % Calculate Inter-Trial-Coherence
@@ -93,9 +100,9 @@ data_freq = ft_freqanalysis(cfgFrq, data_in);
 % make a new FieldTrip-style data structure containing the ITC
 % copy the descriptive fields over from the frequency decomposition
 data_out = [];
-data_out.label     = freq.label;
-data_out.freq      = freq.freq;
-data_out.time      = freq.time;
+data_out.label     = data_freq.label;
+data_out.freq      = data_freq.freq;
+data_out.time      = data_freq.time;
 data_out.dimord    = 'rpt_chan_freq_time';
 data_out.trialinfo = trialinfo;
 

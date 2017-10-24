@@ -73,9 +73,9 @@ clear data_iseg
 
 %% calculation of the inter-trial phase coherence (ITPC)
 cfg           = [];
-cfg.numOfPArt = numOfPart;
-cfg.toi       = 0:0.02:10;
+cfg.toi       = 0:0.2:9.8;
 cfg.foi       = 1:0.5:48;
+cfg.numOfPart = numOfPart;
 
 data_itpcNew = HSP_interTrialPhaseCoh(cfg, data_isegNew);
 clear data_isegNew

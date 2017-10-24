@@ -56,7 +56,7 @@ dataTmp(max(numOfPart)) = struct;
 dataTmp(max(numOfPart)).dyad = [];
 dataTmp(max(numOfPart)).dyad = [];
 
-for i = numOfPart
+parfor i = numOfPart
   fprintf('Calc PLVs of dyad %d with a center frequency of %d Hz...\n', ...           
             i,  data(i).centerFreq);
   dataTmp(i).dyad  = phaseLockingValue(cfg, data(i).part1, data(i).part2);

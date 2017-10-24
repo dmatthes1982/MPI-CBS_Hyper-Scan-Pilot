@@ -336,7 +336,7 @@ while sessionStatus == true
       end
     case 6
       HSP_main_6;
-      sessionStatus = false;
+      selection = false;
       while selection == false
         fprintf('\nContinue data processing with:\n');
         fprintf('[7] - Calculation of ITPC\n');

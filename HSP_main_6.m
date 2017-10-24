@@ -38,18 +38,18 @@ for i = 1:1:length(data_hilbert_2Hz)                                        % re
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% general adjustment
-selection = false;
-while selection == false
+choise = false;
+while choise == false
   cprintf([0,0.6,0], '\nShould rejection of detected artifacts be applied before PLV estimation?\n');
   x = input('Select [y/n]: ','s');
   if strcmp('y', x)
-    selection = true;
+    choise = true;
     artifactRejection = true;
   elseif strcmp('n', x)
-    selection = true;
+    choise = true;
     artifactRejection = false;
   else
-    selection = false;
+    choise = false;
   end
 end
 
@@ -112,6 +112,7 @@ clear data_hseg_2Hz
 if artifactRejection == true
   cfg           = [];
   cfg.artifact  = cfg_allArt;
+  cfg.type      = 'dual';
   cfg.numOfPart = numOfPart;
   
   fprintf('Artifact Rejection of Hilbert phase data at 2 Hz.\n');
@@ -247,6 +248,7 @@ clear data_hseg_10Hz
 if artifactRejection == true
   cfg           = [];
   cfg.artifact  = cfg_allArt;
+  cfg.type      = 'dual';
   cfg.numOfPart = numOfPart;
   
   fprintf('Artifact Rejection of Hilbert phase data at 10 Hz.\n');
@@ -382,6 +384,7 @@ clear data_hseg_20Hz
 if artifactRejection == true
   cfg           = [];
   cfg.artifact  = cfg_allArt;
+  cfg.type      = 'dual';
   cfg.numOfPart = numOfPart;
   
   fprintf('Artifact Rejection of Hilbert phase data at 20 Hz.\n');
@@ -517,6 +520,7 @@ clear data_hseg_40Hz
 if artifactRejection == true
   cfg           = [];
   cfg.artifact  = cfg_allArt;
+  cfg.type      = 'dual';
   cfg.numOfPart = numOfPart;
   
   fprintf('Artifact Rejection of Hilbert phase data at 40 Hz.\n');
@@ -593,4 +597,4 @@ clear data_mplv_40Hz data_mplv_40HzNew
 
 %% clear workspace
 clear cfg file_path file_num dyads dyadsNew i cfg_allArt artifactRejection ...
-      x selection
+      x choise

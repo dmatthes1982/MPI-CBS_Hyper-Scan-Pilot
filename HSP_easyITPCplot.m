@@ -88,5 +88,6 @@ end
 axis xy;
 xlabel('time in sec');                                                      % set xlabel
 ylabel('frequency in Hz');                                                  % set ylabel
+colorbar;
 
 end

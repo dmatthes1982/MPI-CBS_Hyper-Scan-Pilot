@@ -71,7 +71,49 @@ HSP_saveData(cfg, 'data_iseg', data_iseg, 'dyads', dyads);
 fprintf('Data stored!\n\n');
 clear data_iseg
 
-%% calculation of the inter-trial phase coherence (ITPC)
+%% artifact rejection
+choise = false;
+while choise == false
+  cprintf([0,0.6,0], 'Should rejection of detected artifacts be applied before ITPC estimation?\n');
+  x = input('Select [y/n]: ','s');
+  if strcmp('y', x)
+    choise = true;
+    artifactRejection = true;
+  elseif strcmp('n', x)
+    choise = true;
+    artifactRejection = false;
+  else
+    choise = false;
+  end
+end
+
+if artifactRejection == true                                                % load artifact definitions
+  cfg             = [];
+  cfg.desFolder   = desPath;
+  cfg.filename    = 'HSP_06_allArt';
+  cfg.sessionStr  = sessionStr;
+
+  file_path = strcat(desPath, cfg.filename, '_', sessionStr, '.mat');
+  if ~isempty(dir(file_path))
+    fprintf('\nLoading %s ...\n\n', file_path);
+    HSP_loadData( cfg );                                                    
+  else
+    fprintf('File %s is not existent, artifact rejection is not possible!\n', file_path);
+    artifactRejection = false;
+  end
+end
+if artifactRejection == true                                                % reject artifacts
+  cfg           = [];
+  cfg.artifact  = cfg_allArt;
+  cfg.type      = 'single';
+  cfg.numOfPart = numOfPart;
+  
+  fprintf('Rejection of trials with artifacts.\n');
+  data_isegNew = HSP_rejectArtifacts(cfg, data_isegNew);
+  fprintf('\n');
+end
+
+%% estimation of the inter-trial phase coherence (ITPC)
 cfg           = [];
 cfg.toi       = 0:0.2:9.8;
 cfg.foi       = 1:0.5:48;
@@ -106,4 +148,5 @@ fprintf('Data stored!\n');
 clear data_itpc data_itpcNew
 
 %% clear workspace
-clear file_path file_num cfg dyads dyadsNew i
+clear file_path file_num cfg dyads dyadsNew i cfg_allArt artifactRejection ...
+      x choise

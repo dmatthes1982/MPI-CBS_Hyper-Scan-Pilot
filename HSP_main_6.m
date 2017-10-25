@@ -103,7 +103,7 @@ else
   clear cfgMerge;
 end
 
-fprintf('The segmented hilbert data will be saved in %s ...\n', file_path);
+fprintf('The segmented hilbert data (2Hz) will be saved in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_hseg_2Hz', data_hseg_2Hz, 'dyads', dyads);
 fprintf('Data stored!\n\n');
 clear data_hseg_2Hz
@@ -239,7 +239,7 @@ else
   clear cfgMerge;
 end
 
-fprintf('The segmented hilbert data will be saved in %s ...\n', file_path);
+fprintf('The segmented hilbert data (10Hz) will be saved in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_hseg_10Hz', data_hseg_10Hz, 'dyads', dyads);
 fprintf('Data stored!\n\n');
 clear data_hseg_10Hz
@@ -375,7 +375,7 @@ else
   clear cfgMerge;
 end
 
-fprintf('The segmented hilbert data will be saved in %s ...\n', file_path);
+fprintf('The segmented hilbert data (20Hz) will be saved in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_hseg_20Hz', data_hseg_20Hz, 'dyads', dyads);
 fprintf('Data stored!\n\n');
 clear data_hseg_20Hz
@@ -511,7 +511,7 @@ else
   clear cfgMerge;
 end
 
-fprintf('The segmented hilbert data will be saved in %s ...\n', file_path);
+fprintf('The segmented hilbert data (40Hz) will be saved in %s ...\n', file_path);
 HSP_saveData(cfg, 'data_hseg_40Hz', data_hseg_40Hz, 'dyads', dyads);
 fprintf('Data stored!\n\n');
 clear data_hseg_40Hz

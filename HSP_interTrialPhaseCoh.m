@@ -56,8 +56,8 @@ if isempty(numOfPart)
 end
 
 % -------------------------------------------------------------------------
-% Estimate inter-trial phase coherence (PLV)
-% ------------------------------------------------------------------------
+% Estimate inter-trial phase coherence (ITPC)
+% -------------------------------------------------------------------------
 parfor i = numOfPart
   fprintf('Estimate ITPC for participant 1 of dyad %d...\n', i);
   data(i).part1 = interTrialPhaseCoh(cfgSub, data(i).part1);
@@ -70,7 +70,7 @@ end
 
 function [data_out] = interTrialPhaseCoh(cfgITPC, data_in)
 
-if max(cfgITPC.toi) > max(data_in.time{1})                                   % check if trial length is long enough
+if max(cfgITPC.toi) > max(data_in.time{1})                                  % check if trial length is long enough
   error('toi is larger than the trial length. - Use another toi or resegment the trials.');
 end
 

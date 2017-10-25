@@ -1,6 +1,6 @@
 function HSP_easyPLVplot( cfg, data )
 % HSP_EASYPLVPLOT is a function, which makes it easier to plot the PLV 
-% values of a specific condition from the HSP-data-structure.
+% values of a specific condition from the HSP_DATASTRUCTURE.
 %
 % Use as
 %   HSP_easyPLVplot( cfg, data )
@@ -9,7 +9,7 @@ function HSP_easyPLVplot( cfg, data )
 %
 % The configuration options are
 %   cfg.dyad      = number of dyad (default: 1)
-%   cfg.condition = condition (default: 21 or 'Earphone2HzS', see HSP data structure)
+%   cfg.condition = condition (default: 21 or 'Earphone2HzS', see HSP_DATASTRUCTURE)
 %   cfg.elecPart1 = number of electrode of participant 1 (default: 'Cz')
 %   cfg.elecPart2 = number of electrode of participant 2 (default: 'Cz')
 %

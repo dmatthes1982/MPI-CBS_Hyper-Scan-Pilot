@@ -1,7 +1,7 @@
 function HSP_easyMultiTFRplot(cfg, data)
-% HSP_EASYTFRPLOT is a function, which makes it easier to create a multi
-% time frequency response plot of all electrodes of specific condition and 
-% trial on a head model.
+% HSP_EASYMULTITFRPLOT is a function, which makes it easier to create a 
+% multi time frequency response plot of all electrodes of specific 
+% condition and trial on a head model.
 %
 % Use as
 %   HSP_easyTFRPlot(cfg, data)
@@ -66,7 +66,6 @@ ft_warning off;
 % -------------------------------------------------------------------------
 % Plot time frequency spectrum
 % -------------------------------------------------------------------------
-
 colormap 'jet';
 
 cfg               = [];

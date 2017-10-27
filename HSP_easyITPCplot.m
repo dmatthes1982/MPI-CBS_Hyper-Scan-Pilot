@@ -12,7 +12,8 @@ function HSP_easyITPCplot(cfg, data)
 %   cfg.dyad        = number of dyad (default: 1)
 %   cfg.part        = number of participant (default: 1)
 %   cfg.condition   = condition (default: 22 or 'Speaker2HzS', see HSP_DATASTRUCTURE)
-%   cfg.electrode   = number of electrode (default: 'Cz')
+%   cfg.electrode   = number of electrodes (default: {'Cz'} repsectively [7])
+%                     examples: {'Cz'}, {'F3', 'Fz', 'F4'}, [7] or [2, 1, 27] 
 %  
 % This function requires the fieldtrip toolbox
 %
@@ -26,7 +27,7 @@ function HSP_easyITPCplot(cfg, data)
 dyad    = ft_getopt(cfg, 'dyad', 1);
 part    = ft_getopt(cfg, 'part', 1);
 cond    = ft_getopt(cfg, 'condition', 22);
-elec    = ft_getopt(cfg, 'electrode', 'Cz');
+elec    = ft_getopt(cfg, 'electrode', {'Cz'});
 
 numOfDyads = length(data);                                                  % check cfg.dyad definition
 if numOfDyads < dyad
@@ -56,15 +57,21 @@ elseif part == 2
   label = data(dyad).part2.label;
 end
 
-if isnumeric(elec)
-  if elec < 1 || elec > 32
-    error('cfg.elec hast to be a number between 1 and 32 or a existing label like ''Cz''.');
+if isnumeric(elec)                                                          % check cfg.electrode
+  for i=1:length(elec)
+    if elec(i) < 1 || elec(i) > 32
+      error('cfg.elec has to be a numbers between 1 and 32 or a existing labels like {''Cz''}.');
+    end
   end
 else
-  elec = find(strcmp(label, elec));
-  if isempty(elec)
-    error('cfg.elec hast to be a existing label like ''Cz''or a number between 1 and 32.');
+  tmpElec = zeros(1, length(elec));
+  for i=1:length(elec)
+    tmpElec(i) = find(strcmp(label, elec{i}));
+    if isempty(tmpElec(i))
+      error('cfg.elec has to be a cell array of existing labels like ''Cz''or a vector of numbers between 1 and 32.');
+    end
   end
+  elec = tmpElec;
 end
 
 % -------------------------------------------------------------------------
@@ -72,17 +79,17 @@ end
 % -------------------------------------------------------------------------
 switch part
   case 1
-    imagesc(data(dyad).part1.time{trialNum}, data(dyad).part1.freq, ...
-              squeeze(data(dyad).part1.itpc{trialNum}(elec,:,:)));
+    imagesc(data(dyad).part1.time{trialNum}(2:end), data(dyad).part1.freq, ...
+              squeeze(mean(data(dyad).part1.itpc{trialNum}(elec,:,2:end),1)));
+    labelString = elec2string(elec, data(dyad).part1.label);
     title(sprintf('ITPC - Part.: %d/%d - Cond.: %d - Elec.: %s', ...
-          dyad, part, cond, ...
-          strrep(data(dyad).part1.label{elec}, '_', '\_')));
+          dyad, part, cond, labelString));
   case 2
-    imagesc(data(dyad).part2.time{trialNum}, data(dyad).part2.freq, ...
-              squeeze(data(dyad).part2.itpc{trialNum}(elec,:,:)));
+    imagesc(data(dyad).part2.time{trialNum}(2:end), data(dyad).part2.freq, ...
+              squeeze(mean(data(dyad).part2.itpc{trialNum}(elec,:,2:end),1)));
+    labelString = elec2string(elec, data(dyad).part2.label);
     title(sprintf('ITPC - Part.: %d/%d - Cond.: %d - Elec.: %s', ...
-          dyad, part, cond, ...
-          strrep(data(dyad).part2.label{elec}, '_', '\_')));
+          dyad, part, cond, labelString));
 end
 
 axis xy;
@@ -90,4 +97,15 @@ xlabel('time in sec');                                                      % se
 ylabel('frequency in Hz');                                                  % set ylabel
 colorbar;
 
+end
+
+function elecsString = elec2string (elecs, labels)
+  elecsString = labels{elecs(1)};
+  
+  if length(elecs) > 1
+    for i = 2:1:length(elecs)
+      elecsString = [elecsString, ', ', labels{elecs(i)}];                  %#ok<AGROW>
+    end
+  end
+  
 end

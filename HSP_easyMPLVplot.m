@@ -6,7 +6,7 @@ function HSP_easyMPLVplot( cfg, data )
 % Use as
 %   HSP_easyPLVplot( cfg, data )
 %
-% where the input data has to be the result of HSP_PHASELOCKVAL
+% where the input data has to be the result of HSP_CALCMEANPLV
 %
 % The configuration options are
 %   cfg.dyad      = number of dyad (default: 1)
@@ -14,7 +14,7 @@ function HSP_easyMPLVplot( cfg, data )
 %
 % This function requires the fieldtrip toolbox.
 %
-% See also HSP_DATASTRUCTURE, PLOT, HSP_PHASELOCKVAL, HSP_CALCMEANPLV
+% See also HSP_DATASTRUCTURE, PLOT, HSP_CALCMEANPLV
 
 % Copyright (C) 2017, Daniel Matthes, MPI CBS
 

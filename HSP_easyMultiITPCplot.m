@@ -6,7 +6,7 @@ function HSP_easyMultiITPCplot(cfg, data)
 % Use as
 %   HSP_easyMultiITPCplot(cfg, data)
 %
-% where the input data have to be a result from HSP_INTERTRAILPHASECOH.
+% where the input data have to be a result from HSP_INTERTRIALPHASECOH.
 %
 % The configuration options are 
 %   cfg.dyad        = number of dyad (default: 1)
@@ -17,7 +17,7 @@ function HSP_easyMultiITPCplot(cfg, data)
 %  
 % This function requires the fieldtrip toolbox
 %
-% See also HSP_INTERTRAILPHASECOH, HSP_DATASTRUCTURE
+% See also HSP_INTERTRIALPHASECOH, HSP_DATASTRUCTURE
 
 % Copyright (C) 2017, Daniel Matthes, MPI CBS
 

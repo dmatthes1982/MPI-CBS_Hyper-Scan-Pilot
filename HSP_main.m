@@ -43,7 +43,11 @@ while selection == false
     if ismember(x, sessionNum)
       selection = true;
       session = x;
-      sessionStr = sprintf('%03d', session);
+      if ~isempty(max(sessionNum))
+        sessionStr = sprintf('%03d', max(sessionNum) + 1);
+      else
+        sessionStr = sprintf('%03d', 1);
+      end
     elseif x == 0  
       selection = true;
       session = x;

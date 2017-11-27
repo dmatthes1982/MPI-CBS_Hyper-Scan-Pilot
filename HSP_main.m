@@ -5,12 +5,39 @@ fprintf('Copyright (C) 2017, Daniel Matthes, MPI CBS\n');
 fprintf('------------------------------------------------\n');
 
 % -------------------------------------------------------------------------
-% General definitions
+% Path settings
 % -------------------------------------------------------------------------
 srcPath = '/data/pt_01821/DualEEG_AD_auditory_rawData/';
 desPath = '/data/pt_01821/DualEEG_AD_auditory_processedData/';
 
-clear sessionStr numOfPart part
+fprintf('\nThe default paths are:\n');
+fprintf('Source: %s\n',srcPath);
+fprintf('Destination: %s\n',desPath);
+
+selection = false;
+while selection == false
+  fprintf('\nDo you want to select the default paths?\n');
+  x = input('Select [y/n]: ','s');
+  if strcmp('y', x)
+    selection = true;
+    newPaths = false;
+  elseif strcmp('n', x)
+    selection = true;
+    newPaths = true;
+  else
+    selection = false;
+  end
+end
+
+if newPaths == true
+  srcPath = uigetdir(pwd, 'Select Source Folder...');
+  desPath = uigetdir(strcat(srcPath,'/..'), ...
+                      'Select Destination Folder...');
+  srcPath = strcat(srcPath, '/');
+  desPath = strcat(desPath, '/');
+end
+
+clear sessionStr numOfPart part newPaths
 
 % -------------------------------------------------------------------------
 % Session selection
@@ -30,8 +57,23 @@ end
 
 y = sprintf('%d ', sessionNum);
 
+userList = cell(1, length(sessionNum));
+
+for i = sessionNum
+  match = strcmp(sessionList, sprintf('HSP_02_preproc_%03d.mat', i));
+  filePath = [desPath, sessionList{match}];
+  [~, cmdout] = system(['ls -l ' filePath '']);
+  attrib = strsplit(cmdout);
+  userList{i} = attrib{3};
+end
+
 while selection == false
   fprintf('\nThe following sessions are available: %s\n', y);
+   fprintf('The session owners are:\n');
+  for i=1:1:length(userList)
+    fprintf('%d - %s\n', i, userList{i});
+  end
+  fprintf('\n');
   fprintf('Please select one session or create a new one:\n');
   fprintf('[0] - Create new session\n');
   fprintf('[num] - Select session\n\n');
@@ -57,7 +99,8 @@ while selection == false
     end
   end
 end
-  
+
+clear userList match filePath cmdout attrib 
 
 % -------------------------------------------------------------------------
 % General selection of dyads
